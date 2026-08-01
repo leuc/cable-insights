@@ -2,7 +2,7 @@
 
 Source: Morris Morley & Chris McGillion, *US Policy toward Chile in the 1970s: Frustrated Ambitions* (Cambridge Scholars Publishing, 2019), endnotes section (`Notes to Chapter 2`).
 
-MRN matching method: `jq` date-range filter on `data/cable-extract/all-dates.ndjson` (normalized `document_date`) narrowed by origin-station prefix on `document_number`, cross-checked by reading `_message_content`/`Message Attributes` in `data/cable-extract/<year>.ndjson` for sender signature + subject match against the book's citation. "Confirmed" = cable text directly verified (signature, addressee, and/or topic match the citation). "Likely" = one candidate is a clearly-best topical fit but the match isn't independently verified (e.g. against the book's own secondary FRUS citation). "Ambiguous" = date+station narrows to multiple same-day candidates with no quoted subject in the book to disambiguate — needs the book's chapter-body narrative (not yet consulted) to pick the right one.
+MRN matching method: `jq` date-range filter on `data/cable-extract/all-dates.ndjson` (normalized `document_date`) narrowed by origin-station prefix on `document_number`, cross-checked by reading `_message_content`/`Message Attributes` in `data/cable-extract/<year>.ndjson` for sender signature + subject match against the book's citation. "Confirmed" = cable text directly verified (signature, addressee, and/or topic match the citation). "Likely" = one candidate is a clearly-best topical fit but the match isn't independently verified (e.g. against the book's own secondary FRUS citation). "Ambiguous" = date+station narrows to multiple same-day candidates with no quoted subject in the book to disambiguate — needs the book's chapter-body narrative (not yet consulted) to pick the right one. **🚫 FULLTEXT UNAVAILABLE** marks any MRN whose `_message_content` could not be read in this corpus — subject/routing metadata was still usable for matching, but signature/content couldn't be verified.
 
 29 of 37 distinct telegram citations in this chapter are now resolved (16 confirmed, 1 likely, 12 ambiguous-with-candidates identified, plus out-of-corpus memos).
 
@@ -34,7 +34,7 @@ MRN matching method: `jq` date-range filter on `data/cable-extract/all-dates.ndj
 | 91 | 289 | Telegram, Kissinger to AmEmb, Santiago, April 25, 1974, Ibid. | **Confirmed: 74STATE84285** (raw `1974STATE084285`). STATE→SANTIAGO, subject "CHILEAN ARMS REQUESTS," signed KISSINGER — only Chile-relevant candidate among 9 same-day STATE→SANTIAGO cables; content conveys a US arms decision to be relayed to Pinochet personally. |
 | 92 | 289 | Telegram, Popper to Kissinger, August 2, 1974, Ibid. | **Confirmed: 74SANTIAGO4591** (raw `1974SANTIA04591`). SANTIAGO→STATE, subject "INTERNATIONAL PROTESTS ON CHILEAN DEATH SENTENCES," signed POPPER — only human-rights-relevant candidate among 8 same-day cables. |
 | 100 | 290 | Telegram, Kissinger to AmEmb Santiago, March 18 , 1974, NARA, RG59, CFPF,ET. | **Confirmed: 74STATE53384** (raw `1974STATE053384`). STATE→SANTIAGO, subject "INTER-AMERICAN HUMAN RIGHTS CONSIDERATION OF HUMAN RIGHTS SITUATION IN CHILE," signed KISSINGER — only human-rights-relevant candidate among 5 same-day STATE→SANTIAGO cables. |
-| 107 | 290 | Telegram, Popper to Kissinger, April 10, 1975, NARA, RG59, CFPF, ET. | Ambiguous — 9 same-day SANTIAGO→STATE candidates; best subject match ("Chile — Human Rights") has no retrievable body text to verify signature. See note (m). |
+| 107 | 290 | Telegram, Popper to Kissinger, April 10, 1975, NARA, RG59, CFPF, ET. | Ambiguous — 9 same-day SANTIAGO→STATE candidates; best subject match ("Chile — Human Rights") is **🚫 FULLTEXT UNAVAILABLE**, can't verify signature. See note (m). |
 | 121 | 291 | Telegram, Popper to Kissinger, July 23, 1974, DOS/FOIAe, I | Ambiguous — 6 same-day SANTIAGO→STATE candidates, all signed POPPER, no distinguishing signal. See note (n). |
 | 137 | 291 | Telegram, Popper to Kissinger, August 31 , 1974, NARA, RG59, CFPF, ET. | Ambiguous — 3 same-day SANTIAGO→STATE candidates, all signed POPPER, no distinguishing signal. See note (o). |
 | 139 | 291 | Telegram, Kissinger to AmEmb Santiago, September 7, 1974, DOS/FOIAe, I. | **Confirmed: 74STATE196836** (raw `1974STATE196836`). STATE→SANTIAGO, subject "HUMAN RIGHTS IN CHILE," signed KISSINGER — the only STATE→SANTIAGO cable that date (of 62 total STATE cables). |
@@ -150,7 +150,7 @@ Full candidate lists for the "ambiguous" rows above, from `jq` date+station filt
 — "for Kubisch" is an internal attention-line, not a routing addressee, so it doesn't narrow the `To:` field.
 
 **(m) SANTIAGO→STATE, April 10, 1975** (note 107): 9 candidates —
-`1975SANTIA02160` (Chile — Human Rights; body text not retrievable in this corpus) ·
+`1975SANTIA02160` (Chile — Human Rights — **🚫 FULLTEXT UNAVAILABLE**) ·
 `1975SANTIA02184` (World Dairy Expo) ·
 `1975SANTIA02157` (Gen. Leigh blasts politicians) ·
 `1975SANTIA02155` (Chilean cabinet resigns) ·
@@ -180,3 +180,4 @@ Full candidate lists for the "ambiguous" rows above, from `jq` date+station filt
 - Non-telegram citations in a mixed endnote (NSC memos, FCO/British memos) are noted as out-of-corpus rather than searched, since this corpus only contains State Dept cable traffic.
 - "Confirmed" matches were verified by reading `_message_content` (body text) and `Message Attributes` (From/To/Subject/signature) directly from `data/cable-extract/<year>.ndjson` — not inferred from date/station alone.
 - Several ambiguous clusters (notes 56-58-60-64, Paris Club debt; notes 139-140-141, human rights) turned out to be narrative threads where confirming one cable's content (references, promised follow-ups) helped confirm its neighbors — worth keeping in mind when the remaining ambiguous sets get chapter-text context, since nearby endnotes are often part of the same cable exchange.
+- Note 107 (set (m)) is this chapter's one case of **🚫 FULLTEXT UNAVAILABLE** — the best subject-match candidate exists in the metadata index but its body text can't be read in this corpus, a distinct failure mode from "too many candidates" (see Ch.4 for more examples and the standardized marker convention).

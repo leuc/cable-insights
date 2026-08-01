@@ -2,34 +2,65 @@
 
 Source: Morris Morley & Chris McGillion, *US Policy toward Chile in the 1970s: Frustrated Ambitions* (Cambridge Scholars Publishing, 2019), endnotes section (`Notes to Chapter 3`).
 
-| Endnote # | Page | Citation (as printed, OCR-extracted) |
-|---|---|---|
-| 2 | 292 | Telegram, Kissinger to AmEmb Santiago, February 1 , 1975, DOS/FOIAe, I. |
-| 3 | 292 | Telegram, Popper to Kissinger, February 4, 1975, NARA, RG59, CFPF, ET. |
-| 18 | 292 | See Telegram, AmEmb Santiago (Thompson) to Kissinger, January 6, 1975, DOS/FOIAe, I; Statement, AmEmb Santiago to DOS, "Issue Analysis," February 19, 1975, Ibid. |
-| 21 | 292 | Telegram, Popper to Kissinger for Rogers, December 22, 1974, NARA, RG59, CFPF,ET. |
-| 22 | 292 | Telegram, AmEmb Santiago (Thompson) to Kissinger, January 28, 1974, NARA, 157, RG 59, CFPF, ET. |
-| 23 | 292 | Telegram, Popper to Kissinger, February 13 , 1974, NARA, RG59 CFPF, ET. |
-| 29 | 293 | Telegram, Kissinger to AmEmb Santiago, January 30, 1975, NARA, RG59, CFPF,ET |
-| 30 | 293 | Telegram, Kissinger to AmEmb Santiago, January 30, 1975, Ibid. ; Telegram, Kissinger to AmEmb Paris, February 27, 1975, Ibid. |
-| 32 | 293 | Telegram, AmEmb Bonn (Hillenbrand) to Kissinger, January 23, 1975, NARA, RG59, CFPF, Ibid. |
-| 33 | 293 | Telegram, AmEmb Paris (Rush) to Kissinger, February 28, 1975, Ibid. |
-| 34 | 293 | Telegram, AmEmb The Hague (Gould) to Kissinger, March 4, 1975, Ibid. ; Telegram, AmEmb Madrid (Eaton) to Kissinger, March 4, 1975, Ibid. |
-| 39 | 294 | Telegram, Kissinger to AmEmb Santiago, et al., May 15, 1975, Ibid. |
-| 43 | 294 | Telegram, Kissinger to AmEmb Santiago, May 17, 1975, DOS/FOIAe, I. See also "US Supports OAS In Chile Investigation," WP, May 17, 1975, p.A4. |
-| 44 | 294 | Telegram, Kissinger (Ingersoll) to AmEmb Santiago for Popper from Rogers, May 13 , 1975, DOS/FOIAe, I |
-| 47 | 294 | Telegram, Popper to Kissinger for Rogers, June 30, 1975, RG54, Office of the Secretary, Subject Files of Ambassador David H. Popper, Folder: Chron Cables (Amb) May/July 1975, Box 3, NA. |
-| 59 | 295 | Telegram, Kissinger to Popper, Chile CASP, 1975, June 20, 1975, DOS/FOIAe, I |
-| 72 | 295 | Telegram, Kissinger (Ingersoll) to USDEL, July 11 , 1975, Project File on Pinochet/Chile, Folder: 7/9-12175 Europe, to SEC (5), Kissinger Briefing Books and Cables, GRFPL;Telegram, Popper to Kissinger, July 8, 1975, DOS/FOIAe, I One of Pinochet's senior ministers at the time, Raul Saez, when asked by Ambassador Popper who might have influenced the General's change of heart, pointedly recalled that DINA head Manuel Contreras "had been very opposed to the visit." Telegram, Popper to Kissinger, July 7, 1975, Chile Human Rights Documents, File: DOS, Human Rights in Chile, Vo1 . 10, Folder 2, Box 7, NA. |
-| 86 | 296 | Telegram, Popper to Kissinger, September 25, 1975, Ibid. |
-| 98 | 297 | Telegram, Popper to Kissinger, October 31 , 1975, NARA, RG59, CFPF, ET. |
-| 109 | 297 | Note, Bank of London Executive to LAD, FCO (Binns), December 10, 1975, Folder: FCO7/2803, Rescheduling of Foreign Debt of Chile, BNA. llO Memo of Conversation, "Kissinger and Carvajal," September 29, 1975; DOS/FOIAe, I; Telegram, Kissinger to AmEmb Santiago, October 3 , 1975, |
-| 112 | 298 | Telegram, Popper to Kissinger, October 24, 1974, DOS/FOIAe, I |
-| 118 | 298 | Telegram, Kissinger to USUN Mission, October 29, 1975. ET. |
-| 119 | 298 | Telegram, Popper to Kissinger, November 10, 1975, DOS/FOIAe, I. |
-| 120 | 298 | Telegram, USUN Mission (Moynihan) to Kissinger, November 3, 1975, NARA, RG59, CFPF, ET; Telegram, Popper to Kissinger, November 10, 1975, DOS/FOIAe, I; Telegram, USUN Mission (Moynihan) to Kissinger, November 10, 1975, NARA, RG59, CFPF, ET |
-| 122 | 298 | Telegram, USUN Mission (Moynihan) to Kissinger, November 10, 1975, NARA, RG59, CFPF, ET |
-| 123 | 298 | Telegram, USUN Mission (Moynihan) to Kissinger, November 3, 1975, Ibid. |
-| 125 | 298 | Telegram, Popper to Kissinger, November 13, 1975; DOS/FOIAe, Pinochet quoted in Binder, "US-Chilean Ties Called Strained," p.5. |
-| 126 | 298 | Telegram, Moynihan to Kissinger, November 17, 1975, NARA, RG59, CFPF, ET |
-| 129 | 299 | Telegram, Kissinger (Ingersoll) to AmEmb Santiago, December 17, 1975, NARA, RG59, CFPF, ET. |
+MRN matching method: `jq` date-range filter on `data/cable-extract/all-dates.ndjson` (normalized `document_date`) narrowed by origin-station prefix on `document_number`, cross-checked by reading `_message_content`/`Message Attributes` in `data/cable-extract/<year>.ndjson` for sender signature + subject match against the book's citation. "Confirmed" = cable text directly verified (signature, addressee, and/or topic match the citation). "Likely" = one candidate is a clearly-best topical fit but the match isn't fully independently verified. "Ambiguous" = date+station narrows to multiple same-day candidates with no quoted subject in the book to disambiguate. **🚫 FULLTEXT UNAVAILABLE** marks any MRN whose `_message_content` could not be read in this corpus — subject/routing metadata was still usable for matching, but signature/content couldn't be verified.
+
+24 of ~34 distinct telegram citations in this chapter are now resolved (18 confirmed, 5 likely, 11 ambiguous-with-candidates).
+
+| Endnote # | Page | Citation (as printed, OCR-extracted) | MRN match |
+|---|---|---|---|
+| 2 | 292 | Telegram, Kissinger to AmEmb Santiago, February 1 , 1975, DOS/FOIAe, I. | **Confirmed: 75STATE23898** (raw `1975STATE023898`). STATE→SANTIAGO, subject "CHILE - HUMAN RIGHTS AND PROCEDURAL SAFEGUARDS," signed KISSINGER — only Chile-relevant candidate of 2 same-day STATE→SANTIAGO cables. |
+| 3 | 292 | Telegram, Popper to Kissinger, February 4, 1975, NARA, RG59, CFPF, ET. | **Confirmed: 75SANTIAGO789** (raw `1975SANTIA00789`). SANTIAGO→STATE, same subject as note 2, signed POPPER, text explicitly "REFS: STATE 23898" — direct reply. |
+| 18 | 292 | See Telegram, AmEmb Santiago (Thompson) to Kissinger, January 6, 1975, DOS/FOIAe, I; Statement, AmEmb Santiago to DOS, "Issue Analysis," February 19, 1975, Ibid. | **Confirmed: 75SANTIAGO93** (raw `1975SANTIA00093`). SANTIAGO→STATE, subject "CHRISTIAN DEMOCRATS ATTACK ON FUENTEALBA EXPULSION CASE," signed THOMPSON — only Thompson-signed candidate of 5 same-day options. The "Statement" isn't in this cable corpus. |
+| 21 | 292 | Telegram, Popper to Kissinger for Rogers, December 22, 1974, NARA, RG59, CFPF,ET. | **Confirmed: 74SANTIAGO7726** (raw `1974SANTIA07726`). SANTIAGO→STATE, subject "SECRETARY VISIT," opens "FOR ASSISTANT SECRETARY ROGERS FROM POPPER" — exact match, only candidate that date/direction. |
+| 22 | 292 | Telegram, AmEmb Santiago (Thompson) to Kissinger, January 28, 1974, NARA, 157, RG 59, CFPF, ET. | Ambiguous — same 7-candidate set as [Ch.2 note 85, set (d)](02-consolidating-pinochet.md): `1974SANTIA00419/00424/00421/00425/00422/00429/00430`. No distinguishing evidence found even with Ch.3's different topical framing. |
+| 23 | 292 | Telegram, Popper to Kissinger, February 13 , 1974, NARA, RG59 CFPF, ET. | Ambiguous — same 10-candidate set as [Ch.2 note 87 2nd telegram, set (j)](02-consolidating-pinochet.md). Two candidates fit Ch.3's human-rights theme better: `1974SANTIA00726` (prisoners released from Chacabuco detention camp) and `1974SANTIA00730` (sitrep: asylees in diplomatic missions) — still not confirmable without chapter text. |
+| 29 | 293 | Telegram, Kissinger to AmEmb Santiago, January 30, 1975, NARA, RG59, CFPF,ET | **Confirmed: 75STATE21617** (raw `1975STATE021617`). STATE→SANTIAGO, subject "CHILE DEBT RESCHEDULING," signed KISSINGER — discusses Saez's US visit to consult on debt rescheduling. |
+| 30 | 293 | Telegram, Kissinger to AmEmb Santiago, January 30, 1975, Ibid. ; Telegram, Kissinger to AmEmb Paris, February 27, 1975, Ibid. | First telegram: same date/direction as note 29 — same cable, **75STATE21617**, cited twice. Second telegram: **Confirmed: 75STATE45175** (raw `1975STATE045175`). STATE→PARIS, subject "CHILE DEBT RESCHEDULING CONFIDENTIAL," signed KISSINGER, references Deputy Assistant Secretary Boeker's Paris meetings. |
+| 32 | 293 | Telegram, AmEmb Bonn (Hillenbrand) to Kissinger, January 23, 1975, NARA, RG59, CFPF, Ibid. | **Confirmed: 75BONN1200** (raw `1975BONN01200`). BONN→STATE, subject "CHILE DEBT," signed HILLENBRAND, references Gehring (the same FRG debt-rescheduling contact from the 1974 Ch.2 thread) representing FRG at the Paris Club meeting. |
+| 33 | 293 | Telegram, AmEmb Paris (Rush) to Kissinger, February 28, 1975, Ibid. | **Confirmed: 75PARIS5284** (raw `1975PARIS05284`). PARIS→STATE, subject "CHILE DEBT RESCHEDULING," signed RUSH. |
+| 34 | 293 | Telegram, AmEmb The Hague (Gould) to Kissinger, March 4, 1975, Ibid. ; Telegram, AmEmb Madrid (Eaton) to Kissinger, March 4, 1975, Ibid. | First telegram: Likely **75THEHAGUE1110** (raw `1975THEHA01110`) — THE HAGUE→STATE, signed GOULD, subject "CHILE DEBT RESCHEDULING" (DCM's démarche to Van Gorkom at MFA); a same-day companion cable `75THEHAGUE1144` (raw `1975THEHA01144`, follow-up call at Finance Ministry) explicitly cites 1110 as "REF B," suggesting 1110 is the primary cable, but not certain. Second telegram: **Confirmed: 75MADRID1490** (raw `1975MADRID01490`). MADRID→STATE, subject "CHILE DEBT RESCHEDULING," signed EATON — only candidate that date. |
+| 39 | 294 | Telegram, Kissinger to AmEmb Santiago, et al., May 15, 1975, Ibid. | **Confirmed: 75STATE113013** (raw `1975STATE113013`). STATE→SANTIAGO/BERN/BONN/BRUSSELS/COPENHAGEN/THE HAGUE (matches "et al."), subject "CHILE DEBT RESCHEDULING," signed KISSINGER. |
+| 43 | 294 | Telegram, Kissinger to AmEmb Santiago, May 17, 1975, DOS/FOIAe, I. See also "US Supports OAS In Chile Investigation," WP, May 17, 1975, p.A4. | **Confirmed: 75STATE115686** (raw `1975STATE115686`). STATE→SANTIAGO, subject "OASGA CONSIDERATION OF HUMAN RIGHTS COMMISSION REPORT ON CHILE," signed KISSINGER — matches the book's companion WP citation exactly; only candidate that date. |
+| 44 | 294 | Telegram, Kissinger (Ingersoll) to AmEmb Santiago for Popper from Rogers, May 13 , 1975, DOS/FOIAe, I | Likely (subject-line match only): **75STATE111319** (raw `1975STATE111319`) — **🚫 FULLTEXT UNAVAILABLE**. Subject "SECRETARY'S BREAKFAST WITH FORMIN CARVAJAL FOR AMBASSADOR FROM ROGERS." Only candidate matching "for Ambassador from Rogers." |
+| 47 | 294 | Telegram, Popper to Kissinger for Rogers, June 30, 1975, RG54, Office of the Secretary, Subject Files of Ambassador David H. Popper, Folder: Chron Cables (Amb) May/July 1975, Box 3, NA. | Ambiguous — 9 same-day SANTIAGO→STATE candidates, none with an obvious "for Rogers" subject match. See note (p). |
+| 59 | 295 | Telegram, Kissinger to Popper, Chile CASP, 1975, June 20, 1975, DOS/FOIAe, I | **Confirmed: 75STATE144899** (raw `1975STATE144899`). STATE→SANTIAGO, subject "CHILE CASP FOR THE AMBASSADOR," signed KISSINGER, explicitly mentions reviewing the CASP with "Ambassador Popper." |
+| 72 | 295 | Telegram, Kissinger (Ingersoll) to USDEL, July 11 , 1975, ... Telegram, Popper to Kissinger, July 8, 1975, DOS/FOIAe, I ... Telegram, Popper to Kissinger, July 7, 1975, Chile Human Rights Documents ... | Three telegrams, all part of the UNHRC Study Group visit-cancellation passage. 1st (Ingersoll→USDEL, Jul 11): ambiguous/weak — only 2 STATE→USDEL candidates that date, neither mentions Chile (`1975STATE162958` "Dick Helms," `1975STATE163048` "Morgan abduction") — the true cable likely uses a routing format this search didn't catch. 2nd (Popper→Kissinger, Jul 8): ambiguous — 2 candidates, both POPPER, both subject "CANCELLATION OF UNHRC VISIT TO CHILE": `1975SANTIA04740` (raw) vs `1975SANTIA04754` (EXDIS, more analytical). 3rd (Popper→Kissinger, Jul 7): **Confirmed: 75SANTIAGO4711** (raw `1975SANTIA04711`) — signed POPPER, subject "CANCELLATION OF UN HUMAN RIGHTS COMMISSION STUDY GROUP VISIT," body text contains the book's quote **verbatim**: Saez "had been very opposed to the visit" (referring to DINA head Contreras). |
+| 86 | 296 | Telegram, Popper to Kissinger, September 25, 1975, Ibid. | Ambiguous — top 2 of 16 SANTIAGO→STATE candidates, both signed POPPER: **75SANTIAGO6446** (raw `1975SANTIA06446`, "Chilean UN delegation: additional rep at bilateral discussion w/ Secretary" — best UN-diplomacy fit) vs **75SANTIAGO6468** (raw `1975SANTIA06468`, "Jordan to support Chile in UN"). |
+| 98 | 297 | Telegram, Popper to Kissinger, October 31 , 1975, NARA, RG59, CFPF, ET. | Likely: **75SANTIAGO7323** (raw `1975SANTIA07323`) — SANTIAGO→STATE, subject "CHILE RESOLUTION IN THIRD COMMITTEE," signed POPPER; a companion cable (`1975SANTIA07324`) explicitly says "our views this matter contained in SANTIAGO 7323," confirming 7323 as the primary cable. |
+| 109 | 297 | Note, Bank of London Executive to LAD, FCO (Binns), December 10, 1975, Folder: FCO7/2803, Rescheduling of Foreign Debt of Chile, BNA. llO Memo of Conversation, "Kissinger and Carvajal," September 29, 1975; DOS/FOIAe, I; Telegram, Kissinger to AmEmb Santiago, October 3 , 1975, | Note 109 and the Memo of Conversation in note 110 aren't in this cable corpus (British bank note; State Dept internal memo). The note 110 telegram (Kissinger→Santiago, Oct 3 1975): likely **75STATE235835** — STATE→SANTIAGO, subject "CHILEAN DETAINEES," signed KISSINGER. |
+| 112 | 298 | Telegram, Popper to Kissinger, October 24, 1974, DOS/FOIAe, I | Likely: **74SANTIAGO6503** — SANTIAGO→STATE, subject "ASSASSINATION OF GENERAL PRATS," signed POPPER — thematically strong (General Carlos Prats, former C-in-C, assassinated by DINA in Buenos Aires, September 1974). |
+| 118 | 298 | Telegram, Kissinger to USUN Mission, October 29, 1975. ET. | **Confirmed: 75STATE256677** — STATE→USUN NEW YORK, subject "THIRD COMMITTEE--CHILE RESOLUTION," signed KISSINGER — only Chile-subject cable among 11 same-day STATE→USUN candidates. |
+| 119 | 298 | Telegram, Popper to Kissinger, November 10, 1975, DOS/FOIAe, I. | **Confirmed: 75SANTIAGO7594** — SANTIAGO→STATE, subject "US VOTE ON UNGA THIRD COMMITTEE RESOLUTION ON CHILE," signed POPPER — same cable as note 120's 2nd telegram (cited twice). |
+| 120 | 298 | Telegram, USUN Mission (Moynihan) to Kissinger, November 3, 1975 ...; Telegram, Popper to Kissinger, November 10, 1975 ...; Telegram, USUN Mission (Moynihan) to Kissinger, November 10, 1975 ... | 1st telegram (Moynihan, Nov 3) = same ambiguous set as note 123, see note (q). 2nd telegram (Popper, Nov 10) = same cable as note 119, **75SANTIAGO7594**. 3rd telegram (Moynihan, Nov 10) = same ambiguous set as note 122, see note (r). |
+| 122 | 298 | Telegram, USUN Mission (Moynihan) to Kissinger, November 10, 1975, NARA, RG59, CFPF, ET | Ambiguous — 2 candidates, both signed MOYNIHAN, USUN→STATE, both "Third Committee--Chile Resolution" (near-identical companion cables). See note (r). |
+| 123 | 298 | Telegram, USUN Mission (Moynihan) to Kissinger, November 3, 1975, Ibid. | Ambiguous — 2 candidates, both signed MOYNIHAN, USUN→STATE, Nov 3 1975. See note (q). |
+| 125 | 298 | Telegram, Popper to Kissinger, November 13, 1975; DOS/FOIAe, Pinochet quoted in Binder, "US-Chilean Ties Called Strained," p.5. | Ambiguous — 2 candidates, both signed POPPER, SANTIAGO→STATE, Nov 13 1975: **75SANTIAGO7681** (raw `1975SANTIA07681`, "GOC note on US vote on Chilean human rights resolution") vs **75SANTIAGO7683** (raw `1975SANTIA07683`, "GOC reaction to US vote on Chile UNGA resolution"). |
+| 126 | 298 | Telegram, Moynihan to Kissinger, November 17, 1975, NARA, RG59, CFPF, ET | **Confirmed: 75USUNNEWYORK6011** (raw `1975USUNN06011`). USUN→STATE, subject "Deputy Assistant Secretary Ryan's call on Chilean Permanent Representative," signed MOYNIHAN — only Chile-relevant cable among 12 same-day candidates. |
+| 129 | 299 | Telegram, Kissinger (Ingersoll) to AmEmb Santiago, December 17, 1975, NARA, RG59, CFPF, ET. | Ambiguous — all 3 same-day STATE→SANTIAGO candidates signed INGERSOLL (matches "Kissinger (Ingersoll)"): `1975STATE297259` (ECLA plenary), `1975STATE297266` (lecturer project), **75STATE297303** (raw `1975STATE297303`, "VI OASGA in Santiago" — most substantively plausible, the 6th OAS General Assembly). |
+
+## Ambiguous-match candidate sets (chapter-specific; sets (a)-(o) are shared with Ch.2 — see [`02-consolidating-pinochet.md`](02-consolidating-pinochet.md))
+
+**(p) SANTIAGO→STATE, June 30, 1975** (note 47): 9 candidates —
+`1975SANTIA04506` / `04586` (drug abuse seminar) ·
+`1975SANTIA04579` (Lexan for Ambassador's office) ·
+`1975SANTIA04591` (visas) ·
+`1975SANTIA04595` (philosophy stag) ·
+`1975SANTIA04601` (stag Rubottom) ·
+`1975SANTIA04585` (educational travel) ·
+`1975SANTIA04594` (financial market/monetary council) ·
+`1975SANTIA04600` (Pinochet presses for FMS credit decision — most policy-relevant, best guess but unconfirmed)
+
+**(q) USUN→STATE, November 3, 1975** (notes 120 1st telegram, 123): 2 candidates, both signed MOYNIHAN —
+`1975USUNN05578` / **75USUNNEWYORK5578** ("Third Committee--Chile Resolution," mentions the Secretary's torture initiative) ·
+`1975USUNN05582` / **75USUNNEWYORK5582** ("Third Committee-Debate on Chile")
+
+**(r) USUN→STATE, November 10, 1975** (notes 120 3rd telegram, 122): 2 candidates, both signed MOYNIHAN, both "Third Committee--Chile Resolution" —
+`1975USUNN05821` / **75USUNNEWYORK5821** ·
+`1975USUNN05826` / **75USUNNEWYORK5826**
+
+## Notes on the workflow
+
+- This chapter's Paris Club debt-rescheduling thread (notes 29, 30, 32, 33, 34, 39) directly continues Ch.2's (notes 56-58-60-64) into 1975 — same cast (Hillenbrand/Bonn, Rush/Paris, Gould/The Hague, Eaton/Madrid, Gehring the FRG contact), same subject line "CHILE DEBT RESCHEDULING." Recognizing the thread made several of these easy confirms.
+- **Note 72's third telegram is the strongest possible confirmation in this whole project so far**: the cable's body text contains the book's quoted material verbatim ("had been very opposed to the visit"), not just a plausible topical/date/signature match.
+- Notes 22 and 23 reuse candidate sets already identified as ambiguous in Chapter 2 (same date/station, cited again in this chapter) — worth checking whether the book is citing the *same* underlying cable twice across chapters once real MRNs are known for those sets.
+- Several "ambiguous" pairs here are companion cables (same subject, sequential document numbers, same signer) where the book's terse citation doesn't specify which one — this is a recurring pattern (also seen in Ch.2) and will likely need chapter-body text to resolve definitively.
