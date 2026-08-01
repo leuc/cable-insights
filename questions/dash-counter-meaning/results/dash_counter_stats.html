@@ -1,0 +1,892 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<title>The Shared Counter — ACP-127 Tape Relay Stats</title>
+<style>
+  :root {
+    --paper: #e7e2d6;
+    --paper-raised: #faf8f2;
+    --paper-sunken: #d9d3c3;
+    --ink: #221e16;
+    --ink-muted: #635b49;
+    --rule: #c6bda8;
+    --accent: #a1691f;
+    --accent-soft: rgba(161, 105, 31, 0.12);
+    --teal: #3f6b62;
+    --teal-soft: rgba(63, 107, 98, 0.14);
+    --rose: #9a4a45;
+    --rose-soft: rgba(154, 74, 69, 0.14);
+    --shadow: 0 1px 3px rgba(30, 24, 10, 0.10), 0 12px 30px -18px rgba(30, 24, 10, 0.3);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #15130e;
+      --paper-raised: #1e1b14;
+      --paper-sunken: #0f0d09;
+      --ink: #ece5d5;
+      --ink-muted: #a89d84;
+      --rule: #38321f;
+      --accent: #d9a35a;
+      --accent-soft: rgba(217, 163, 90, 0.16);
+      --teal: #7db3a7;
+      --teal-soft: rgba(125, 179, 167, 0.14);
+      --rose: #d98d87;
+      --rose-soft: rgba(217, 141, 135, 0.16);
+      --shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 12px 30px -18px rgba(0, 0, 0, 0.7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #15130e; --paper-raised: #1e1b14; --paper-sunken: #0f0d09;
+    --ink: #ece5d5; --ink-muted: #a89d84; --rule: #38321f;
+    --accent: #d9a35a; --accent-soft: rgba(217, 163, 90, 0.16);
+    --teal: #7db3a7; --teal-soft: rgba(125, 179, 167, 0.14);
+    --rose: #d98d87; --rose-soft: rgba(217, 141, 135, 0.16);
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 12px 30px -18px rgba(0, 0, 0, 0.7);
+  }
+  :root[data-theme="light"] {
+    --paper: #e7e2d6; --paper-raised: #faf8f2; --paper-sunken: #d9d3c3;
+    --ink: #221e16; --ink-muted: #635b49; --rule: #c6bda8;
+    --accent: #a1691f; --accent-soft: rgba(161, 105, 31, 0.12);
+    --teal: #3f6b62; --teal-soft: rgba(63, 107, 98, 0.14);
+    --rose: #9a4a45; --rose-soft: rgba(154, 74, 69, 0.14);
+    --shadow: 0 1px 3px rgba(30, 24, 10, 0.10), 0 12px 30px -18px rgba(30, 24, 10, 0.3);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Optima, Candara, "Noto Sans", "Segoe UI", sans-serif;
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 1080px; margin: 0 auto; padding: clamp(1.25rem, 4vw, 3rem) clamp(1rem, 4vw, 1.5rem) 4rem; }
+  .sheet { background: var(--paper-raised); border: 1px solid var(--rule); box-shadow: var(--shadow); border-radius: 3px; padding: clamp(1.75rem, 5vw, 3.5rem); }
+
+  h1, h2, h3 { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif; text-wrap: balance; color: var(--ink); margin: 0; }
+  .eyebrow { font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.9rem; }
+  h1 { font-size: clamp(1.85rem, 4.2vw, 2.75rem); font-weight: 600; line-height: 1.16; letter-spacing: -0.01em; }
+  .dek { margin: 1.1rem 0 0; max-width: 68ch; font-size: 1.1rem; color: var(--ink-muted); }
+  .masthead { padding-bottom: 1.75rem; border-bottom: 1px solid var(--rule); }
+  .masthead-rule { height: 3px; margin-top: 1.75rem; background: linear-gradient(to right, var(--accent) 0 3ch, var(--rule) 3ch 100%); }
+  .masthead-stats { display: flex; flex-wrap: wrap; gap: 1.75rem 2.5rem; margin: 1.75rem 0 0; }
+  .masthead-stats > div { min-width: 8rem; }
+  .masthead-stats dt { font-family: ui-monospace, monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin: 0 0 0.3rem; }
+  .masthead-stats dd { margin: 0; font-family: ui-monospace, monospace; font-variant-numeric: tabular-nums; font-size: 1.15rem; font-weight: 600; color: var(--ink); }
+
+  section { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+  section > h2 { font-size: clamp(1.35rem, 2.6vw, 1.65rem); font-weight: 600; margin-bottom: 1.1rem; }
+  section > .kicker { font-family: ui-monospace, monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin: 0 0 0.5rem; }
+  section > p { max-width: 70ch; }
+  section > p + p { margin-top: 1rem; }
+  code { font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace; }
+  .num { font-variant-numeric: tabular-nums; }
+  p code, li code { background: var(--paper-sunken); border-radius: 3px; padding: 0.1em 0.4em; font-size: 0.88em; }
+
+  .hero { text-align: left; padding: 2rem 0 0.5rem; border-bottom: 1px solid var(--rule); }
+  .hero-number { margin: 0; font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; font-weight: 600; font-size: clamp(3.2rem, 11vw, 5.5rem); line-height: 1; letter-spacing: -0.02em; color: var(--accent); }
+  .hero-number .unit { font-size: 0.4em; color: var(--ink-muted); font-family: Optima, Candara, sans-serif; font-weight: 500; margin-left: 0.35em; }
+  .hero-caption { max-width: 60ch; margin: 1.1rem 0 1.75rem; font-size: 1.05rem; color: var(--ink-muted); }
+  .hero-caption strong { color: var(--ink); font-weight: 600; }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-number { animation: rise 0.7s cubic-bezier(.2,.7,.3,1) both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(0.4em); } to { opacity: 1; transform: translateY(0); } }
+  }
+
+  .header-example { margin-top: 1.25rem; background: var(--ink); color: var(--paper); border-radius: 4px; padding: 1.1rem 1.3rem; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.82rem; line-height: 1.7; overflow-x: auto; white-space: pre; }
+  .header-example .dim { opacity: 0.55; }
+  .header-example .hl { color: var(--accent); font-weight: 600; }
+  :root[data-theme="dark"] .header-example, @media (prefers-color-scheme: dark) { }
+  .header-caption { margin-top: 0.6rem; font-size: 0.85rem; color: var(--ink-muted); }
+
+  .flow { display: flex; flex-wrap: wrap; gap: 0.5rem 0; align-items: center; font-family: ui-monospace, monospace; font-size: 0.85rem; margin-top: 1.25rem; }
+  .flow-item { display: flex; flex-direction: column; align-items: center; padding: 0.5rem 0.75rem; background: var(--paper-sunken); border-radius: 3px; min-width: 5.5rem; }
+  .flow-item .st { color: var(--ink-muted); font-size: 0.72rem; letter-spacing: 0.05em; }
+  .flow-item .ct { font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; margin-top: 0.2rem; }
+  .flow-arrow { color: var(--ink-muted); padding: 0 0.35rem; font-size: 0.9rem; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin-top: 1rem; }
+  thead th { text-align: left; font-family: ui-monospace, monospace; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); font-weight: 500; padding: 0 0.75rem 0.6rem 0; border-bottom: 1px solid var(--rule); }
+  tbody td { padding: 0.65rem 0.75rem 0.65rem 0; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+  tbody tr:last-child td { border-bottom: none; }
+  .table-scroll { overflow-x: auto; }
+  .muted { color: var(--ink-muted); }
+
+  .bar-track { display: flex; flex-direction: column; gap: 4px; width: 140px; }
+  .bar-row { display: flex; align-items: center; }
+  .bar-track-bg { flex: 1; height: 6px; background: var(--paper-sunken); border-radius: 1px; position: relative; overflow: hidden; }
+  .bar-fill { position: absolute; inset: 0 auto 0 0; border-radius: 1px; }
+  .bar-actual { background: var(--teal); }
+  .bar-random { background: var(--accent); }
+
+  .callout { margin: 1.5rem 0 0; padding: 1.1rem 1.4rem; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 3px 3px 0; }
+  .callout h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .callout p { margin: 0; font-size: 0.92rem; color: var(--ink-muted); }
+  .callout .figs { display: flex; gap: 2rem; margin-top: 0.75rem; }
+  .callout .figs div { font-family: ui-monospace, monospace; }
+  .callout .figs dt { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); }
+  .callout .figs dd { margin: 0.15rem 0 0; font-size: 1.25rem; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
+
+  .callout.rose { border-left-color: var(--rose); background: var(--rose-soft); }
+  .callout.rose h3 { color: var(--rose); }
+
+  .chart-wrap { margin-top: 1.5rem; background: var(--paper-sunken); border-radius: 3px; padding: 1.25rem 1rem 0.75rem; }
+  canvas { display: block; width: 100%; height: auto; }
+  .chart-legend { display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 0.5rem 0 0.75rem; font-size: 0.8rem; color: var(--ink-muted); padding: 0 0.25rem; }
+  .chart-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .swatch { width: 10px; height: 10px; border-radius: 1px; display: inline-block; }
+  .swatch.line { width: 14px; height: 2px; border-radius: 0; }
+
+  .year-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+  @media (max-width: 700px) { .year-grid { grid-template-columns: 1fr; } }
+  .year-card { background: var(--paper-sunken); border-radius: 3px; padding: 1rem 1rem 0.9rem; }
+  .year-card h4 { font-family: ui-monospace, monospace; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); margin: 0 0 0.5rem; display: flex; justify-content: space-between; align-items: baseline; }
+  .year-card h4 .yr { font-size: 1rem; color: var(--ink); font-weight: 700; letter-spacing: 0; }
+  .year-card canvas { border-radius: 2px; }
+  .gap-note { margin: 0.6rem 0 0; font-size: 0.78rem; color: var(--ink-muted); line-height: 1.55; }
+  .gap-note strong { color: var(--rose); font-weight: 600; }
+  .gap-note.clean { color: var(--teal); }
+
+  .combined-card { background: var(--paper-sunken); border-radius: 3px; padding: 1.25rem 1.25rem 1rem; margin-top: 1.5rem; }
+  .combined-card h4 { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; font-size: 1.3rem; font-weight: 600; margin: 0 0 0.15rem; }
+  .combined-card .yr-sub { font-family: ui-monospace, monospace; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); margin: 0 0 0.75rem; }
+  .combined-card canvas { border-radius: 2px; }
+
+  blockquote { margin: 1.25rem 0 0; padding: 0.9rem 1.2rem; border-left: 3px solid var(--teal); background: var(--teal-soft); border-radius: 0 3px 3px 0; font-size: 0.95rem; max-width: 64ch; }
+  blockquote p { margin: 0; }
+
+  footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-size: 0.8rem; color: var(--ink-muted); display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+  a { color: var(--accent); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+
+<div class="page">
+  <div class="sheet">
+
+    <header class="masthead">
+      <p class="eyebrow">Data Notes · ACP-127 Corpus, Full Extraction</p>
+      <h1>One counter, one relay, a ledger far bigger than our archive</h1>
+      <p class="dek">The dash-counter line's two digit groups turn out to be ACP-127's own "station serial number" and "filing time" — a single shared tape-relay sequence, not a per-cable ID. Comparing it against what actually survives in this corpus implies most of what it counted never made it into the declassified record — and a second, independent signal (which cables have real body text at all) lines up with a published study's own findings on where and when text went missing.</p>
+      <dl class="masthead-stats">
+        <div><dt>Corpus</dt><dd>2,081,272 cables</dd></div>
+        <div><dt>Years</dt><dd>1973&ndash;1979</dd></div>
+        <div><dt>Days compared</dt><dd>2,411</dd></div>
+        <div><dt>Reset ceiling</dt><dd>~130,000</dd></div>
+        <div><dt>Gap events found</dt><dd>8</dd></div>
+      </dl>
+      <div class="masthead-rule" aria-hidden="true"></div>
+    </header>
+
+    <section class="hero">
+      <p class="hero-number">~133<span class="unit">&times; more than we have</span></p>
+      <p class="hero-caption">Summed across every day with counter data, the counter implies at least <strong>243,235,084</strong> messages passed through this relay system &mdash; against <strong>1,827,495</strong> cables actually archived here. The ratio holds remarkably steady, ~105&ndash;165&times;, for six straight years.</p>
+    </section>
+
+    <section class="header-context">
+      <p class="kicker">First, where this line actually lives</p>
+      <h2>An unlabeled stamp between the signoff block and the DTG</h2>
+      <p>The dash-counter line has no caption of its own in ACP-127 &mdash; it isn't one of the protocol's formally named fields. It sits, unlabeled, between the drafting/clearance signoff and the date-time group. Real example (<code>1977STATE013174</code>):</p>
+      <div class="header-example">
+<span class="dim">DRAFTED BY EB/OA/AVP:JSGRAVATT:FAA:CSPICKENS:JO</span>
+<span class="dim">APPROVED BY EB/OA/AVP:AJWHITE</span>
+<span class="dim">NEA/ARN - MLKING</span>
+           ------------------<span class="hl">201212Z</span> <span class="hl">109980</span> /<span class="hl">20</span>
+<span class="dim">R 192358Z JAN 77</span>
+<span class="dim">FM SECSTATE WASHDC</span>
+<span class="dim">TO AMEMBASSY TRIPOLI</span></div>
+      <p class="header-caption">PAGE line &rarr; ORIGIN/INFO distribution &rarr; drafter/clearance signoff &rarr; <strong style="color:var(--accent)">dash-counter line</strong> &rarr; DTG &rarr; FM/TO. Highlighted: <code>filing_time=201212Z</code> (the 20th at 1212Z), <code>counter=109980</code>, <code>copies=20</code>. Nothing in ACP-127(G) documents a line in this position &mdash; it reads as the tape-relay communications centre's own handling stamp, not something the drafting officer composed, which is exactly what the "single shared sequence" finding below confirms.</p>
+    </section>
+
+    <section class="shared">
+      <h2>One shared counter, not per-embassy</h2>
+      <p>Grouping by originating station looked like a per-post counter at first &mdash; values climb for days without resetting. But pooling <em>all</em> stations together and sorting by time shows the real structure: on <code>1977-07-28</code>, totally unrelated posts land in one tight, climbing numeric band, not twelve separate sequences:</p>
+      <div class="flow">
+        <div class="flow-item"><span class="st">TOKYO</span><span class="ct">106165</span></div><span class="flow-arrow">&rarr;</span>
+        <div class="flow-item"><span class="st">TAIPEI</span><span class="ct">109123</span></div><span class="flow-arrow">&rarr;</span>
+        <div class="flow-item"><span class="st">TEHRAN</span><span class="ct">111641</span></div><span class="flow-arrow">&rarr;</span>
+        <div class="flow-item"><span class="st">PARIS</span><span class="ct">112035</span></div><span class="flow-arrow">&rarr;</span>
+        <div class="flow-item"><span class="st">NATO</span><span class="ct">113012</span></div><span class="flow-arrow">&rarr;</span>
+        <div class="flow-item"><span class="st">ANKARA</span><span class="ct">112428</span></div><span class="flow-arrow">&rarr;</span>
+        <div class="flow-item"><span class="st">OTTAWA</span><span class="ct">115154</span></div><span class="flow-arrow">&rarr;</span>
+        <div class="flow-item"><span class="st">GENEVA</span><span class="ct">117351</span></div><span class="flow-arrow">&rarr;</span>
+        <div class="flow-item"><span class="st">LONDON</span><span class="ct">118191</span></div><span class="flow-arrow">&rarr;</span>
+        <div class="flow-item"><span class="st">STATE</span><span class="ct">121962</span></div><span class="flow-arrow">&rarr;</span>
+        <div class="flow-item"><span class="st">PANAMA</span><span class="ct">121770</span></div><span class="flow-arrow">&rarr;</span>
+        <div class="flow-item"><span class="st">QUITO</span><span class="ct">122749</span></div>
+      </div>
+      <p style="margin-top:1.1rem">This is almost certainly the tape-relay communications centre's own transmission log &mdash; one serial number per message it handles, regardless of which embassy originated it. ACP-127 is, after all, specifically <em>tape relay procedure</em>.</p>
+    </section>
+
+    <section class="attribution">
+      <p class="kicker">Which station increments the counter, and what else confirms it</p>
+      <h2>Station attribution and cross-checks against other signals</h2>
+      <p>Sorting every counter-bearing document by (date, station) shows, for the subset of counter values with a surviving document, which station's traffic occupies which part of the sequence &mdash; the counter's implied volume runs ~100&times; larger than this archive, so most ticks have no attributable station here, but the ticks we do have show clear structure, cross-checked against two other independent fields.</p>
+
+      <h3 style="font-size:1.1rem;margin:1.5rem 0 0.75rem">Counter order tracks filing_time, not DTG</h3>
+      <p>Spearman correlation between counter value and reconstructed filing_time, per DTG-day: raw result was noisy, but every one of the 15 worst-correlated days turned out to have a counter reset occurring mid-day &mdash; a confound, not disorder. Restricted to 145 clean (no mid-day reset) days:</p>
+      <div class="callout">
+        <div class="figs">
+          <div><dt>Counter vs. filing_time (median &rho;)</dt><dd>0.96</dd></div>
+          <div><dt>Counter vs. DTG / origination time (median &rho;)</dt><dd>0.73</dd></div>
+        </div>
+        <p style="margin-top:0.75rem">Zero of the 145 clean days show a negative correlation with filing_time. The weaker DTG relationship is exactly what's expected if the counter stamps arrival at the relay (filing_time), not when the cable was drafted (DTG).</p>
+      </div>
+
+      <h3 style="font-size:1.1rem;margin:1.75rem 0 0.75rem">Overseas posts batch; STATE is continuous</h3>
+      <p>STATE alone accounts for <strong>28.7%</strong> of all counter-bearing records (524,763 of 1,826,811) &mdash; vastly more than any single overseas post (next highest, Geneva, at 2.0%). More telling is <em>how</em> each station's values are distributed across a day: comparing a station's actual average gap between consecutive counter values to what a uniform random draw of the same size would produce across that day's full range.</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Station type</th><th>Median clustering ratio</th><th>Reading</th></tr></thead>
+          <tbody>
+            <tr><td>Overseas posts</td><td class="num">0.16</td><td>tightly clustered &mdash; a day's cables land in one contiguous burst (many posts &lt;0.02)</td></tr>
+            <tr><td>STATE</td><td class="num">&asymp;1.0 (0.994&ndash;1.024)</td><td>indistinguishable from uniform random &mdash; spread continuously across the whole day</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:0.85rem;font-size:0.92rem">Concrete example, 1978-10-23: Tokyo's 29 cables that day span counters 59,374&ndash;61,007 (a 1,633-wide band) inside a day-wide range of 25,468&ndash;111,340 &mdash; under 2% of the day's spread. STATE's cables that same day ran continuously from 25,468 past 63,000. Consistent with overseas posts' traffic arriving in scheduled daily transmission sessions, while STATE's own traffic originates continuously on-site at the relay.</p>
+
+      <h3 style="font-size:1.1rem;margin:1.75rem 0 0.75rem">Cross-check: Document Number's per-station serial (the "MRN")</h3>
+      <p>The numeric suffix of Document Number (e.g. <code>013174</code> in <code>1977STATE013174</code>) is a separate signal: a per-station, per-year sequential cable number, unrelated to the ACP-127 counter itself. It correlates with the dash-counter station-day by station-day on clean days &mdash; <strong>median &rho;=0.80 across all stations, &rho;=0.91 for STATE specifically</strong> &mdash; independent confirmation of the filing_time result above, from a completely different field.</p>
+      <p style="margin-top:0.75rem">It also gives an independent, verifiable measure of real cable volume. Taking the robust 99.9th-percentile serial per year for STATE (excluding a small tail of placeholder-like values &ge;900,000, 0&ndash;67 docs/year):</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Year</th><th>STATE real annual volume</th><th>STATE archived here</th><th>Archived/real</th><th>Counter's implied volume &divide; STATE's real volume</th></tr></thead>
+          <tbody>
+            <tr><td>1973</td><td class="num">252,324</td><td class="num">43,668</td><td class="num">17.3%</td><td class="num">60.1&times;</td></tr>
+            <tr><td>1974</td><td class="num">284,247</td><td class="num">85,170</td><td class="num">30.0%</td><td class="num">124.9&times;</td></tr>
+            <tr><td>1975</td><td class="num">305,666</td><td class="num">102,270</td><td class="num">33.5%</td><td class="num">113.9&times;</td></tr>
+            <tr><td>1976</td><td class="num">313,994</td><td class="num">106,007</td><td class="num">33.8%</td><td class="num">107.4&times;</td></tr>
+            <tr><td>1977</td><td class="num">311,031</td><td class="num">90,844</td><td class="num">29.2%</td><td class="num">138.0&times;</td></tr>
+            <tr><td>1978</td><td class="num">327,994</td><td class="num">99,479</td><td class="num">30.3%</td><td class="num">125.3&times;</td></tr>
+            <tr><td>1979</td><td class="num">334,831</td><td class="num">94,018</td><td class="num">28.1%</td><td class="num">119.6&times;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:0.85rem;font-size:0.92rem">The strongest available evidence on the counter's implied-volume gap, derived directly from this corpus's own data rather than speculation: even STATE's complete real outgoing stream &mdash; a few hundred thousand cables/year, independently verified via its own sequential numbering, not the counter &mdash; is still ~60&ndash;140&times; smaller than what the counter implies for the same year. Whatever the counter tallies, it isn't explained by State Department cable traffic alone; that traffic's real volume, measured directly, is two orders of magnitude too small.</p>
+
+      <h3 style="font-size:1.1rem;margin:1.75rem 0 0.75rem">Signals checked and ruled out</h3>
+      <p>Three more metadata fields were checked as possible counter-related signals; none showed a connection:</p>
+      <ul style="margin-top:0.75rem;padding-left:1.3rem;font-size:0.92rem;line-height:1.7">
+        <li><strong>Film Number</strong> (e.g. <code>D760210-0639</code>, a microfilm reel + frame ID): one reel spans 8 distinct draft dates and 142 distinct stations, with frame numbers topping out around 1,200&ndash;2,500 &mdash; two orders of magnitude below the counter's ~130,000 ceiling. A NARA microfilming batch, unrelated to transmission order.</li>
+        <li><strong>Legacy Key</strong> (e.g. <code>link1973/newtext/t19730629/aaaajogf.tel</code>): the batch segment spans up to 27 distinct draft dates; the filename suffix increments as pure scan order &mdash; within one station's cluster, Document Numbers actually run <em>backward</em>, confirming archival scanning order, not transmission order.</li>
+        <li><strong>Control Number</strong>: present on only 783 of 2,081,272 records, and groups multiple distinct cables under one ID &mdash; an administrative case number, not a per-message counter.</li>
+      </ul>
+    </section>
+
+    <section class="ceiling">
+      <h2>A ceiling near 130,000 &mdash; not a calendar reset</h2>
+      <p>The counter never resets at midnight. Every large drop in the full-corpus sequence fires at a strikingly consistent value, across independent reset events spanning all seven years:</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Before reset</th><th>After reset</th></tr></thead>
+          <tbody>
+            <tr><td class="num">130,687</td><td class="num">506</td></tr>
+            <tr><td class="num">130,664</td><td class="num">33,601</td></tr>
+            <tr><td class="num">130,803</td><td class="num">575</td></tr>
+            <tr><td class="num">130,581</td><td class="num">1,718</td></tr>
+            <tr><td class="num">130,536</td><td class="num">3,445</td></tr>
+            <tr><td class="num">129,766</td><td class="num">28,275</td></tr>
+            <tr><td class="num">129,154</td><td class="num">6,885</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:1rem">Consistent with a capacity-based rollover &mdash; a tape reel or batch-log limit intrinsic to the original hardware &mdash; rather than a time-based one.</p>
+
+      <div class="callout">
+        <h3>Aside: what would that capacity be in modern terms?</h3>
+        <p>Not a measured fact &mdash; an order-of-magnitude extrapolation, since the counter counts <em>messages</em>, not bytes. Average message size from real extracted data (~2,158 chars, body + routing overhead) &times; the ~130,000-message ceiling:</p>
+        <div class="figs">
+          <div><dt>At 1 byte/char (ASCII)</dt><dd>&asymp;267.5 MB</dd></div>
+          <div><dt>At 5 bits/char (real 5-level Baudot/ITA2 punched tape)</dt><dd>&asymp;167.2 MB</dd></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="monthly">
+      <h2>Actual cables vs. counter-implied volume, month by month</h2>
+      <p>Bars: actual cables archived per month (linear scale, left). Line: implied &divide; actual ratio (log scale, right). The shaded band marks the stable ~105&ndash;165&times; regime that holds from mid-1973 onward &mdash; the early-1973 and one 1976 spike are known thin/anomalous data months, not the trend.</p>
+      <div class="chart-wrap">
+        <canvas id="chart" width="1600" height="640" role="img" aria-label="Monthly actual cable counts as bars and implied-to-actual ratio as a line, January 1973 through December 1979"></canvas>
+        <div class="chart-legend">
+          <span><span class="swatch" style="background:var(--teal)"></span>actual cables / month</span>
+          <span><span class="swatch line" style="background:var(--accent)"></span>implied &divide; actual ratio (log scale)</span>
+          <span><span class="swatch" style="background:var(--accent-soft);border:1px solid var(--accent)"></span>stable ~105&ndash;165&times; band</span>
+        </div>
+      </div>
+      <p style="margin-top:1rem">Full daily-resolution data (2,411 rows: date, actual cables, counter min/max, implied span, ratio) is in <code>dash_counter_daily_comparison.csv</code>.</p>
+    </section>
+
+    <section class="gaps-intro">
+      <p class="kicker">A second, independent signal</p>
+      <h2>Where the message text itself goes missing</h2>
+      <p>Separate from the counter: every cable record also carries a classification level and either real body text or a placeholder (<code>ERROR READING TEXT INDEX</code> / <code>EXPAND ERROR ENCOUNTERED</code>) where the text should be. Souza, Coelho, Shah &amp; Connelly's 2016 study <em>"Using Artificial Intelligence to Identify State Secrets"</em> (arXiv:1611.00356), working from the same NARA-derived cable population, found specific date ranges where this placeholder rate spikes &mdash; interpreted as cables likely destroyed or removed after transmission but before declassification review. Their study covers 1973&ndash;1978; this corpus runs one year further, into 1979.</p>
+    </section>
+
+    <section class="tablecheck">
+      <h3 style="font-size:1.1rem;margin-bottom:0.75rem">Cross-check: the paper's Table 5</h3>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Situation</th><th>Paper's total</th><th>Ours, 1973&ndash;1978</th><th>Ours, 1973&ndash;1979</th></tr></thead>
+          <tbody>
+            <tr><td>Has real text</td><td class="num">1,758,279</td><td class="num">1,627,587</td><td class="num">1,946,784</td></tr>
+            <tr><td>Error placeholder</td><td class="num">119,744</td><td class="num">124,041</td><td class="num">126,234</td></tr>
+            <tr><td>Blank body</td><td class="num">8,282</td><td class="num">7,041</td><td class="num">8,069</td></tr>
+            <tr><td><strong>Sum</strong></td><td class="num"><strong>1,886,305</strong></td><td class="num"><strong>1,758,669</strong></td><td class="num"><strong>2,081,087</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:0.85rem;font-size:0.92rem">Error-placeholder and blank-body totals land within single-digit percent of the paper's own figures for the matching 1973&ndash;1978 window &mdash; independent confirmation both are counting the same underlying phenomenon. "Has real text" runs ~7.4% lower here; the paper applies additional exclusion categories (410,539 "withdrawn" cables; 128,026 with significant TAGS but no text) this simpler three-way split doesn't reproduce.</p>
+
+      <h3 style="font-size:1.1rem;margin:1.75rem 0 0.75rem">Cross-check: the FOIA-reported SAS totals</h3>
+      <p style="margin-bottom:0.5rem"><code>sas_totals_from_foia.csv</code> reports system-wide SAS totals per year &mdash; expected to run larger than our declassified corpus, similar in spirit to the counter-implied-volume gap above, but from a wholly independent source.</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Year</th><th>FOIA total</th><th>Our total</th><th>Ratio</th><th>Unclass.</th><th>LOU</th><th>Confid.</th><th>Secret</th></tr></thead>
+          <tbody>
+            <tr><td>1973</td><td class="num">225,840</td><td class="num">155,285</td><td class="num">1.45&times;</td><td class="num">1.85&times;</td><td class="num">1.16&times;</td><td class="num">1.13&times;</td><td class="num">1.19&times;</td></tr>
+            <tr><td>1974</td><td class="num">467,881</td><td class="num">289,755</td><td class="num">1.61&times;</td><td class="num">2.04&times;</td><td class="num">1.23&times;</td><td class="num">1.15&times;</td><td class="num">1.15&times;</td></tr>
+            <tr><td>1975</td><td class="num">541,337</td><td class="num">333,161</td><td class="num">1.62&times;</td><td class="num">2.04&times;</td><td class="num">1.21&times;</td><td class="num">1.14&times;</td><td class="num">1.20&times;</td></tr>
+            <tr><td>1976</td><td class="num">569,391</td><td class="num">347,516</td><td class="num">1.64&times;</td><td class="num">2.11&times;</td><td class="num">1.22&times;</td><td class="num">1.22&times;</td><td class="num">1.42&times;</td></tr>
+            <tr><td>1977</td><td class="num">617,816</td><td class="num">307,330</td><td class="num">2.01&times;</td><td class="num">2.83&times;</td><td class="num">1.30&times;</td><td class="num">1.18&times;</td><td class="num">1.38&times;</td></tr>
+            <tr><td>1978</td><td class="num">655,808</td><td class="num">325,806</td><td class="num">2.01&times;</td><td class="num">2.84&times;</td><td class="num">1.31&times;</td><td class="num">1.19&times;</td><td class="num">1.33&times;</td></tr>
+            <tr><td>1979</td><td class="num">732,206</td><td class="num">322,419</td><td class="num">2.27&times;</td><td class="num">3.33&times;</td><td class="num">1.34&times;</td><td class="num">1.21&times;</td><td class="num">1.41&times;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:0.85rem;font-size:0.92rem">Unlike the dash-counter ratio (flat ~105&ndash;165&times; all seven years), this ratio <strong>climbs steadily</strong>, 1.45&times; &rarr; 2.27&times; &mdash; and the growth is concentrated almost entirely in Unclassified cables (1.85&times; &rarr; 3.33&times;) while Confidential/Secret/LOU stay in a flat 1.1&ndash;1.4&times; band throughout. Consistent with routine unclassified traffic being the category least likely to survive into a curated diplomatic-cable archive, and that gap widening as SAS volume grew through the decade. The FOIA CSV's own 1976 row also carries an internal ~27,000 discrepancy between its four classification columns and its reported yearly total &mdash; unexplained, flagged here rather than silently reconciled.</p>
+
+      <h3 style="font-size:1.1rem;margin:1.75rem 0 0.75rem">All three yearly totals side by side</h3>
+      <p style="margin-bottom:0.5rem">The counter-implied total (naive per-day span, summed across the year, linear &mdash; not the log scale used in the charts), the FOIA-reported SAS total, and this corpus's own archived count, together. Three independent measurements of the same underlying decade, at three very different scales.</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Year</th><th>Counter-implied total</th><th>FOIA SAS total</th><th>Our corpus total</th><th>Counter &divide; FOIA</th><th>Counter &divide; ours</th></tr></thead>
+          <tbody>
+            <tr><td>1973</td><td class="num">15,169,166</td><td class="num">225,840</td><td class="num">155,285</td><td class="num">67.2&times;</td><td class="num">97.7&times;</td></tr>
+            <tr><td>1974</td><td class="num">35,493,316</td><td class="num">467,881</td><td class="num">289,755</td><td class="num">75.9&times;</td><td class="num">122.5&times;</td></tr>
+            <tr><td>1975</td><td class="num">34,804,038</td><td class="num">541,337</td><td class="num">333,161</td><td class="num">64.3&times;</td><td class="num">104.5&times;</td></tr>
+            <tr><td>1976</td><td class="num">33,709,801</td><td class="num">569,391</td><td class="num">347,516</td><td class="num">59.2&times;</td><td class="num">97.0&times;</td></tr>
+            <tr><td>1977</td><td class="num">42,923,679</td><td class="num">617,816</td><td class="num">307,330</td><td class="num">69.5&times;</td><td class="num">139.7&times;</td></tr>
+            <tr><td>1978</td><td class="num">41,081,467</td><td class="num">655,808</td><td class="num">325,806</td><td class="num">62.6&times;</td><td class="num">126.1&times;</td></tr>
+            <tr><td>1979</td><td class="num">40,053,617</td><td class="num">732,206</td><td class="num">322,419</td><td class="num">54.7&times;</td><td class="num">124.2&times;</td></tr>
+            <tr><td><strong>1973&ndash;1979</strong></td><td class="num"><strong>243,235,084</strong></td><td class="num"><strong>3,810,279</strong></td><td class="num"><strong>2,081,272</strong></td><td class="num"><strong>63.8&times;</strong></td><td class="num"><strong>116.9&times;</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:0.85rem;font-size:0.92rem">The counter-implied total is a lower bound (per-day min/max span, see caveats) and still runs 55&ndash;76&times; the FOIA-reported system-wide SAS total. What that gap consists of isn't established here &mdash; the counter is a relay-centre transmission log (see "where the counter sits in the raw header" above) and nothing in this repository's data says what else, if anything, shared that relay with State Department traffic. What Souza et al. (2016) do document, from NARA's own appraisal records (pp. 7&ndash;8), is that the cable population behind both this corpus and their study is already a curated subset of something much larger: 27 million CFPF electronic records had accumulated by 2006, and archivists deliberately preserved only cables with historically-significant TAGS, explicitly reducing the retained share of routine, unclassified cables. That figure spans decades of CFPF record-keeping generally, not just 1973&ndash;1979, so it can't be turned into a precise ratio here &mdash; but it shows substantial, documented filtering happened well before the counter's implied volume enters the comparison. FOIA/SAS and our corpus, by contrast, stay within the same order of magnitude of each other throughout (both are specifically State Department cable counts), which is why that pair gets its own ratio column in the table above rather than needing a log axis here.</p>
+    </section>
+
+    <section class="namedgaps">
+      <h3 style="font-size:1.1rem;margin-bottom:0.75rem">Cross-check: the paper's four named gap dates</h3>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Named range</th><th>Days w/ data</th><th>Avg. missing/day</th><th>Missing % range</th></tr></thead>
+          <tbody>
+            <tr><td>Dec 1&ndash;15, 1975</td><td class="num">15/15</td><td class="num">1,055</td><td class="num">94.0&ndash;99.9%</td></tr>
+            <tr><td>Mar 18&ndash;31, 1976</td><td class="num">14/14</td><td class="num">1,107</td><td class="num">84.0&ndash;100%</td></tr>
+            <tr><td>May 25&ndash;31, 1976</td><td class="num">7/7</td><td class="num">611</td><td class="num">16.0&ndash;100%</td></tr>
+            <tr><td>June 1976 (full month)</td><td class="num">30/30</td><td class="num">1,095</td><td class="num">99.2&ndash;100%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:0.85rem;font-size:0.92rem">Strong confirmation of all four &mdash; but with a nuance the paper's prose blurs: it describes these as periods with "almost no cables," implying absence. Our data shows the opposite mechanism &mdash; <em>metadata records are present at normal volume</em> (1,000&ndash;1,600/day); what's missing is specifically body text. That's the paper's own "error messages for body" category, not a document-count gap. We also found "May 25&ndash;31" and "June 1976" aren't two separate events &mdash; missing % never drops below 94% across the full six weeks from May 25 to July 2. Same for the other two: measured directly rather than read off a chart, Dec 1975's gap runs Nov 26&ndash;Dec 24, and March 1976's runs Mar 17&ndash;Apr 5 &mdash; both wider than their named windows.</p>
+    </section>
+
+    <section class="newgaps">
+      <h3 style="font-size:1.1rem;margin-bottom:0.75rem">New: three of the paper's own unlabeled spikes, precisely dated</h3>
+      <p>The paper's Fig. 2 chart plots missing-cable counts through 1973&ndash;1978 and visibly shows six spikes, but only names four in its text. Scanning our own data the same way (raw daily missing count, not just percentage, matching that chart's y-axis) turns up three ranges whose magnitude lines up with the paper's own unlabeled peaks almost exactly &mdash; giving them real dates for the first time:</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Range</th><th>Peak day</th><th>Peak missing</th><th>Paper's Fig. 2 estimate</th></tr></thead>
+          <tbody>
+            <tr><td>1973-07-05 &ndash; 07-09</td><td class="num">07-06</td><td class="num">1,180</td><td>~1,150&ndash;1,200 (unlabeled)</td></tr>
+            <tr><td>1973-11-26 &ndash; 11-27</td><td class="num">11-27</td><td class="num">828</td><td>~800, "shortly before 1/1/1974" (unlabeled)</td></tr>
+            <tr><td>1974-10-03 &ndash; 10-04</td><td class="num">10-04</td><td class="num">478</td><td>~475, "late 1974" (unlabeled)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:0.85rem;font-size:0.92rem">The paper offers no historical explanation for these three, and none is asserted here either &mdash; they're reported purely as precise dates for spikes that were already visible, but unlabeled, in the paper's own figure. A smaller, borderline cluster also appears Oct 18&ndash;23, 1973 (peak 245/day), below the magnitude of the other spikes.</p>
+
+      <div class="callout rose">
+        <h3>Outside the paper's coverage: Oct 30&ndash;31, 1979</h3>
+        <p>Small in absolute terms (93 missing at peak) but sharply anomalous against 1979's otherwise near-zero baseline (median 6/day, max elsewhere 33). The timing coincides with the intensifying Iran crisis &mdash; the Shah was admitted to the US for medical treatment Oct 22, 1979; the US embassy in Tehran was seized Nov 4, 1979. Noted as a temporal coincidence only; nothing here demonstrates a causal link.</p>
+      </div>
+
+      <p style="margin-top:1.25rem"><strong>1977 and 1978 show almost no gap activity at all</strong> &mdash; median 0 and 3 missing/day respectively, max 4 and 13 &mdash; a strong independent confirmation of the paper's own claim that "the gaps end with the end of Kissinger's term as Secretary of State" (Jan 20, 1977).</p>
+    </section>
+
+    <section class="stacked">
+      <h2>Classification mix by year, gaps highlighted</h2>
+      <p>Monthly proportion of Unclassified / Limited Official Use / Confidential / Secret, reproducing the paper's Fig. 1 style, one small chart per year. Rose-shaded bands mark the gap ranges above, positioned at their actual day-of-year span (not rounded to whole months).</p>
+      <div class="year-grid" id="yearGrid"></div>
+    </section>
+
+    <section class="combined">
+      <h2>Everything together, day by day</h2>
+      <p>One large chart per year, at full day resolution, combining the totals discussed above. The classification breakdown and the overall "available cables" total are the same number viewed two ways &mdash; the four colors are literally what the stack sums to &mdash; so they share one stack rather than double-counting. The dark line tracing the top of each day's bar is the subset of that same total with no real body text (a fraction of the stack, not an addition to it). The counter's implied volume runs ~100&times; larger than any of that, so it gets its own log-scale axis on the right. (The FOIA-reported SAS yearly totals are cross-checked in the table above; at only yearly resolution they don't add useful signal plotted against these daily series, so they're omitted from these charts.)</p>
+      <div id="combinedCharts"></div>
+    </section>
+
+    <section class="caveats">
+      <h2>Caveats</h2>
+      <p><code>implied_volume_naive_span</code> (max counter &minus; min counter + 1, per day) is a <strong>lower bound</strong>, not a precise reconstruction &mdash; it can't detect a reset happening mid-day. A more ambitious attempt to walk every record in reconstructed filing-time order across the whole corpus, resolving resets explicitly, produced internally inconsistent results (~42% of adjacent pairs showed backward steps even after reconstruction &mdash; too high for noise), suggesting multiple interleaved sub-sequences (parallel precedence-tier queues, multiple relay legs) that a single global ordering can't cleanly capture. The per-day span sidesteps that problem entirely, at the cost of being a floor rather than an exact count.</p>
+      <p style="margin-top:1rem">The classification/availability cross-check trusts <code>Original Classification</code> and the placeholder-text pattern as extracted from source plaintext &mdash; original SAS-database text with noise added by NARA's own reproduction process, <em>not</em> OCR. A ~185-document residue of garbled classification values across the full corpus is bucketed separately and excluded from the cross-check tables.</p>
+      <blockquote><p>Pre-1976 documents have <code>counter</code> but no <code>filing_time</code> &mdash; the day-span comparison still works for those years (needs only <code>counter</code>). The narrower <code>filing_time</code>-vs-DTG lag analysis (1976&ndash;1979 only) has moved to its own note, <code>dash_counter_filing_lag.md</code>, since it's a secondary finding distinct from the core counter/gap story here.</p></blockquote>
+    </section>
+
+    <footer>
+      <span>Counter data: <code>dash_counter_daily_comparison.csv</code></span>
+      <span>Availability data: <code>cable_classification_availability_{daily,monthly,yearly}.csv</code></span>
+      <span>Gap ranges: <code>cable_removal_gap_ranges.csv</code></span>
+      <span>Full write-up: <code>docs/dash_counter_stats.md</code></span>
+      <span>Filing-lag note: <code>docs/dash_counter_filing_lag.md</code></span>
+      <span>Parser: <code>src/patterns/dash_counter.py</code></span>
+    </footer>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var monthly = [["1973-01", 42, 229620], ["1973-02", 14, 120277], ["1973-03", 25, 143549], ["1973-04", 5, 5], ["1973-05", 5, 18256], ["1973-06", 291, 71926], ["1973-07", 13029, 2445324], ["1973-08", 17573, 2334865], ["1973-09", 16519, 2521393], ["1973-10", 16812, 2371251], ["1973-11", 17077, 2764975], ["1973-12", 14037, 2147725], ["1974-01", 19132, 2766909], ["1974-02", 19212, 2744737], ["1974-03", 22603, 3090378], ["1974-04", 22870, 2876762], ["1974-05", 23678, 3078045], ["1974-06", 22213, 2803730], ["1974-07", 23241, 3039914], ["1974-08", 23051, 3350908], ["1974-09", 22536, 2689104], ["1974-10", 23753, 3346725], ["1974-11", 23250, 3096139], ["1974-12", 19397, 2609965], ["1975-01", 23550, 3009540], ["1975-02", 22349, 2802180], ["1975-03", 25202, 3132329], ["1975-04", 27342, 2986262], ["1975-05", 26240, 2995971], ["1975-06", 25339, 3075116], ["1975-07", 25680, 3046538], ["1975-08", 25216, 2729558], ["1975-09", 26309, 3024924], ["1975-10", 28133, 3213964], ["1975-11", 24074, 2706387], ["1975-12", 11218, 2081269], ["1976-01", 25172, 3197971], ["1976-02", 25352, 4047430], ["1976-03", 16666, 1878018], ["1976-04", 27411, 3271571], ["1976-05", 23610, 2636380], ["1976-06", 35, 476478], ["1976-07", 24391, 2673210], ["1976-08", 25291, 2626745], ["1976-09", 26964, 3490860], ["1976-10", 25231, 3044574], ["1976-11", 26520, 3048268], ["1976-12", 22011, 3318296], ["1977-01", 20408, 3229002], ["1977-02", 20115, 4672977], ["1977-03", 26745, 4488748], ["1977-04", 24593, 3442155], ["1977-05", 25434, 3648926], ["1977-06", 23964, 3195342], ["1977-07", 22855, 3068816], ["1977-08", 25491, 3458411], ["1977-09", 25314, 3502917], ["1977-10", 24087, 3461473], ["1977-11", 25312, 3466648], ["1977-12", 24923, 3288264], ["1978-01", 25214, 3353185], ["1978-02", 23790, 3174659], ["1978-03", 29016, 3781832], ["1978-04", 26884, 3281114], ["1978-05", 26932, 3402704], ["1978-06", 26147, 3305163], ["1978-07", 24139, 3406560], ["1978-08", 26041, 3244426], ["1978-09", 25303, 3540368], ["1978-10", 27679, 3517328], ["1978-11", 26674, 3515888], ["1978-12", 23214, 3558240], ["1979-01", 25739, 3423834], ["1979-02", 23798, 3234131], ["1979-03", 29243, 3731095], ["1979-04", 25144, 3317390], ["1979-05", 26418, 3453187], ["1979-06", 25691, 3418273], ["1979-07", 25187, 3364708], ["1979-08", 27181, 3171364], ["1979-09", 23749, 3054324], ["1979-10", 26363, 3072811], ["1979-11", 26040, 3534380], ["1979-12", 22997, 3278120]];
+
+  function currentTheme() {
+    var isDark = matchMedia("(prefers-color-scheme: dark)").matches;
+    var rootTheme = document.documentElement.getAttribute("data-theme");
+    if (rootTheme === "dark") isDark = true;
+    if (rootTheme === "light") isDark = false;
+    return isDark
+      ? { ink: "#ece5d5", inkMuted: "#a89d84", rule: "#38321f", teal: "#7db3a7", accent: "#d9a35a", rose: "#d98d87", band: "rgba(217,163,90,0.14)", bandLine: "#d9a35a",
+          cls: ["#7db3a7", "#d9a35a", "#c98f5a", "#d98d87"] }
+      : { ink: "#221e16", inkMuted: "#635b49", rule: "#c6bda8", teal: "#3f6b62", accent: "#a1691f", rose: "#9a4a45", band: "rgba(161,105,31,0.10)", bandLine: "#a1691f",
+          cls: ["#3f6b62", "#a1691f", "#8a5a35", "#9a4a45"] };
+  }
+  var colors = currentTheme();
+
+  var canvas = document.getElementById("chart");
+  var ctx = canvas.getContext("2d");
+  var W = canvas.width, H = canvas.height;
+  var padL = 70, padR = 70, padT = 20, padB = 50;
+  var plotW = W - padL - padR, plotH = H - padT - padB;
+
+  var n = monthly.length;
+  var maxActual = Math.max.apply(null, monthly.map(function(m){ return m[1]; }));
+  var actualAxisMax = Math.ceil(maxActual / 5000) * 5000;
+
+  var ratios = monthly.map(function(m){ return m[1] > 0 ? m[2] / m[1] : 1; });
+  var logRatios = ratios.map(function(r){ return Math.log10(Math.max(r, 1)); });
+  var maxLog = Math.max.apply(null, logRatios);
+  var logAxisMax = Math.ceil(maxLog);
+
+  function xFor(i) { return padL + (i + 0.5) / n * plotW; }
+  function yActual(v) { return padT + plotH - (v / actualAxisMax) * plotH; }
+  function yLog(v) { return padT + plotH - (v / logAxisMax) * plotH; }
+
+  ctx.clearRect(0, 0, W, H);
+
+  var bandLo = yLog(Math.log10(105));
+  var bandHi = yLog(Math.log10(165));
+  ctx.fillStyle = colors.band;
+  ctx.fillRect(padL, bandHi, plotW, bandLo - bandHi);
+
+  ctx.strokeStyle = colors.rule;
+  ctx.fillStyle = colors.inkMuted;
+  ctx.font = "22px ui-monospace, SFMono-Regular, Menlo, monospace";
+  ctx.lineWidth = 1;
+  var steps = 5;
+  for (var s = 0; s <= steps; s++) {
+    var v = actualAxisMax * s / steps;
+    var y = yActual(v);
+    ctx.beginPath();
+    ctx.moveTo(padL, y);
+    ctx.lineTo(padL + plotW, y);
+    ctx.globalAlpha = s === 0 ? 1 : 0.35;
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+    ctx.fillText((v/1000).toFixed(0) + "k", padL - 12, y);
+  }
+
+  ctx.textAlign = "left";
+  for (var p = 0; p <= logAxisMax; p++) {
+    var yl = yLog(p);
+    ctx.fillText(Math.pow(10, p) >= 1000 ? (Math.pow(10,p)/1000)+"k×" : Math.pow(10,p)+"×", padL + plotW + 12, yl);
+  }
+
+  var barW = plotW / n * 0.62;
+  ctx.fillStyle = colors.teal;
+  monthly.forEach(function(m, i) {
+    var x = xFor(i) - barW / 2;
+    var y = yActual(m[1]);
+    ctx.fillRect(x, y, barW, padT + plotH - y);
+  });
+
+  ctx.strokeStyle = colors.accent;
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  monthly.forEach(function(m, i) {
+    var x = xFor(i);
+    var y = yLog(logRatios[i]);
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  ctx.fillStyle = colors.ink;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "top";
+  ctx.font = "24px ui-monospace, SFMono-Regular, Menlo, monospace";
+  monthly.forEach(function(m, i) {
+    if (m[0].slice(5) === "01") {
+      var x = xFor(i);
+      ctx.strokeStyle = colors.rule;
+      ctx.globalAlpha = 0.5;
+      ctx.beginPath();
+      ctx.moveTo(x, padT);
+      ctx.lineTo(x, padT + plotH);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+      ctx.fillText(m[0].slice(0,4), x, padT + plotH + 12);
+    }
+  });
+
+  ctx.save();
+  ctx.translate(22, padT + plotH / 2);
+  ctx.rotate(-Math.PI/2);
+  ctx.textAlign = "center";
+  ctx.fillStyle = colors.teal;
+  ctx.font = "600 22px Optima, sans-serif";
+  ctx.fillText("actual cables / month", 0, 0);
+  ctx.restore();
+
+  ctx.save();
+  ctx.translate(W - 20, padT + plotH / 2);
+  ctx.rotate(Math.PI/2);
+  ctx.textAlign = "center";
+  ctx.fillStyle = colors.accent;
+  ctx.font = "600 22px Optima, sans-serif";
+  ctx.fillText("implied ÷ actual (log)", 0, 0);
+  ctx.restore();
+
+  // ---- per-year stacked classification charts ----
+  var yearFracs = {"1973": [[1, 0.4583, 0.2222, 0.1806, 0.1389], [2, 0.2857, 0.1429, 0.4286, 0.1429], [3, 0.3529, 0.2868, 0.3019, 0.0584], [4, 0.3404, 0.2737, 0.3211, 0.0649], [5, 0.3327, 0.2815, 0.325, 0.0609], [6, 0.363, 0.29, 0.2895, 0.0575], [7, 0.5102, 0.2397, 0.1957, 0.0545], [8, 0.5028, 0.2485, 0.1972, 0.0515], [9, 0.479, 0.2482, 0.2167, 0.0561], [10, 0.4316, 0.2419, 0.219, 0.1075], [11, 0.4284, 0.2529, 0.2344, 0.0843], [12, 0.4445, 0.2525, 0.2235, 0.0795]],
+  "1974": [[1, 0.4948, 0.2441, 0.1953, 0.0657], [2, 0.4619, 0.2488, 0.2204, 0.069], [3, 0.4963, 0.2468, 0.193, 0.0638], [4, 0.5184, 0.2376, 0.1907, 0.0533], [5, 0.5028, 0.2192, 0.2029, 0.0751], [6, 0.5113, 0.2215, 0.2019, 0.0653], [7, 0.5207, 0.2121, 0.2047, 0.0625], [8, 0.5508, 0.2255, 0.1747, 0.0491], [9, 0.5077, 0.2478, 0.1967, 0.0478], [10, 0.4765, 0.2439, 0.2234, 0.0562], [11, 0.4536, 0.2402, 0.2371, 0.0691], [12, 0.5011, 0.2532, 0.1995, 0.0462]],
+  "1975": [[1, 0.5057, 0.2409, 0.1995, 0.0538], [2, 0.4679, 0.2427, 0.2267, 0.0627], [3, 0.4691, 0.2337, 0.2205, 0.0768], [4, 0.5051, 0.2324, 0.207, 0.0556], [5, 0.51, 0.243, 0.2044, 0.0425], [6, 0.5526, 0.2318, 0.1803, 0.0353], [7, 0.5299, 0.2313, 0.1915, 0.0474], [8, 0.5358, 0.2229, 0.1929, 0.0485], [9, 0.532, 0.2225, 0.1886, 0.0569], [10, 0.5289, 0.2227, 0.1955, 0.0529], [11, 0.5182, 0.2326, 0.2029, 0.0463], [12, 0.518, 0.2247, 0.1972, 0.0602]],
+  "1976": [[1, 0.5321, 0.2303, 0.183, 0.0546], [2, 0.5365, 0.2307, 0.1878, 0.0449], [3, 0.5607, 0.2186, 0.175, 0.0457], [4, 0.5341, 0.2468, 0.1732, 0.0459], [5, 0.5622, 0.2167, 0.179, 0.042], [6, 0.5647, 0.2063, 0.1821, 0.0469], [7, 0.5411, 0.2258, 0.1879, 0.0451], [8, 0.5504, 0.2089, 0.1958, 0.0449], [9, 0.532, 0.2196, 0.2023, 0.0461], [10, 0.5556, 0.2254, 0.1848, 0.0342], [11, 0.5261, 0.2455, 0.1904, 0.0379], [12, 0.5447, 0.2276, 0.1845, 0.0432]],
+  "1977": [[1, 0.5041, 0.2453, 0.2187, 0.0319], [2, 0.4932, 0.2441, 0.2225, 0.0402], [3, 0.4977, 0.2464, 0.224, 0.0319], [4, 0.4897, 0.2454, 0.2281, 0.0368], [5, 0.493, 0.2433, 0.2326, 0.0312], [6, 0.5172, 0.2339, 0.2204, 0.0285], [7, 0.5041, 0.244, 0.2158, 0.0361], [8, 0.5106, 0.242, 0.2147, 0.0328], [9, 0.5015, 0.2332, 0.2359, 0.0294], [10, 0.505, 0.2373, 0.2202, 0.0376], [11, 0.4724, 0.2505, 0.2337, 0.0435], [12, 0.459, 0.2594, 0.2332, 0.0484]],
+  "1978": [[1, 0.487, 0.226, 0.2258, 0.0612], [2, 0.4829, 0.2258, 0.2365, 0.0548], [3, 0.4777, 0.2337, 0.2393, 0.0493], [4, 0.473, 0.2345, 0.2496, 0.043], [5, 0.4787, 0.2354, 0.2403, 0.0456], [6, 0.4795, 0.2465, 0.2265, 0.0474], [7, 0.4843, 0.2265, 0.2326, 0.0566], [8, 0.5003, 0.2304, 0.2239, 0.0454], [9, 0.4837, 0.2225, 0.2394, 0.0543], [10, 0.4739, 0.2289, 0.2426, 0.0546], [11, 0.4487, 0.2377, 0.2584, 0.0551], [12, 0.4716, 0.2313, 0.2443, 0.0528]],
+  "1979": [[1, 0.4921, 0.2221, 0.23, 0.0558], [2, 0.4896, 0.2204, 0.237, 0.053], [3, 0.4818, 0.2237, 0.2375, 0.057], [4, 0.4902, 0.2359, 0.2303, 0.0436], [5, 0.487, 0.2246, 0.2467, 0.0417], [6, 0.4818, 0.2196, 0.2466, 0.052], [7, 0.5026, 0.2107, 0.2342, 0.0525], [8, 0.5054, 0.2174, 0.2383, 0.039], [9, 0.5084, 0.2149, 0.2385, 0.0383], [10, 0.4939, 0.2021, 0.2577, 0.0463], [11, 0.4388, 0.1991, 0.2989, 0.0632], [12, 0.4273, 0.2066, 0.286, 0.0802]]};
+
+  // [startMonth, startDay, endMonth, endDay]
+  var gapRanges = {
+    "1973": [[7,5,7,9],[10,18,10,23],[11,26,11,27]],
+    "1974": [[10,3,10,4]],
+    "1975": [[11,26,12,24]],
+    "1976": [[3,17,4,5],[5,25,7,2]],
+    "1977": [],
+    "1978": [],
+    "1979": [[10,30,10,31]]
+  };
+  var gapNotes = {
+    "1973": '<strong>3 gap events</strong> (Jul 5&ndash;9, Oct 18&ndash;23, Nov 26&ndash;27) &mdash; visible in the paper’s Fig. 2 but unnamed/unexplained in its text.',
+    "1974": '<strong>1 gap event</strong> (Oct 3&ndash;4) &mdash; visible in the paper’s Fig. 2 but unnamed/unexplained in its text.',
+    "1975": '<strong>1 gap event</strong> (Nov 26&ndash;Dec 24) &mdash; the paper’s named "Dec 1&ndash;15" gap, East Timor invasion / Jakarta meeting context; our data shows it’s wider than the named window.',
+    "1976": '<strong>2 gap events</strong> (Mar 17&ndash;Apr 5: Argentina coup; May 25&ndash;Jul 2: Lebanon/Soweto period) &mdash; the paper names these as three separate ranges; ours shows two continuous blocks.',
+    "1977": 'No significant gaps detected &mdash; consistent with the paper’s claim that gaps ended with Kissinger’s departure (Jan 1977).',
+    "1978": 'No significant gaps detected.',
+    "1979": '<strong>1 minor event</strong> (Oct 30&ndash;31) &mdash; outside the paper’s coverage; coincides with the intensifying Iran crisis, timing noted only.'
+  };
+  function daysInYear(y) { return (y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0)) ? 366 : 365; }
+  function dayOfYear(y, m, d) {
+    var mdays = [31, daysInYear(y)===366?29:28, 31,30,31,30,31,31,30,31,30,31];
+    var doy = d;
+    for (var i=0;i<m-1;i++) doy += mdays[i];
+    return doy;
+  }
+
+  var grid = document.getElementById("yearGrid");
+  var years = ["1973","1974","1975","1976","1977","1978","1979"];
+  var classLabels = ["Unclassified", "Limited Official Use", "Confidential", "Secret"];
+
+  years.forEach(function(yr) {
+    var card = document.createElement("div");
+    card.className = "year-card";
+    var cv = document.createElement("canvas");
+    cv.width = 760; cv.height = 260;
+    var h4 = document.createElement("h4");
+    h4.innerHTML = '<span class="yr">' + yr + '</span><span>monthly, stacked %</span>';
+    var note = document.createElement("p");
+    note.className = "gap-note" + (gapRanges[yr].length === 0 ? " clean" : "");
+    note.innerHTML = gapNotes[yr];
+    card.appendChild(h4);
+    card.appendChild(cv);
+    card.appendChild(note);
+    grid.appendChild(card);
+
+    var cctx = cv.getContext("2d");
+    var cW = cv.width, cH = cv.height;
+    var cPadL = 40, cPadR = 12, cPadT = 10, cPadB = 24;
+    var cPlotW = cW - cPadL - cPadR, cPlotH = cH - cPadT - cPadB;
+    var data = yearFracs[yr];
+    var yn = daysInYear(parseInt(yr,10));
+
+    function cxFor(doy) { return cPadL + (doy / yn) * cPlotW; }
+    function cyFor(frac) { return cPadT + cPlotH - frac * cPlotH; }
+
+    // stacked area, computed at each month midpoint, day-of-year x position
+    var n4 = data.length;
+    var stacks = data.map(function(row) {
+      var m = row[0];
+      var doy = dayOfYear(parseInt(yr,10), m, 15); // mid-month
+      var c0 = row[1], c1 = row[1]+row[2], c2 = row[1]+row[2]+row[3], c3 = row[1]+row[2]+row[3]+row[4];
+      return { doy: doy, vals: [0, c0, c1, c2, c3] };
+    });
+
+    for (var layer = 3; layer >= 0; layer--) {
+      cctx.fillStyle = colors.cls[layer];
+      cctx.globalAlpha = 0.92;
+      cctx.beginPath();
+      stacks.forEach(function(s, i) {
+        var x = cxFor(s.doy), y = cyFor(s.vals[layer+1]);
+        if (i === 0) cctx.moveTo(x, y); else cctx.lineTo(x, y);
+      });
+      for (var i2 = stacks.length - 1; i2 >= 0; i2--) {
+        var s2 = stacks[i2];
+        cctx.lineTo(cxFor(s2.doy), cyFor(s2.vals[layer]));
+      }
+      cctx.closePath();
+      cctx.fill();
+    }
+    cctx.globalAlpha = 1;
+
+    // gap bands drawn on top as a tint (the stacked fill above is fully opaque,
+    // so a band drawn *behind* it would be invisible) plus a solid marker bar
+    // just under the plot so ranges stay legible regardless of tint contrast
+    gapRanges[yr].forEach(function(g) {
+      var d0 = dayOfYear(parseInt(yr,10), g[0], g[1]) - 1;
+      var d1 = dayOfYear(parseInt(yr,10), g[2], g[3]);
+      var x0 = cxFor(d0), x1 = cxFor(d1);
+      var bw = Math.max(x1 - x0, 3);
+      cctx.fillStyle = colors.rose;
+      cctx.globalAlpha = 0.4;
+      cctx.fillRect(x0, cPadT, bw, cPlotH);
+      cctx.globalAlpha = 1;
+      cctx.fillRect(x0, cPadT + cPlotH + 2, bw, 3);
+    });
+
+    // axis baseline + month ticks (quarters)
+    cctx.strokeStyle = colors.rule;
+    cctx.lineWidth = 1;
+    cctx.fillStyle = colors.inkMuted;
+    cctx.font = "10px ui-monospace, SFMono-Regular, Menlo, monospace";
+    cctx.textAlign = "center";
+    cctx.textBaseline = "top";
+    [1,4,7,10].forEach(function(m) {
+      var doy = dayOfYear(parseInt(yr,10), m, 1);
+      var x = cxFor(doy);
+      cctx.fillText(["Jan","Apr","Jul","Oct"][[1,4,7,10].indexOf(m)], x, cPadT + cPlotH + 6);
+    });
+    cctx.beginPath();
+    cctx.moveTo(cPadL, cPadT + cPlotH);
+    cctx.lineTo(cPadL + cPlotW, cPadT + cPlotH);
+    cctx.stroke();
+  });
+
+  // one shared legend under the grid
+  var legend = document.createElement("div");
+  legend.className = "chart-legend";
+  legend.style.marginTop = "0.25rem";
+  classLabels.forEach(function(lbl, i) {
+    var span = document.createElement("span");
+    span.innerHTML = '<span class="swatch" style="background:' + colors.cls[i] + '"></span>' + lbl;
+    legend.appendChild(span);
+  });
+  var roseSpan = document.createElement("span");
+  roseSpan.innerHTML = '<span class="swatch" style="background:' + colors.rose + ';opacity:0.5"></span>flagged gap range';
+  legend.appendChild(roseSpan);
+  grid.parentNode.insertBefore(legend, grid.nextSibling);
+
+  // ---- large combined per-year charts: counter + availability + classification + missing-text, day resolution ----
+  var combinedDaily ={"1973":[[1,1,1,2,1,2,null],[2,8,1,1,0,1,130608],[3,7,1,1,1,1,10823],[4,0,2,0,1,1,9755],[5,0,1,0,0,0,null],[6,0,0,0,0,0,null],[7,4,3,1,0,0,63621],[8,3,0,0,0,0,741],[9,2,1,2,1,1,5885],[10,0,0,1,1,0,1],[11,4,1,1,2,6,2934],[12,0,1,1,0,2,null],[13,0,0,1,0,1,null],[14,0,0,0,1,1,null],[15,0,0,0,1,1,null],[16,0,1,0,1,1,1],[17,0,1,0,0,0,1],[18,1,0,0,0,0,null],[19,0,0,0,0,0,null],[20,0,0,0,0,0,null],[21,1,1,0,0,0,3145],[22,0,0,0,0,0,null],[23,0,1,1,0,0,2104],[24,0,0,0,0,0,null],[25,0,0,0,0,0,null],[26,0,0,0,0,0,null],[27,1,0,0,0,1,null],[28,0,0,0,0,0,null],[29,1,0,0,0,0,1],[30,0,0,1,0,1,null],[31,0,0,0,0,0,null],[32,0,0,1,1,0,2588],[33,0,0,0,0,0,null],[34,0,0,0,0,0,null],[35,0,0,0,0,0,null],[36,1,0,1,0,0,4724],[37,1,0,2,0,0,null],[38,0,0,0,0,0,null],[39,1,1,0,0,0,98765],[40,1,0,0,1,1,1],[41,0,0,1,0,0,1],[42,0,0,0,0,0,null],[43,0,0,0,0,0,null],[44,0,1,0,1,1,1],[45,0,0,0,0,0,null],[46,0,0,0,0,0,null],[47,0,0,0,0,0,null],[48,0,0,0,0,0,null],[49,0,0,0,0,0,null],[50,2,0,1,0,2,1],[51,0,0,0,0,0,null],[52,0,0,1,0,0,1],[53,0,0,0,0,0,null],[54,0,0,0,0,0,null],[55,0,0,1,0,0,1],[56,0,0,0,0,0,null],[57,0,1,1,0,0,14194],[58,0,0,0,0,0,null],[59,0,0,0,0,0,null],[60,5,4,1,2,0,7001],[61,6,2,6,0,0,null],[62,3,3,1,0,0,null],[63,0,3,1,0,0,4370],[64,1,1,2,0,0,3350],[65,1,2,0,0,0,1],[66,4,5,1,0,0,169],[67,11,12,9,6,0,10709],[68,248,170,194,21,0,1],[69,60,61,94,22,0,null],[70,3,5,9,5,0,1],[71,178,137,131,21,0,1],[72,206,159,147,35,1,null],[73,208,196,181,23,0,4450],[74,180,170,180,40,0,null],[75,279,213,199,39,0,null],[76,39,48,63,17,0,null],[77,7,7,9,5,0,113494],[78,181,146,155,24,0,1],[79,194,173,171,28,0,null],[80,78,65,67,23,0,null],[81,99,93,80,17,0,null],[82,293,172,171,28,0,null],[83,46,42,66,17,1,null],[84,0,4,7,1,0,null],[85,189,158,139,34,0,null],[86,189,172,172,41,1,null],[87,207,169,204,28,0,null],[88,238,167,232,43,0,null],[89,241,197,169,33,0,1],[90,61,51,94,19,0,null],[91,7,11,15,6,1,null],[92,213,144,160,22,0,null],[93,235,179,156,55,0,null],[94,220,161,167,33,0,null],[95,210,157,194,42,0,null],[96,248,179,219,41,0,null],[97,39,44,95,16,0,null],[98,4,7,17,6,0,1],[99,264,129,121,28,0,1],[100,219,151,178,36,0,null],[101,222,149,170,31,0,null],[102,235,166,201,48,0,1],[103,193,195,229,41,0,1],[104,36,52,112,30,0,null],[105,6,10,21,10,0,null],[106,167,122,141,39,0,null],[107,196,174,226,47,0,null],[108,170,172,153,34,4,null],[109,173,163,182,27,0,null],[110,119,121,165,27,0,null],[111,58,55,110,34,0,null],[112,4,4,13,6,0,1],[113,96,85,100,11,0,null],[114,161,113,142,20,0,null],[115,196,194,196,22,0,null],[116,177,174,179,29,1,null],[117,114,92,97,19,0,null],[118,40,46,55,18,0,null],[119,9,6,7,6,0,null],[120,146,104,119,12,2,null],[121,40,41,51,5,0,null],[122,146,94,125,16,0,null],[123,99,83,112,24,0,null],[124,173,168,191,22,0,null],[125,25,22,61,15,0,null],[126,9,5,8,3,0,null],[127,155,149,142,20,0,null],[128,178,180,203,29,0,null],[129,158,127,151,22,0,1],[130,204,168,197,26,0,null],[131,185,203,197,30,0,18253],[132,30,29,72,21,0,null],[133,1,0,6,0,0,null],[134,186,166,159,17,0,null],[135,215,154,179,23,0,null],[136,185,155,175,30,0,null],[137,214,181,172,31,0,null],[138,238,204,223,52,0,null],[139,48,39,81,29,0,null],[140,6,3,6,4,0,null],[141,57,41,38,9,0,null],[142,197,154,204,48,0,1],[143,157,128,154,31,0,1],[144,219,166,198,47,0,null],[145,116,91,117,38,0,null],[146,6,6,14,5,1,null],[147,0,1,4,1,2,null],[148,2,3,4,3,1,null],[149,97,61,55,9,0,null],[150,145,109,98,33,1,null],[151,96,104,107,14,0,null],[152,89,63,60,17,5,1],[153,5,4,3,4,1,6654],[154,5,1,3,0,1,1],[155,4,1,7,2,8,1],[156,3,0,3,0,2,null],[157,1,0,6,1,3,1],[158,10,8,9,6,3,1],[159,145,109,103,15,2,null],[160,30,42,82,22,0,null],[161,3,6,14,4,0,null],[162,0,0,1,0,0,null],[163,0,0,1,0,0,null],[164,3,1,1,0,0,3147],[165,95,64,68,17,0,null],[166,189,165,147,29,0,null],[167,44,36,48,17,0,null],[168,1,4,16,0,0,null],[169,202,129,148,29,3,null],[170,163,149,143,20,3,null],[171,181,171,154,22,0,null],[172,128,142,136,45,0,null],[173,190,203,159,31,1,null],[174,51,41,49,15,0,null],[175,8,4,12,7,0,null],[176,191,155,127,31,0,11891],[177,237,157,158,21,51,null],[178,229,143,182,29,36,1],[179,228,188,169,22,39,11055],[180,290,184,157,19,168,24227],[181,35,35,35,12,15,14946],[182,23,22,17,5,15,15122],[183,376,153,113,28,78,20570],[184,465,215,129,48,113,130504],[185,76,36,32,28,25,8585],[186,448,218,160,40,251,131058],[187,650,299,213,46,1180,82941],[188,99,74,70,20,255,103613],[189,38,15,43,9,100,16024],[190,514,213,170,36,514,34598],[191,492,211,163,31,77,123214],[192,439,210,119,47,59,59524],[193,418,164,149,46,83,47834],[194,466,224,167,28,59,85737],[195,70,68,61,14,25,103216],[196,20,10,6,10,12,40873],[197,372,158,153,35,56,121733],[198,397,204,148,40,89,121354],[199,434,208,192,54,87,130815],[200,381,199,208,60,93,131035],[201,502,223,186,36,85,127175],[202,88,48,71,34,56,98695],[203,16,13,23,14,33,1865],[204,391,192,138,42,102,67164],[205,362,148,159,30,66,52329],[206,423,182,161,44,69,48868],[207,235,114,93,29,107,91596],[208,436,236,158,48,204,169903],[209,71,40,44,20,23,49257],[210,18,6,4,9,4,86072],[211,345,148,125,32,47,108508],[212,389,190,151,46,68,35542],[213,424,194,154,55,68,129837],[214,437,220,142,38,62,130113],[215,551,248,183,53,102,131035],[216,71,43,70,28,35,128791],[217,19,10,8,6,16,34990],[218,371,155,108,23,60,52158],[219,381,171,134,40,66,49306],[220,426,192,143,40,61,53430],[221,425,235,120,32,63,40800],[222,477,240,166,34,77,65059],[223,70,41,55,19,25,14944],[224,16,10,9,10,13,26033],[225,397,196,127,36,71,21473],[226,400,193,130,51,81,34822],[227,356,159,120,26,36,64033],[228,387,191,121,22,52,114915],[229,467,216,181,36,70,129766],[230,64,37,50,24,29,126988],[231,21,4,4,9,11,97527],[232,434,178,156,37,63,131041],[233,395,204,134,36,74,109910],[234,348,188,147,47,68,27755],[235,390,183,199,56,80,77873],[236,417,263,227,52,105,55768],[237,68,27,60,11,24,53254],[238,16,12,20,2,12,44271],[239,376,175,162,36,69,56655],[240,366,190,164,32,72,68213],[241,402,214,176,38,117,95771],[242,413,202,208,40,79,40902],[243,517,302,206,46,79,127432],[244,91,55,63,29,33,107126],[245,27,10,13,3,9,107994],[246,53,26,17,12,25,130791],[247,387,177,152,38,67,131067],[248,401,225,176,41,86,50043],[249,354,184,139,43,56,49332],[250,428,233,202,49,79,47150],[251,40,43,58,15,27,25321],[252,28,10,14,8,18,36567],[253,381,221,156,29,71,77587],[254,488,201,182,40,55,57085],[255,415,229,219,41,82,110493],[256,450,246,185,41,66,98381],[257,482,269,239,40,94,118606],[258,106,53,88,26,30,100281],[259,30,12,25,12,11,106058],[260,398,232,160,39,66,120691],[261,477,215,181,51,90,131019],[262,483,241,230,47,106,131062],[263,422,215,167,36,72,89279],[264,487,252,190,61,92,54604],[265,70,50,67,17,29,44119],[266,15,7,13,8,8,38660],[267,391,194,172,51,76,76018],[268,488,243,215,58,87,77297],[269,450,235,217,56,66,67145],[270,449,235,191,44,75,76320],[271,555,262,217,69,90,46784],[272,101,64,93,34,29,116701],[273,16,5,13,12,7,97812],[274,431,209,181,106,176,129462],[275,360,220,159,46,57,130947],[276,399,253,178,60,82,131048],[277,459,229,187,51,58,27280],[278,500,291,161,57,100,37132],[279,63,46,68,38,24,52836],[280,28,12,53,26,18,19013],[281,51,40,80,44,38,23462],[282,321,199,132,77,79,56195],[283,437,242,196,81,94,65496],[284,412,213,196,100,84,59215],[285,377,195,142,84,100,59279],[286,73,56,82,62,64,100830],[287,27,18,48,22,12,22759],[288,437,210,190,74,81,123609],[289,422,236,226,119,88,129635],[290,354,173,176,80,66,131044],[291,444,237,206,106,155,123936],[292,436,259,206,103,245,101867],[293,83,83,102,95,133,40060],[294,38,13,30,47,123,87295],[295,33,44,73,50,85,26059],[296,323,168,143,65,219,48050],[297,404,207,217,95,141,64926],[298,379,201,177,75,78,51177],[299,459,263,257,94,121,27510],[300,66,81,109,58,43,129324],[301,17,8,14,26,25,3006],[302,220,107,96,59,125,113043],[303,258,145,119,86,93,125097],[304,426,239,228,89,124,130659],[305,306,191,213,50,71,131017],[306,440,251,253,61,95,43068],[307,84,85,143,77,73,360117],[308,17,22,52,19,23,55686],[309,283,174,140,53,67,43198],[310,388,238,236,73,109,100429],[311,397,215,280,68,107,61273],[312,365,211,204,93,102,48943],[313,392,255,234,110,118,109831],[314,136,116,171,87,69,53547],[315,18,5,24,35,22,47084],[316,335,208,183,66,94,121626],[317,385,271,205,96,109,126713],[318,376,228,213,84,102,130715],[319,407,260,185,58,92,131022],[320,460,292,167,76,100,96053],[321,87,62,68,34,25,96627],[322,13,14,7,17,24,99485],[323,419,211,155,52,83,89570],[324,491,250,189,74,94,89655],[325,438,254,221,65,91,62578],[326,75,63,65,18,18,12883],[327,442,215,178,58,74,52469],[328,75,58,82,32,29,14326],[329,23,9,16,10,24,23317],[330,357,212,155,60,233,102958],[331,459,235,233,59,828,123155],[332,424,219,186,66,92,79017],[333,430,219,207,63,95,127554],[334,459,259,248,53,102,131059],[335,88,65,92,53,39,131005],[336,41,15,22,12,13,41866],[337,384,199,163,54,82,51160],[338,384,211,245,58,85,67374],[339,389,229,225,53,92,48698],[340,411,238,203,63,71,44688],[341,405,283,249,48,100,67998],[342,54,63,88,52,41,43252],[343,12,11,17,17,24,52013],[344,327,216,168,50,78,59257],[345,391,205,174,66,117,98419],[346,349,216,179,59,80,129218],[347,315,161,166,57,87,130379],[348,428,221,187,70,91,131014],[349,85,58,84,58,45,25940],[350,22,16,32,20,33,48255],[351,325,186,141,41,59,85174],[352,428,183,168,71,119,38229],[353,389,233,201,83,100,85043],[354,457,202,187,46,80,41480],[355,448,276,157,54,83,35925],[356,99,64,103,41,21,28487],[357,16,16,16,10,15,12280],[358,16,10,13,10,6,27415],[359,6,0,1,5,4,1831],[360,229,144,76,23,39,41006],[361,321,167,130,33,49,119950],[362,402,203,136,39,77,130374],[363,76,55,37,34,22,128150],[364,19,10,12,22,28,75400],[365,29,17,21,12,5,126445]],"1974":[[1,44,13,10,4,7,126108],[2,289,116,97,46,100,131020],[3,348,198,95,51,35,52526],[4,403,172,126,53,50,49739],[5,60,46,52,31,19,92974],[6,17,11,6,7,6,61902],[7,321,169,108,38,38,78599],[8,407,216,127,33,42,83813],[9,446,200,169,85,69,67870],[10,424,261,179,62,34,101151],[11,545,260,190,39,35,69332],[12,102,75,73,44,33,112613],[13,14,7,14,12,5,43075],[14,401,196,157,47,34,117459],[15,416,224,138,48,35,94467],[16,456,234,168,51,46,130523],[17,488,240,195,76,75,131024],[18,554,244,239,54,96,80087],[19,87,47,68,33,14,38554],[20,34,18,39,29,22,119329],[21,446,230,171,51,37,94826],[22,513,242,178,47,40,62783],[23,468,200,175,52,51,118168],[24,492,223,194,46,45,97618],[25,548,244,239,45,30,45162],[26,87,53,61,27,15,35624],[27,19,7,13,10,3,41936],[28,420,199,193,52,32,121238],[29,501,230,194,66,35,130617],[30,515,257,207,62,43,131067],[31,465,264,203,71,39,105705],[32,596,323,246,81,54,97113],[33,75,70,78,54,28,116628],[34,12,9,11,13,9,96407],[35,454,199,171,63,41,120674],[36,459,242,209,54,34,111199],[37,492,248,240,78,53,124479],[38,480,293,220,79,55,119319],[39,593,321,239,51,49,122465],[40,77,51,54,51,28,23898],[41,14,12,20,13,10,119087],[42,432,221,174,43,27,130890],[43,423,271,215,65,38,131058],[44,495,306,252,61,50,84871],[45,471,277,226,61,37,121931],[46,647,312,241,49,44,112234],[47,110,81,107,31,23,93606],[48,26,12,26,6,6,122995],[49,48,31,49,11,18,29295],[50,486,215,188,49,30,105196],[51,483,281,251,61,51,125003],[52,410,186,232,67,123,130982],[53,435,200,186,58,68,131033],[54,117,68,103,40,29,37979],[55,26,11,23,21,8,17127],[56,333,179,171,68,52,47682],[57,451,230,211,77,60,84828],[58,461,227,219,61,43,96125],[59,531,315,236,74,49,90633],[60,606,316,292,76,62,116216],[61,83,60,113,49,22,112823],[62,18,12,33,15,8,125824],[63,468,234,172,62,58,126330],[64,546,259,204,67,43,131027],[65,533,240,205,72,60,130806],[66,532,249,185,51,30,80314],[67,600,301,204,58,53,106743],[68,76,69,75,44,17,57689],[69,13,6,14,11,6,103448],[70,446,219,156,56,33,86236],[71,537,270,196,53,39,90838],[72,508,253,181,42,39,109296],[73,546,285,201,51,41,128510],[74,667,263,209,66,39,127206],[75,79,84,82,44,33,129296],[76,14,7,15,11,7,127935],[77,526,203,154,42,36,131069],[78,538,228,177,49,35,115906],[79,519,242,176,46,35,86129],[80,546,269,201,60,41,82033],[81,627,318,236,59,38,61675],[82,75,82,78,55,39,37554],[83,12,7,11,4,3,17282],[84,510,252,156,55,51,94641],[85,570,255,178,65,57,118544],[86,538,295,209,97,79,128923],[87,595,307,234,59,50,131021],[88,638,338,252,71,49,123337],[89,84,66,77,50,24,65589],[90,15,11,16,12,7,6138],[91,511,256,162,45,31,128765],[92,620,227,231,55,60,124742],[93,521,240,239,64,46,111526],[94,653,244,225,58,41,123728],[95,593,268,229,70,59,128604],[96,97,52,73,34,19,123697],[97,25,10,14,14,11,98564],[98,538,267,180,57,49,131070],[99,588,257,209,55,45,62719],[100,621,275,190,44,36,89608],[101,546,272,167,53,34,67775],[102,451,192,147,46,36,62162],[103,105,50,70,26,17,62015],[104,9,2,8,3,3,30422],[105,296,148,101,25,20,112325],[106,545,215,167,35,34,32238],[107,577,274,172,45,31,107189],[108,627,300,181,38,31,128149],[109,697,324,235,43,32,131014],[110,116,52,56,44,38,131045],[111,17,10,14,16,12,93185],[112,515,211,170,29,32,78317],[113,549,278,177,67,55,89600],[114,601,246,209,59,47,64269],[115,513,246,220,49,62,81501],[116,657,345,252,69,46,117985],[117,91,81,152,45,35,40025],[118,14,10,33,7,9,71018],[119,473,244,207,56,45,124309],[120,620,264,213,64,63,129196],[121,343,148,184,46,41,131067],[122,550,232,217,52,36,127809],[123,610,302,262,61,50,129752],[124,74,50,100,34,31,95831],[125,33,14,49,20,27,23639],[126,501,219,192,74,53,126242],[127,572,250,240,75,71,122752],[128,583,214,204,85,66,122148],[129,569,271,216,60,56,121087],[130,727,285,260,71,65,130894],[131,88,52,69,33,27,128526],[132,30,7,17,16,9,116297],[133,561,187,156,47,38,131070],[134,562,223,216,80,77,106827],[135,531,255,178,93,64,100696],[136,561,263,227,86,50,93368],[137,660,314,232,103,80,91202],[138,119,55,93,66,44,45796],[139,17,12,18,28,16,62118],[140,500,220,198,65,41,114407],[141,537,265,209,72,50,125473],[142,620,273,262,91,52,131056],[143,475,182,208,90,49,110053],[144,693,303,259,85,65,46761],[145,137,76,100,54,31,71566],[146,33,11,34,15,14,28032],[147,52,29,55,26,23,79533],[148,495,227,194,55,28,52466],[149,548,256,197,94,72,63006],[150,664,270,226,95,65,120332],[151,746,287,251,98,57,128239],[152,92,55,97,44,31,116872],[153,19,16,31,27,25,122957],[154,446,186,172,77,53,131069],[155,583,238,188,78,62,66911],[156,618,271,201,78,58,87260],[157,566,245,256,71,70,73735],[158,693,289,249,85,76,70238],[159,107,66,98,39,35,48424],[160,27,14,42,11,16,51999],[161,525,225,191,40,49,99585],[162,651,267,213,56,54,128333],[163,612,221,272,75,71,131046],[164,604,229,223,73,73,61011],[165,717,315,251,106,95,77938],[166,100,100,104,51,31,46587],[167,35,18,20,11,10,13782],[168,505,180,188,54,38,123797],[169,568,214,197,52,37,54842],[170,633,252,203,44,31,128784],[171,607,247,186,46,34,124367],[172,622,261,222,75,50,126451],[173,94,79,107,31,25,126891],[174,25,27,16,15,6,129405],[175,529,218,150,57,34,130933],[176,538,250,206,60,47,84063],[177,560,260,244,59,52,74825],[178,598,292,231,76,63,102326],[179,682,290,276,65,52,117109],[180,112,73,83,35,23,66086],[181,20,12,15,5,2,86104],[182,478,222,168,31,33,115115],[183,511,238,252,61,47,126584],[184,571,304,228,88,78,130951],[185,87,58,75,38,24,87567],[186,542,262,229,63,49,86657],[187,73,65,86,25,12,89895],[188,26,6,23,6,4,89471],[189,452,212,203,40,29,53771],[190,609,224,186,44,34,66936],[191,587,224,207,46,31,82431],[192,600,244,220,61,32,80626],[193,719,238,234,51,48,124065],[194,109,59,86,31,9,85744],[195,30,17,20,13,5,114239],[196,526,200,178,41,30,130285],[197,563,179,221,61,30,131064],[198,565,256,235,60,38,88916],[199,546,220,233,70,44,100861],[200,583,269,276,69,60,96129],[201,161,88,160,84,38,92074],[202,74,14,50,51,33,93009],[203,518,196,206,68,38,121520],[204,609,227,200,87,41,109230],[205,585,236,210,75,42,121479],[206,614,232,233,67,40,130871],[207,670,251,194,78,33,131055],[208,115,51,56,38,13,69813],[209,55,15,32,22,10,59055],[210,556,171,175,48,25,102637],[211,585,214,175,42,27,57898],[212,610,238,189,40,25,69966],[213,533,204,197,40,33,103643],[214,704,294,204,35,23,108335],[215,90,50,87,30,11,111540],[216,32,13,10,12,8,92200],[217,469,199,138,31,27,119119],[218,524,243,165,42,27,124763],[219,512,295,190,31,26,131062],[220,546,259,175,38,28,131031],[221,641,265,224,92,67,80684],[222,101,63,82,67,41,247783],[223,39,12,43,41,38,39244],[224,508,222,131,56,45,55504],[225,587,190,159,49,51,282802],[226,589,247,179,54,50,67428],[227,493,202,128,50,31,113341],[228,632,258,185,48,39,115511],[229,100,49,61,25,11,52526],[230,41,9,15,23,10,32360],[231,594,190,125,29,23,130667],[232,579,241,158,47,31,131032],[233,589,190,179,26,26,123185],[234,645,229,177,47,39,44112],[235,670,270,200,46,30,79302],[236,95,53,59,38,23,41596],[237,38,9,25,9,7,70863],[238,531,210,161,31,17,102626],[239,608,211,157,20,42,195658],[240,568,217,201,29,34,40723],[241,630,272,171,43,30,124788],[242,721,306,219,45,52,130180],[243,119,66,85,32,24,127300],[244,41,19,24,14,10,55357],[245,37,28,36,18,14,130591],[246,481,212,163,41,28,111374],[247,624,278,193,36,30,60712],[248,562,301,205,44,38,74293],[249,714,321,253,33,30,72194],[250,97,55,95,31,12,65426],[251,38,14,21,13,5,38876],[252,534,268,160,41,27,101764],[253,589,256,214,64,43,101353],[254,676,282,259,55,47,120378],[255,593,277,247,55,45,130766],[256,700,336,261,51,54,130912],[257,152,81,107,33,20,69689],[258,25,11,35,4,2,5664],[259,472,248,207,36,30,79326],[260,512,253,178,43,25,99202],[261,559,269,227,47,39,113351],[262,568,280,234,44,37,129388],[263,710,359,231,69,40,120518],[264,100,76,108,22,23,114683],[265,45,9,28,9,7,103842],[266,483,263,163,57,37,128545],[267,586,278,195,61,51,131047],[268,599,284,216,60,50,92867],[269,601,279,200,53,34,73171],[270,679,355,264,55,50,65761],[271,113,79,95,21,11,79497],[272,24,36,14,8,5,32982],[273,537,270,190,53,44,55575],[274,532,282,205,49,26,116545],[275,592,247,206,76,56,106540],[276,586,273,153,32,306,128972],[277,691,356,238,65,478,131057],[278,89,79,107,34,25,112066],[279,20,10,23,16,14,19860],[280,487,248,174,42,31,109084],[281,551,298,263,48,47,86243],[282,580,273,286,54,53,128858],[283,530,292,295,67,43,126262],[284,672,298,287,69,42,116743],[285,124,103,141,53,28,290552],[286,38,66,44,23,17,102774],[287,57,50,53,26,25,118949],[288,531,242,247,56,40,131054],[289,622,263,217,50,47,126385],[290,551,222,210,52,37,67843],[291,647,319,276,60,45,55255],[292,117,67,96,24,17,44058],[293,23,15,15,7,7,73803],[294,528,258,200,42,31,69651],[295,563,276,267,56,48,76843],[296,561,320,275,72,68,121836],[297,555,269,309,72,57,128514],[298,587,354,317,86,70,130974],[299,160,120,197,62,39,131010],[300,29,22,41,11,12,98440],[301,65,54,60,20,26,113055],[302,480,222,212,45,48,108098],[303,573,302,282,63,64,90263],[304,621,333,286,73,76,85138],[305,527,299,309,66,41,116107],[306,153,135,193,71,47,98400],[307,40,40,76,27,16,96873],[308,503,248,263,68,46,128918],[309,580,301,250,86,60,130791],[310,515,271,322,69,63,131068],[311,586,249,282,79,69,116364],[312,571,337,317,95,84,86271],[313,131,102,158,58,34,84375],[314,33,28,66,22,26,60434],[315,447,213,182,59,38,91348],[316,505,237,239,37,24,96234],[317,555,303,250,59,58,107290],[318,541,273,263,72,45,128522],[319,653,313,295,59,41,131012],[320,105,89,126,59,34,130965],[321,42,28,29,17,9,124518],[322,493,249,167,51,44,81582],[323,558,297,244,81,69,94176],[324,519,257,257,108,89,80331],[325,588,279,292,67,58,88549],[326,601,335,287,73,47,122133],[327,141,111,142,65,31,77900],[328,39,31,47,35,15,114589],[329,494,195,170,51,47,125087],[330,569,267,235,53,45,130712],[331,653,353,302,88,70,131067],[332,104,64,76,30,18,109560],[333,504,291,255,62,50,38747],[334,74,65,87,35,14,42216],[335,42,25,25,2,2,7854],[336,419,208,184,32,21,66369],[337,519,309,189,55,39,102569],[338,533,273,219,65,47,60765],[339,483,240,211,32,21,123194],[340,573,333,253,60,55,127693],[341,95,61,102,19,13,129803],[342,18,9,22,10,7,115100],[343,443,177,145,28,28,131041],[344,488,267,203,45,34,116924],[345,535,272,238,48,46,101295],[346,452,227,202,58,27,89970],[347,641,288,233,59,45,85464],[348,74,55,83,22,16,80350],[349,39,14,12,8,8,72000],[350,412,185,131,27,34,54907],[351,524,261,163,35,23,107635],[352,537,259,149,42,39,124696],[353,498,228,186,34,27,129822],[354,569,348,228,55,42,130948],[355,82,48,64,28,20,60928],[356,21,11,19,11,4,3371],[357,473,235,175,25,29,105383],[358,339,188,148,16,19,36829],[359,8,0,2,5,3,2676],[360,285,119,96,24,19,42705],[361,396,202,136,31,27,47687],[362,63,48,56,18,15,110068],[363,37,16,19,8,3,124607],[364,404,159,125,24,19,58203],[365,424,203,134,35,36,59109]],"1975":[[1,37,26,23,5,13,93457],[2,360,151,89,26,28,104235],[3,492,203,172,32,31,106188],[4,77,40,73,22,23,96193],[5,30,19,21,10,12,81955],[6,385,162,133,24,18,77543],[7,513,215,185,61,71,130359],[8,559,257,173,39,40,105609],[9,556,269,180,48,45,121766],[10,705,325,229,51,49,130575],[11,102,71,61,30,20,131039],[12,28,24,16,11,12,60392],[13,524,235,125,44,41,118376],[14,575,250,201,57,59,86353],[15,564,251,220,76,81,120214],[16,627,318,245,62,66,129152],[17,630,292,250,69,56,105969],[18,147,101,95,40,24,91604],[19,47,22,25,11,11,74263],[20,546,250,178,46,31,72384],[21,519,259,245,69,59,127688],[22,576,262,236,65,49,131037],[23,555,250,243,56,56,130178],[24,618,323,277,55,54,57454],[25,130,74,101,58,45,59505],[26,35,18,26,8,7,33749],[27,492,212,214,54,40,67488],[28,639,303,215,47,41,64048],[29,558,293,282,66,62,53357],[30,618,300,260,66,65,120554],[31,605,346,276,60,52,126856],[32,120,87,114,39,31,127543],[33,35,20,31,10,6,130929],[34,440,244,247,69,65,128574],[35,597,301,306,64,81,83660],[36,552,270,261,57,54,90308],[37,561,338,274,64,61,93515],[38,604,325,300,86,74,90979],[39,114,97,125,48,45,34914],[40,17,28,36,22,25,40954],[41,489,249,214,58,47,127872],[42,518,274,240,66,75,127747],[43,573,258,273,96,78,131011],[44,627,358,353,79,90,123611],[45,638,371,337,95,80,104089],[46,172,138,178,78,58,66001],[47,31,21,19,29,26,66141],[48,37,49,60,30,29,56974],[49,547,245,232,75,77,94880],[50,619,272,260,72,81,125212],[51,581,336,223,55,54,129343],[52,649,288,223,56,59,131054],[53,96,67,94,21,22,116745],[54,28,18,19,10,12,88207],[55,588,233,222,52,38,97945],[56,577,268,240,58,66,66815],[57,637,262,258,57,56,84294],[58,630,309,232,50,50,116360],[59,628,345,299,72,51,126503],[60,162,82,123,33,34,119842],[61,42,23,40,17,20,117496],[62,545,238,222,81,68,131035],[63,657,352,240,73,75,120567],[64,596,299,262,79,75,115324],[65,625,283,308,76,96,103375],[66,629,318,299,92,84,127802],[67,196,128,129,67,69,117218],[68,47,35,43,47,47,28493],[69,592,262,200,77,58,125801],[70,643,284,260,55,60,131032],[71,612,308,308,84,94,122360],[72,619,285,297,100,100,102078],[73,690,343,318,106,98,120718],[74,178,90,146,49,48,107385],[75,42,17,34,30,28,55611],[76,520,278,226,55,64,119347],[77,573,296,252,89,78,130557],[78,570,278,265,93,99,130967],[79,628,311,317,93,87,98359],[80,570,324,281,104,90,57419],[81,138,91,119,91,76,72233],[82,43,31,50,49,38,6267],[83,575,271,231,79,58,74274],[84,612,311,232,94,45,128351],[85,626,293,281,62,54,130759],[86,587,308,258,87,57,131016],[87,447,220,186,70,47,98434],[88,75,49,119,60,53,81121],[89,19,19,21,18,11,88180],[90,400,177,164,60,41,38908],[91,593,248,249,69,62,80395],[92,715,258,242,77,54,129223],[93,625,307,249,75,63,127565],[94,699,304,292,84,98,131017],[95,111,63,108,45,25,130347],[96,38,19,38,22,6,28676],[97,552,267,210,56,35,81144],[98,635,264,226,65,38,92264],[99,648,316,239,77,37,119305],[100,682,294,220,97,65,128264],[101,681,333,272,60,47,127344],[102,106,61,109,49,36,125872],[103,41,9,48,21,16,121812],[104,566,258,210,50,30,131057],[105,670,300,251,40,32,105260],[106,651,316,254,72,47,101752],[107,607,327,234,59,29,93580],[108,772,338,299,62,44,74913],[109,129,81,126,54,30,31713],[110,35,25,33,7,7,42485],[111,525,272,213,53,37,130156],[112,634,286,265,69,59,130571],[113,644,278,254,54,46,131018],[114,609,302,256,55,43,67739],[115,780,371,272,70,55,60114],[116,115,73,99,35,23,73809],[117,66,21,31,6,6,40716],[118,609,251,216,47,33,104992],[119,572,256,253,52,38,113472],[120,665,299,287,44,52,129687],[121,488,187,223,44,41,129607],[122,644,301,265,47,35,130969],[123,125,106,98,29,18,100573],[124,46,16,32,11,9,67293],[125,535,241,182,42,28,55745],[126,688,292,227,47,45,134421],[127,652,364,237,38,55,76016],[128,569,269,196,20,23,51439],[129,637,325,270,32,64,120389],[130,153,95,102,19,19,84461],[131,40,21,25,14,11,35556],[132,543,292,221,31,49,129138],[133,671,278,228,43,50,131037],[134,669,348,261,52,38,95317],[135,700,333,241,60,53,97080],[136,738,404,313,36,41,104027],[137,116,96,127,36,15,79759],[138,34,35,37,9,3,26122],[139,490,227,181,50,8,117425],[140,727,303,250,69,39,128304],[141,680,296,271,96,36,131024],[142,702,334,269,53,59,109534],[143,761,352,268,52,54,94158],[144,218,117,138,23,16,96272],[145,45,48,59,12,7,5296],[146,39,34,48,20,14,45767],[147,599,265,184,48,30,108679],[148,681,281,229,45,34,122454],[149,608,263,293,47,20,126508],[150,743,330,244,51,28,130555],[151,222,86,118,38,12,131046],[152,54,20,45,17,2,21338],[153,539,216,192,47,20,103639],[154,683,303,210,48,26,108015],[155,679,335,197,37,27,82069],[156,623,315,190,47,32,87285],[157,681,304,239,40,36,127814],[158,170,85,108,23,6,90827],[159,43,14,21,17,6,11271],[160,632,256,150,38,21,121638],[161,646,259,152,28,30,130455],[162,694,258,230,42,26,131036],[163,682,311,215,33,27,122492],[164,791,305,222,32,39,109214],[165,123,81,113,19,6,103090],[166,36,18,22,14,0,82517],[167,651,261,198,33,33,100866],[168,730,259,195,31,31,82120],[169,744,269,223,36,42,110399],[170,671,297,231,36,31,118234],[171,775,329,228,42,38,124514],[172,177,75,94,18,15,130056],[173,30,10,22,7,2,130612],[174,586,202,179,49,27,120182],[175,648,248,162,49,27,105999],[176,613,262,229,43,42,99501],[177,621,281,207,23,27,122556],[178,610,255,246,31,42,129373],[179,304,159,123,30,16,123656],[180,52,24,23,8,6,13296],[181,641,250,206,36,19,131052],[182,570,243,173,58,30,78657],[183,623,238,233,38,29,82962],[184,719,348,287,68,36,104330],[185,125,53,61,31,9,51378],[186,85,57,63,30,13,39239],[187,40,14,18,17,1,37057],[188,529,228,189,39,21,115513],[189,596,295,201,51,35,100331],[190,532,259,170,51,31,129361],[191,744,293,249,62,40,131054],[192,736,318,257,61,46,123604],[193,219,113,109,55,16,40738],[194,27,7,14,8,3,20078],[195,506,210,140,34,19,126250],[196,624,247,205,44,20,60317],[197,705,273,238,40,37,119110],[198,640,241,238,38,17,85141],[199,698,306,247,43,38,125878],[200,120,61,97,26,9,130891],[201,23,19,32,19,3,127237],[202,511,244,176,41,15,56018],[203,647,280,228,48,31,84406],[204,618,239,222,54,25,84086],[205,572,315,197,43,30,94226],[206,698,322,270,64,41,113503],[207,167,109,95,23,8,52041],[208,42,17,34,7,4,5682],[209,515,238,192,58,27,115893],[210,670,287,237,56,34,130764],[211,645,261,237,49,32,131064],[212,780,292,213,61,28,349729],[213,841,308,244,75,56,67575],[214,116,74,93,39,9,33919],[215,36,23,24,13,3,22252],[216,583,207,251,45,21,56450],[217,619,231,207,46,40,113320],[218,632,260,231,41,35,120466],[219,652,259,204,36,26,131057],[220,673,284,214,38,38,131048],[221,154,70,85,22,7,128124],[222,30,13,11,11,4,47414],[223,587,263,173,30,24,78977],[224,696,274,226,42,30,68070],[225,594,239,208,29,21,80363],[226,715,276,225,28,32,48505],[227,562,276,201,40,18,116681],[228,125,82,92,30,3,108045],[229,43,23,17,23,3,14546],[230,559,228,176,50,18,124091],[231,677,255,203,37,23,130714],[232,762,275,249,53,49,131052],[233,649,290,268,58,41,91181],[234,747,322,261,62,36,108158],[235,165,105,114,58,22,62048],[236,40,22,24,20,2,16884],[237,557,255,185,53,28,105869],[238,683,276,216,81,40,124580],[239,664,275,251,71,35,128990],[240,701,298,242,71,43,131065],[241,738,280,249,72,32,130905],[242,96,59,112,44,22,54496],[243,47,32,51,16,15,22713],[244,122,84,124,104,39,67149],[245,568,254,218,59,43,98111],[246,792,289,227,68,54,113297],[247,749,297,229,55,29,120771],[248,852,309,269,82,62,126843],[249,138,57,91,31,7,130395],[250,38,16,13,14,1,87644],[251,614,242,159,40,25,91054],[252,680,241,194,68,38,114035],[253,647,295,231,84,54,90224],[254,661,310,252,96,57,78217],[255,827,323,266,81,67,119678],[256,173,88,91,51,10,40884],[257,25,14,22,21,3,42841],[258,580,247,174,45,26,129952],[259,731,253,202,77,37,130685],[260,639,280,228,67,43,130968],[261,712,318,272,65,50,108026],[262,718,307,245,55,34,110780],[263,151,82,108,48,24,35863],[264,36,18,17,26,6,83744],[265,533,239,210,71,31,115571],[266,667,301,271,51,30,126047],[267,634,277,238,58,31,124868],[268,727,291,242,33,30,131054],[269,778,315,247,54,24,130945],[270,92,59,91,20,4,96398],[271,35,12,21,11,4,95389],[272,624,266,212,36,20,78012],[273,738,308,254,64,37,75479],[274,701,318,210,74,45,124023],[275,738,297,218,50,31,370571],[276,816,374,263,66,45,127353],[277,150,64,110,46,8,126076],[278,32,13,20,8,1,131027],[279,584,237,178,31,19,102722],[280,708,262,214,69,21,83423],[281,732,283,222,54,35,76466],[282,727,302,242,48,25,96116],[283,786,352,280,48,42,107570],[284,161,96,97,40,9,66951],[285,48,21,25,18,4,67697],[286,39,43,72,14,8,29524],[287,635,257,196,66,33,128131],[288,656,294,253,66,20,129919],[289,669,273,251,73,35,131070],[290,839,349,288,68,47,120023],[291,125,76,112,65,14,93680],[292,40,25,56,20,21,23180],[293,672,237,211,72,41,82042],[294,700,266,274,79,39,95445],[295,684,296,272,97,48,123561],[296,736,311,293,69,34,122161],[297,768,305,307,85,58,131044],[298,216,108,143,24,4,40652],[299,30,11,29,6,0,110524],[300,43,28,65,21,11,32957],[301,627,218,249,65,36,87429],[302,778,300,272,45,32,81592],[303,736,328,218,47,37,59519],[304,723,351,238,56,18,111516],[305,172,106,104,34,22,57829],[306,57,23,26,21,19,28496],[307,592,242,191,52,32,124840],[308,730,293,228,51,39,131047],[309,758,285,268,42,28,129502],[310,733,289,244,62,31,64007],[311,782,325,308,67,36,74031],[312,188,109,109,24,4,67164],[313,42,15,22,11,1,58355],[314,577,240,251,50,24,100871],[315,699,306,299,61,35,130613],[316,740,311,283,52,39,130681],[317,689,300,273,49,28,130921],[318,805,378,312,39,51,131047],[319,211,113,141,23,10,113602],[320,44,13,27,6,1,101626],[321,590,256,191,45,33,85701],[322,612,286,215,55,34,90937],[323,670,297,242,52,42,125879],[324,615,309,310,43,27,112650],[325,677,349,264,58,45,126174],[326,184,132,106,34,12,128106],[327,42,19,11,6,4,130827],[328,574,253,168,41,61,50330],[329,663,304,255,53,55,104428],[330,800,365,297,65,210,39277],[331,132,71,61,39,175,28473],[332,668,299,234,55,1256,null],[333,137,82,103,51,369,108973],[334,37,13,25,29,104,null],[335,623,252,257,64,1189,81965],[336,712,317,268,90,1376,56272],[337,743,342,331,73,1486,1],[338,626,316,299,87,1325,173],[339,717,352,304,75,1446,1],[340,282,89,140,55,563,1701],[341,37,27,34,20,116,50939],[342,595,240,230,65,1128,null],[343,736,310,294,91,1426,35741],[344,695,307,265,103,1368,75349],[345,740,276,255,98,1364,68776],[346,733,302,293,78,1390,109852],[347,232,101,142,47,520,1],[348,33,24,26,17,98,1],[349,603,238,206,49,1030,106276],[350,696,294,232,82,188,74496],[351,657,237,199,47,35,64562],[352,576,265,203,38,19,112483],[353,771,325,237,28,33,128997],[354,181,89,94,37,16,124150],[355,24,11,17,16,4,114379],[356,563,248,169,43,18,130920],[357,627,275,219,56,20,130974],[358,638,298,254,71,186,94095],[359,36,13,5,15,34,49061],[360,31,10,10,10,1,16957],[361,34,15,30,22,3,88300],[362,29,14,16,15,2,77779],[363,408,187,123,59,11,112908],[364,598,264,168,69,12,59419],[365,558,266,213,69,15,114741]],"1976":[[1,104,46,37,28,4,86881],[2,325,189,127,52,18,113908],[3,80,35,43,72,8,88210],[4,27,9,16,20,5,65588],[5,493,177,106,51,17,130630],[6,534,212,166,55,17,130987],[7,660,252,176,41,18,130913],[8,692,276,183,40,15,116231],[9,661,313,203,46,18,96552],[10,163,90,95,34,4,83850],[11,44,16,25,16,3,76070],[12,487,207,183,33,14,115016],[13,659,273,220,43,16,99117],[14,640,272,197,46,25,103507],[15,675,294,205,49,11,127357],[16,643,329,204,50,33,131058],[17,252,111,96,44,7,60580],[18,37,15,8,2,1,45038],[19,540,254,207,32,12,105174],[20,619,242,212,67,17,95809],[21,642,283,261,91,25,114961],[22,712,293,271,73,42,120243],[23,759,304,298,72,63,131052],[24,283,115,109,74,56,100951],[25,50,19,23,12,4,51398],[26,436,194,186,48,31,95847],[27,702,306,225,57,54,89919],[28,696,278,249,74,57,109560],[29,741,345,250,63,68,121146],[30,788,380,267,61,71,129870],[31,276,112,113,34,34,130548],[32,57,11,22,13,8,130657],[33,612,232,198,40,45,111701],[34,737,309,252,54,54,122715],[35,645,315,220,69,56,92147],[36,744,322,232,50,31,113609],[37,741,347,242,46,65,81875],[38,324,124,114,35,29,104877],[39,65,16,17,25,5,41223],[40,624,252,231,41,35,130837],[41,690,285,240,43,46,130904],[42,693,302,217,41,65,107119],[43,705,322,227,37,61,126900],[44,862,425,314,52,55,129392],[45,275,151,114,47,36,125185],[46,63,23,35,18,7,107960],[47,55,38,54,24,13,126749],[48,536,256,245,48,50,130810],[49,757,325,296,72,59,131069],[50,820,331,270,60,53,189246],[51,724,359,264,49,62,92361],[52,309,136,148,61,40,69427],[53,67,36,33,21,4,829716],[54,583,260,223,50,50,127180],[55,805,293,264,59,60,250645],[56,731,320,223,70,62,131039],[57,873,294,258,46,64,115004],[58,876,346,252,41,83,85402],[59,256,119,116,58,36,71800],[60,40,18,24,9,1,39881],[61,546,254,199,36,82,46914],[62,752,255,219,60,54,104955],[63,793,299,228,44,89,126995],[64,790,338,235,37,71,131023],[65,839,327,239,57,90,125022],[66,253,85,77,22,29,28069],[67,42,9,10,5,4,115768],[68,670,234,176,25,51,88256],[69,750,270,235,40,77,78326],[70,757,325,257,47,73,123770],[71,747,297,236,53,77,124729],[72,780,363,267,38,81,130997],[73,264,106,97,28,40,131059],[74,44,17,23,5,5,112798],[75,578,259,195,37,56,40740],[76,765,338,243,36,72,43052],[77,831,337,225,60,168,87650],[78,840,320,262,88,1268,29251],[79,880,373,341,83,1672,1],[80,255,119,111,45,526,1],[81,49,11,20,15,95,null],[82,673,299,208,54,1230,72112],[83,796,303,253,75,1424,null],[84,954,349,297,91,1689,1],[85,731,270,232,85,1316,1],[86,959,339,277,76,1648,1],[87,293,73,110,56,529,1],[88,46,25,22,31,124,null],[89,600,233,164,62,1056,1],[90,859,300,224,76,1452,77150],[91,862,280,246,82,1465,59375],[92,739,306,219,78,1285,127468],[93,802,347,262,69,590,102923],[94,342,134,92,42,46,90333],[95,18,16,20,31,11,82654],[96,652,286,182,54,713,56087],[97,789,387,218,53,95,55792],[98,710,320,229,69,52,115014],[99,717,378,238,55,70,127793],[100,818,355,265,49,66,131036],[101,266,143,111,29,40,76305],[102,52,19,20,18,2,58808],[103,586,293,180,45,66,81341],[104,773,341,219,58,69,117784],[105,771,347,257,58,65,113043],[106,807,333,230,54,46,123244],[107,640,315,239,59,84,130206],[108,294,109,96,28,32,129411],[109,46,31,20,21,10,130614],[110,415,184,127,31,18,131062],[111,737,335,221,54,55,107390],[112,871,358,235,65,59,108787],[113,737,329,218,48,48,121434],[114,787,413,260,47,43,100163],[115,303,150,127,40,28,110917],[116,54,42,36,27,9,110300],[117,654,292,203,51,32,129261],[118,816,324,251,69,77,130962],[119,769,428,283,64,60,113016],[120,719,381,268,63,70,127423],[121,796,382,342,73,73,131000],[122,295,119,145,51,40,130826],[123,256,109,84,31,30,83907],[124,570,242,225,53,41,95524],[125,1000,358,284,73,114,125990],[126,759,354,282,63,59,128726],[127,650,260,219,61,57,129186],[128,740,349,249,52,61,130902],[129,455,119,107,47,112,113173],[130,257,75,47,17,37,7224],[131,675,246,187,42,58,78549],[132,888,302,247,51,104,82190],[133,882,354,223,43,75,254869],[134,783,289,209,29,68,130821],[135,891,362,237,40,80,131051],[136,217,94,93,37,28,63376],[137,47,16,12,18,13,89754],[138,625,257,184,37,70,81495],[139,753,293,225,34,81,97813],[140,854,265,267,58,86,104719],[141,680,258,253,49,74,130949],[142,743,352,253,58,54,131048],[143,434,169,161,40,47,57082],[144,91,27,34,11,9,76987],[145,603,242,206,42,54,30196],[146,775,278,237,52,215,20959],[147,581,203,175,43,949,129063],[148,662,243,230,54,1187,1],[149,681,270,231,44,1223,null],[150,252,86,75,28,441,null],[151,53,20,47,14,133,null],[152,47,19,49,12,127,null],[153,724,286,232,45,1287,null],[154,800,285,218,40,1340,null],[155,826,311,274,50,1459,124943],[156,862,352,283,75,1564,3147],[157,335,137,118,28,618,null],[158,77,34,49,16,176,null],[159,613,233,179,52,1076,1],[160,916,289,261,46,1510,1],[161,743,271,259,52,1317,86356],[162,668,247,268,91,1273,1],[163,613,243,285,71,1209,1],[164,263,76,98,43,480,null],[165,415,91,86,29,619,1],[166,649,246,206,59,1157,21762],[167,905,303,237,66,1508,null],[168,827,288,234,92,1436,85709],[169,716,254,222,89,1277,1],[170,837,339,296,82,1552,null],[171,430,156,148,76,808,25775],[172,111,24,45,32,211,null],[173,701,295,236,56,1287,1],[174,798,291,253,46,1384,null],[175,844,261,231,52,1386,1],[176,687,245,252,57,1237,null],[177,689,305,250,44,1284,1],[178,318,126,121,28,591,1],[179,61,18,35,13,126,1],[180,673,221,200,29,1118,1],[181,793,262,187,30,1272,null],[182,698,302,232,55,1281,128774],[183,688,276,212,62,1216,129846],[184,801,323,275,55,1042,130924],[185,246,105,112,33,21,131067],[186,27,17,19,16,0,120568],[187,60,21,32,16,3,16820],[188,603,241,193,39,19,101084],[189,659,291,214,42,17,84383],[190,653,283,221,46,9,95420],[191,791,329,237,39,36,77460],[192,155,101,89,43,11,55560],[193,43,21,24,11,8,31442],[194,583,211,161,36,13,127410],[195,729,287,196,49,15,131055],[196,663,251,190,49,18,124649],[197,666,253,222,54,27,110274],[198,720,319,220,55,17,101723],[199,129,69,101,31,11,79172],[200,56,20,33,39,4,37886],[201,561,212,169,47,8,82374],[202,595,229,179,51,14,83665],[203,703,262,205,47,17,102138],[204,606,253,264,58,18,122487],[205,773,331,309,50,24,131027],[206,158,70,109,39,14,51153],[207,43,18,27,37,0,9139],[208,554,226,162,30,23,49251],[209,645,268,208,45,27,54460],[210,626,260,224,42,16,76022],[211,682,304,230,33,10,84280],[212,737,351,305,33,33,124120],[213,165,108,109,33,8,16351],[214,62,35,37,17,2,94786],[215,472,186,176,26,8,127210],[216,714,315,262,49,24,130739],[217,558,277,278,55,25,131007],[218,712,265,221,49,18,64481],[219,704,250,260,66,21,100524],[220,218,93,103,40,13,55556],[221,45,20,19,19,4,69054],[222,542,207,203,46,10,48751],[223,634,238,215,63,19,55391],[224,662,240,233,56,27,45775],[225,616,263,197,37,14,127755],[226,651,258,202,25,7,125921],[227,146,66,84,26,7,130916],[228,52,13,29,11,1,18898],[229,550,225,167,32,4,35507],[230,553,215,208,30,7,33528],[231,656,235,214,35,7,76059],[232,726,235,214,49,14,92777],[233,622,241,226,54,13,70650],[234,131,59,68,26,7,92568],[235,40,17,18,25,4,30731],[236,529,172,140,41,9,74333],[237,639,227,232,32,17,130015],[238,708,231,222,48,13,130405],[239,625,202,240,42,9,131049],[240,709,257,281,60,14,68537],[241,162,76,103,39,5,110452],[242,55,23,20,13,2,73841],[243,538,193,160,37,4,42732],[244,728,267,217,56,14,106797],[245,600,276,231,68,9,129709],[246,697,261,234,67,18,123401],[247,681,301,236,44,13,125127],[248,299,142,136,63,7,128897],[249,66,28,45,16,3,128288],[250,52,39,64,37,6,131004],[251,586,197,195,55,14,80690],[252,646,250,193,36,16,108970],[253,636,273,214,48,14,100066],[254,702,276,256,48,12,101504],[255,202,102,140,31,5,60048],[256,51,30,28,18,4,33873],[257,612,278,235,55,10,94351],[258,746,260,303,45,14,129361],[259,773,324,290,45,10,131053],[260,739,264,315,29,10,123792],[261,795,343,316,73,10,129601],[262,201,111,102,55,2,121356],[263,175,78,46,9,0,122781],[264,614,261,211,37,14,125870],[265,774,321,266,49,11,130877],[266,664,289,243,87,9,130810],[267,746,316,272,60,6,130004],[268,695,305,272,55,8,131022],[269,287,102,131,23,2,131068],[270,14,5,17,18,6,123587],[271,569,223,210,30,14,106048],[272,750,283,227,37,14,123514],[273,683,279,270,73,11,123411],[274,634,260,268,50,10,130777],[275,736,268,243,62,9,130933],[276,375,113,101,29,2,94629],[277,39,20,14,20,1,55268],[278,607,229,153,25,4,122766],[279,740,260,212,25,8,98484],[280,646,252,203,40,7,122176],[281,745,270,251,33,3,126131],[282,805,313,279,44,10,131026],[283,259,99,108,24,3,130610],[284,68,17,22,6,3,117907],[285,42,25,27,14,3,57662],[286,563,220,202,30,16,113094],[287,611,265,188,35,12,108249],[288,800,301,231,31,17,118676],[289,859,371,234,32,30,115816],[290,135,96,87,15,8,32473],[291,53,9,16,6,0,17804],[292,567,256,180,34,7,124128],[293,685,283,203,39,7,131023],[294,658,294,228,32,10,127821],[295,739,295,281,28,1,123815],[296,674,311,282,34,15,75064],[297,216,97,97,17,10,95081],[298,56,21,21,6,2,26118],[299,63,30,26,11,3,45836],[300,565,221,175,45,14,114192],[301,675,312,220,48,22,130868],[302,684,266,228,46,12,131012],[303,719,297,243,40,13,130857],[304,199,96,86,36,1,80267],[305,43,27,23,13,1,14788],[306,508,223,169,33,3,87719],[307,638,277,212,44,4,106315],[308,652,296,192,49,5,128818],[309,659,324,214,45,6,129179],[310,817,363,251,53,10,130029],[311,245,111,113,22,4,131066],[312,64,29,22,5,0,11465],[313,572,240,185,28,9,102565],[314,662,297,196,27,7,92154],[315,684,344,237,38,8,93891],[316,695,308,212,36,12,112631],[317,698,322,258,51,13,96767],[318,207,97,123,25,2,110940],[319,48,14,14,3,1,66525],[320,587,274,166,38,5,128261],[321,658,313,209,44,5,130665],[322,736,311,221,37,7,130852],[323,593,283,238,29,4,111257],[324,736,357,263,33,8,79051],[325,129,82,110,26,0,74702],[326,42,19,21,10,4,24505],[327,566,239,214,29,6,97695],[328,600,279,247,48,3,130063],[329,671,389,317,62,10,130878],[330,247,113,113,36,8,130958],[331,554,265,224,52,2,98603],[332,126,100,103,38,4,83680],[333,48,19,21,14,0,74936],[334,556,251,185,34,5,107289],[335,666,304,258,67,8,114809],[336,667,303,247,70,13,129453],[337,503,209,212,61,4,118568],[338,669,278,251,37,10,130817],[339,165,85,88,30,8,131029],[340,35,14,21,11,2,108414],[341,445,213,169,27,10,52048],[342,603,261,245,35,14,80661],[343,612,287,223,59,28,79917],[344,575,270,235,76,13,214810],[345,685,311,186,70,19,53552],[346,188,75,81,34,9,80625],[347,40,18,13,6,2,111711],[348,502,230,193,27,7,128794],[349,560,274,192,26,12,131016],[350,642,250,176,33,7,63289],[351,609,219,207,37,7,66938],[352,547,258,217,33,16,94201],[353,161,66,68,18,5,68350],[354,43,20,11,0,0,36084],[355,543,214,143,25,11,104816],[356,650,246,191,24,11,108098],[357,592,228,165,38,13,97091],[358,587,274,181,29,7,346738],[359,58,44,39,14,3,98158],[360,14,3,4,13,0,124656],[361,30,9,8,3,0,115620],[362,411,132,119,36,5,131062],[363,467,159,105,36,8,99822],[364,484,170,134,36,10,61445],[365,606,177,150,41,10,80992],[366,45,26,41,26,5,69521]],"1977":[[1,14,5,10,2,0,63715],[2,27,11,9,5,0,41335],[3,294,127,102,20,0,78788],[4,361,166,128,28,0,55418],[5,453,170,179,27,0,60792],[6,386,187,149,21,1,51676],[7,481,223,214,26,0,90799],[8,78,51,60,18,0,116375],[9,46,11,12,8,0,119170],[10,387,183,154,23,0,130975],[11,500,199,240,13,1,130891],[12,449,184,210,27,0,128005],[13,431,219,194,26,0,176292],[14,502,297,247,25,0,118720],[15,151,65,76,13,0,65075],[16,27,13,14,2,0,53560],[17,432,226,176,12,0,117511],[18,559,250,199,35,0,130324],[19,554,242,250,22,0,129495],[20,400,226,212,22,0,129396],[21,472,252,209,32,0,131069],[22,105,70,81,31,0,125627],[23,41,22,29,22,0,96108],[24,466,241,178,23,1,115757],[25,495,258,190,33,0,92521],[26,472,254,187,29,0,119479],[27,527,252,210,25,0,112267],[28,598,276,252,37,0,127261],[29,97,73,91,16,0,107634],[30,42,22,21,10,0,81914],[31,441,230,179,19,0,131053],[32,432,238,180,33,1,130949],[33,471,214,231,37,0,129621],[34,469,265,221,28,0,129056],[35,443,257,233,31,1,220326],[36,59,53,73,22,0,97000],[37,39,27,22,14,0,130699],[38,478,215,175,37,1,175222],[39,526,245,235,30,1,188513],[40,578,289,231,40,0,126679],[41,480,250,258,39,0,131064],[42,419,257,244,27,0,118375],[43,65,62,69,25,0,211380],[44,44,16,27,11,0,27965],[45,379,179,164,28,0,220850],[46,461,221,192,47,0,230146],[47,455,209,195,29,0,236689],[48,576,249,212,36,0,191205],[49,528,271,270,28,0,212076],[50,154,71,95,14,0,95897],[51,43,17,18,8,0,21080],[52,46,17,22,8,0,207019],[53,444,209,165,27,0,112896],[54,530,238,204,38,1,234718],[55,505,250,218,33,0,251416],[56,589,272,231,51,0,271215],[57,146,65,95,33,0,269507],[58,49,17,16,7,0,19105],[59,513,237,180,47,0,282309],[60,513,246,225,29,0,269799],[61,555,263,205,33,1,170778],[62,489,258,221,22,0,282277],[63,599,313,297,30,1,118178],[64,118,75,89,21,1,200881],[65,54,21,28,5,0,83806],[66,486,215,180,27,0,97947],[67,555,261,224,19,0,60056],[68,625,245,221,23,1,114723],[69,560,261,217,38,0,231697],[70,582,325,256,32,0,131054],[71,146,74,113,19,0,93087],[72,40,9,21,10,0,57001],[73,492,250,187,22,0,113281],[74,568,271,259,30,0,110690],[75,519,258,233,37,2,181167],[76,533,236,240,22,0,119216],[77,585,318,269,33,0,191314],[78,164,90,128,19,0,131000],[79,59,24,28,6,1,177611],[80,456,223,192,29,0,176991],[81,572,257,233,35,0,120178],[82,598,274,238,24,0,126386],[83,607,299,262,25,0,123590],[84,527,295,289,38,0,128446],[85,187,98,120,20,0,261331],[86,34,33,23,5,0,130886],[87,542,256,194,43,0,116873],[88,527,323,250,53,0,114905],[89,501,242,267,48,2,123300],[90,517,278,283,55,0,130299],[91,466,252,245,34,0,130975],[92,330,132,142,29,0,82370],[93,80,40,31,7,0,73504],[94,501,252,204,26,0,120641],[95,574,247,230,34,0,114473],[96,564,263,248,39,0,129586],[97,573,289,234,38,0,129376],[98,375,197,204,25,0,130963],[99,104,78,95,24,0,124406],[100,25,10,11,4,0,61421],[101,334,147,125,23,0,123139],[102,527,229,204,26,0,92148],[103,552,257,225,36,0,121542],[104,552,245,254,41,1,81406],[105,610,295,247,46,0,126801],[106,126,76,113,23,0,108980],[107,45,21,23,13,0,124944],[108,537,195,186,36,0,130914],[109,564,242,253,30,0,131022],[110,562,287,230,35,0,129834],[111,502,283,242,30,1,118727],[112,532,339,282,39,1,115298],[113,123,78,118,22,0,108064],[114,38,21,42,12,0,98867],[115,441,247,229,35,0,129630],[116,530,278,269,49,0,131011],[117,568,287,279,56,1,123906],[118,625,328,279,25,0,121713],[119,556,313,254,33,1,125116],[120,126,107,112,34,1,101378],[121,43,32,24,5,0,76275],[122,444,244,173,25,1,116300],[123,466,259,192,26,0,129282],[124,601,338,325,56,0,131059],[125,553,288,282,41,0,124006],[126,565,345,287,37,0,118057],[127,168,84,101,9,1,86492],[128,39,22,19,7,0,74078],[129,494,253,217,27,1,128346],[130,482,217,242,24,1,131016],[131,635,310,311,30,0,130982],[132,415,239,210,30,2,111182],[133,637,317,300,36,0,130851],[134,256,98,124,24,0,131001],[135,175,37,57,21,0,75655],[136,478,235,215,33,1,126604],[137,614,268,238,38,0,98670],[138,677,309,297,35,1,103790],[139,361,172,208,24,0,125889],[140,663,339,319,37,1,125331],[141,155,94,101,26,0,128596],[142,61,13,18,3,0,130804],[143,501,225,224,25,0,130553],[144,503,246,239,37,0,116619],[145,589,271,245,24,0,105050],[146,616,285,277,29,0,125237],[147,611,315,331,33,0,129188],[148,165,80,104,12,0,118887],[149,40,18,24,11,0,127525],[150,34,20,20,4,0,130545],[151,497,214,191,25,0,131056],[152,532,241,204,31,0,106485],[153,539,263,241,29,0,116647],[154,599,257,265,43,0,119154],[155,118,64,80,6,0,54842],[156,31,13,23,4,0,66663],[157,503,226,184,11,0,124753],[158,538,237,161,23,0,128169],[159,623,254,246,24,1,130553],[160,584,245,227,16,0,131043],[161,620,288,225,24,0,124600],[162,115,52,83,9,0,121123],[163,34,14,14,1,0,67230],[164,466,207,218,16,0,112252],[165,536,248,220,18,0,100302],[166,478,236,222,28,0,95602],[167,512,266,241,27,0,126090],[168,538,264,254,33,0,130720],[169,98,53,92,5,0,131061],[170,29,16,36,4,0,111024],[171,453,257,195,38,0,127718],[172,503,238,222,32,0,100626],[173,486,261,245,33,0,61856],[174,613,249,240,34,0,106377],[175,553,269,230,37,0,91222],[176,84,56,68,18,0,74519],[177,40,8,20,6,0,25919],[178,468,189,155,29,0,124821],[179,578,218,231,34,0,130317],[180,579,206,230,34,0,131017],[181,545,209,209,37,0,122637],[182,604,249,245,38,0,127529],[183,155,72,83,21,0,130076],[184,31,16,15,4,0,17521],[185,11,18,11,3,0,64599],[186,474,183,161,30,0,124633],[187,532,243,210,40,1,58170],[188,603,253,208,37,0,126645],[189,635,281,240,40,0,126039],[190,145,70,92,24,0,126308],[191,45,12,22,5,0,130093],[192,451,209,175,21,0,46165],[193,540,244,224,37,0,117084],[194,531,249,264,22,0,125355],[195,494,259,213,37,0,63207],[196,481,262,233,42,0,102900],[197,117,57,101,13,0,87718],[198,49,17,19,6,1,33162],[199,495,216,188,22,0,86342],[200,566,266,182,30,0,121435],[201,515,296,202,41,0,131056],[202,538,279,241,51,0,120267],[203,535,264,224,37,1,117794],[204,126,93,113,26,0,98494],[205,45,20,21,3,0,50118],[206,505,236,195,37,0,103823],[207,516,262,215,42,1,123312],[208,512,297,208,29,0,127478],[209,536,263,256,37,1,130660],[210,567,301,224,30,0,131035],[211,131,70,124,14,0,97402],[212,36,20,22,7,0,22396],[213,444,256,169,22,0,104782],[214,541,281,210,25,2,115289],[215,543,247,211,30,2,108862],[216,482,221,180,30,0,127872],[217,639,268,217,38,1,131003],[218,268,133,118,19,0,130451],[219,43,20,18,5,0,28425],[220,479,209,178,31,0,110359],[221,564,266,188,39,0,127165],[222,630,308,205,37,1,122678],[223,583,233,188,25,0,129785],[224,592,271,223,31,1,131009],[225,179,80,101,14,0,109767],[226,36,10,13,9,0,9497],[227,418,211,126,21,0,112262],[228,540,274,195,38,1,91768],[229,471,252,204,31,0,120908],[230,506,268,248,35,1,122622],[231,528,255,246,41,0,130337],[232,161,80,100,21,0,129202],[233,46,16,27,12,0,129074],[234,443,223,186,43,0,131020],[235,491,211,222,26,0,121641],[236,581,260,247,34,0,100567],[237,548,249,264,29,1,123881],[238,608,258,262,39,0,112116],[239,94,51,100,18,0,56256],[240,32,12,30,2,0,98385],[241,414,209,256,37,0,130446],[242,536,234,262,26,0,129989],[243,575,302,278,28,1,130993],[244,576,253,282,44,0,122550],[245,659,308,326,29,0,121287],[246,170,130,128,13,0,115860],[247,49,35,41,8,0,97150],[248,20,24,37,3,0,100812],[249,462,194,252,21,0,130879],[250,571,221,255,27,2,130991],[251,569,266,263,23,1,125531],[252,642,311,291,28,0,121647],[253,112,119,105,11,0,109771],[254,32,15,18,5,0,44099],[255,514,239,228,26,0,110067],[256,608,252,215,24,2,99937],[257,558,269,237,29,0,122808],[258,470,233,237,33,1,130809],[259,702,311,327,23,1,131027],[260,78,60,113,16,0,123984],[261,38,13,26,7,0,61160],[262,515,273,232,28,1,97044],[263,646,271,259,24,0,93275],[264,624,289,302,37,1,111111],[265,610,303,328,27,0,119667],[266,572,292,299,49,0,130903],[267,107,67,74,32,0,131039],[268,49,14,10,5,0,46852],[269,498,239,194,25,0,109626],[270,555,238,204,33,0,122949],[271,526,231,220,40,0,99015],[272,595,225,214,42,0,127585],[273,567,209,254,33,0,313482],[274,265,126,120,19,0,130311],[275,56,18,41,3,0,106320],[276,491,181,164,18,0,112554],[277,533,247,199,35,0,88805],[278,581,249,247,30,1,119089],[279,419,202,190,23,0,121349],[280,750,364,274,36,0,130738],[281,100,65,85,20,0,99067],[282,172,40,57,11,0,31636],[283,31,18,33,13,0,102129],[284,418,231,188,32,1,129713],[285,700,326,240,24,0,128373],[286,640,287,230,53,1,130614],[287,544,242,226,45,0,131024],[288,207,80,110,23,0,124895],[289,137,61,61,18,0,89168],[290,489,231,218,35,0,118026],[291,507,251,252,46,0,120850],[292,619,280,266,48,0,130992],[293,528,255,248,45,0,125362],[294,642,356,316,36,1,129057],[295,140,78,104,22,0,121064],[296,70,37,52,6,0,97664],[297,44,21,45,8,0,11602],[298,509,211,218,41,0,130990],[299,608,303,252,49,1,127672],[300,569,274,263,38,0,126377],[301,615,292,246,59,1,130966],[302,252,104,135,26,0,131019],[303,27,22,18,5,0,76866],[304,500,263,206,38,0,107181],[305,462,237,199,31,0,120025],[306,548,250,245,38,1,130056],[307,565,290,245,48,0,130817],[308,450,272,286,35,0,128737],[309,224,121,126,21,0,127419],[310,27,11,22,2,0,77093],[311,405,195,201,46,0,130506],[312,516,288,233,51,0,131058],[313,492,227,224,64,1,116642],[314,471,271,254,44,0,116754],[315,610,325,325,58,0,121825],[316,193,103,108,23,0,118281],[317,33,38,25,12,0,116070],[318,483,241,190,40,0,130927],[319,578,295,264,41,0,131059],[320,555,269,254,42,0,108372],[321,619,261,277,49,0,115701],[322,671,334,334,76,4,121393],[323,105,115,143,43,0,90877],[324,33,11,36,12,0,113076],[325,406,249,233,40,0,108533],[326,449,270,227,40,0,120044],[327,647,315,265,34,0,128452],[328,144,77,109,18,0,90805],[329,483,299,263,39,1,127851],[330,103,86,113,21,0,121274],[331,42,19,22,7,0,9903],[332,507,234,181,30,0,130660],[333,536,299,211,56,0,131052],[334,600,338,300,39,1,121386],[335,541,288,258,45,1,125357],[336,630,322,322,46,0,125725],[337,138,75,141,32,0,111590],[338,39,9,19,7,0,63086],[339,499,270,212,30,1,119705],[340,477,338,254,39,0,121021],[341,645,341,309,38,0,129253],[342,547,278,271,44,1,123919],[343,553,298,299,47,1,130920],[344,150,112,142,153,1,110028],[345,44,22,20,7,1,111765],[346,495,255,219,41,1,130869],[347,494,287,242,57,0,126091],[348,474,309,274,53,0,120032],[349,553,284,274,67,0,117232],[350,514,284,293,57,0,112831],[351,91,82,106,27,0,94538],[352,44,17,13,9,0,21680],[353,496,252,222,39,0,114831],[354,510,324,249,39,0,119063],[355,517,270,245,49,0,129890],[356,491,301,250,36,1,130767],[357,512,326,305,45,0,131012],[358,118,64,85,24,0,116932],[359,4,2,0,0,0,10620],[360,45,30,20,9,0,36094],[361,370,206,145,34,0,38700],[362,464,257,197,34,0,116481],[363,430,251,194,45,0,126169],[364,485,261,162,36,0,125160],[365,69,51,70,17,0,96903]],"1978":[[1,34,16,28,19,5,122746],[2,79,46,41,30,5,129432],[3,403,195,180,54,5,56895],[4,605,266,211,49,2,121537],[5,590,285,267,59,6,93010],[6,568,268,295,65,6,106782],[7,118,71,127,38,1,64979],[8,51,41,29,17,2,53652],[9,535,250,229,26,1,42650],[10,568,256,263,54,2,122744],[11,545,273,238,67,8,129427],[12,557,265,285,89,7,131043],[13,597,273,257,78,5,128783],[14,125,83,98,50,6,124631],[15,74,29,33,41,1,47951],[16,515,181,195,67,3,106025],[17,651,286,302,60,2,123350],[18,589,272,276,71,6,127851],[19,595,289,293,89,6,129455],[20,691,297,298,71,9,122476],[21,112,75,113,42,5,130879],[22,61,22,24,21,4,96577],[23,535,208,193,49,4,130045],[24,627,250,261,75,5,130626],[25,581,268,279,55,10,131066],[26,579,285,295,69,7,125466],[27,574,253,280,57,8,110924],[28,220,133,118,50,1,124450],[29,48,24,36,14,6,50318],[30,516,255,208,41,4,115539],[31,646,314,272,65,5,121876],[32,655,271,297,84,4,130660],[33,614,294,315,65,6,131038],[34,571,320,328,69,7,128546],[35,206,119,122,38,2,108235],[36,68,20,23,22,3,36365],[37,527,233,225,41,3,100307],[38,533,291,252,51,1,129321],[39,616,281,324,49,1,129290],[40,538,296,284,39,1,128434],[41,675,319,317,58,6,130276],[42,128,85,129,39,3,130310],[43,58,23,42,11,6,130897],[44,564,274,214,72,7,129393],[45,615,319,273,75,8,126936],[46,659,259,289,76,3,129087],[47,654,314,288,65,4,110873],[48,710,310,345,74,1,125617],[49,185,119,193,39,6,130825],[50,44,13,42,16,1,79112],[51,35,12,52,15,1,88039],[52,563,219,230,46,5,128907],[53,657,279,308,58,5,130635],[54,597,273,299,91,3,131051],[55,753,336,341,64,2,115696],[56,124,68,125,52,4,106856],[57,56,18,23,17,1,13890],[58,587,235,237,48,3,101353],[59,654,314,276,62,8,112710],[60,583,233,247,51,4,129090],[61,575,261,265,55,2,121886],[62,697,355,301,54,8,127395],[63,137,98,111,40,1,122603],[64,54,25,42,15,2,107244],[65,528,229,225,37,1,131056],[66,624,263,303,60,5,131043],[67,616,282,279,43,5,129961],[68,604,309,273,71,5,119335],[69,729,328,347,54,7,115430],[70,114,78,146,38,1,97975],[71,62,27,33,14,3,99083],[72,492,226,241,27,4,113886],[73,655,292,283,51,5,128302],[74,631,318,318,55,7,130820],[75,635,308,300,74,6,131052],[76,589,337,279,61,3,130786],[77,167,99,170,33,1,127125],[78,88,53,59,18,1,124385],[79,590,260,274,31,2,119229],[80,571,315,310,66,6,102750],[81,660,314,325,55,4,127249],[82,560,311,294,74,2,130353],[83,520,282,304,34,4,131010],[84,107,84,126,20,0,131053],[85,58,23,22,11,1,120124],[86,379,195,143,44,5,128824],[87,542,280,261,68,3,128798],[88,673,312,330,94,7,119945],[89,626,290,305,77,9,105665],[90,634,307,348,73,4,118375],[91,225,78,162,51,5,122439],[92,56,15,33,15,3,130701],[93,568,254,246,52,2,117408],[94,667,271,299,58,4,125953],[95,602,272,301,59,4,130946],[96,547,264,376,60,5,126011],[97,624,288,349,47,2,120358],[98,147,129,156,37,5,84276],[99,43,15,46,8,3,55998],[100,573,247,231,32,3,118599],[101,591,313,347,51,4,113271],[102,603,278,307,51,13,126931],[103,609,307,311,41,6,131055],[104,616,339,348,56,6,118172],[105,162,116,158,47,4,115559],[106,54,28,37,22,3,18603],[107,586,264,237,47,6,118773],[108,712,314,286,49,3,115857],[109,619,332,359,51,4,124356],[110,524,306,306,61,4,130707],[111,590,357,300,42,2,131064],[112,238,141,174,28,2,122921],[113,74,29,36,11,1,82552],[114,550,273,206,32,4,75020],[115,571,261,278,37,3,114490],[116,638,320,295,50,1,125143],[117,635,297,354,42,6,126786],[118,677,351,320,30,5,130077],[119,157,120,135,30,1,118677],[120,59,22,33,13,1,8411],[121,352,146,134,33,6,130223],[122,583,247,260,36,3,131070],[123,645,317,328,50,5,126483],[124,486,239,260,37,6,118628],[125,565,308,312,51,2,128282],[126,176,86,114,36,0,101082],[127,51,26,25,13,1,69304],[128,535,241,219,44,6,104943],[129,597,276,254,43,4,97056],[130,644,295,273,37,2,110605],[131,616,281,290,61,2,85186],[132,687,318,346,44,2,120544],[133,93,66,74,22,0,75826],[134,56,19,37,9,0,23968],[135,422,217,202,37,1,97978],[136,588,293,290,43,3,129150],[137,584,290,316,61,4,130788],[138,585,330,324,75,2,117809],[139,442,282,268,75,5,128554],[140,87,61,163,43,0,116537],[141,277,97,111,15,3,93063],[142,504,251,277,41,2,94229],[143,578,302,336,49,3,105126],[144,593,268,269,63,3,128116],[145,556,307,274,54,3,125613],[146,665,344,318,58,3,154348],[147,91,82,102,33,0,128386],[148,56,12,23,8,0,104484],[149,37,13,28,12,0,81823],[150,517,243,210,29,1,114080],[151,625,279,237,55,2,129420],[152,558,282,232,40,4,130108],[153,663,324,292,34,2,85319],[154,117,79,130,40,6,120765],[155,48,16,29,17,1,58846],[156,470,219,209,39,3,97712],[157,620,312,276,45,4,110769],[158,644,339,259,45,5,128564],[159,550,321,303,47,2,130681],[160,671,378,333,67,3,131048],[161,96,92,99,30,1,123113],[162,40,14,25,20,4,93969],[163,479,215,263,46,2,99301],[164,565,283,274,69,3,237478],[165,538,287,292,71,5,120809],[166,594,326,289,59,8,129198],[167,576,307,334,57,5,127338],[168,92,85,85,28,0,110993],[169,51,19,23,11,2,57319],[170,523,265,189,35,4,130995],[171,560,280,254,47,5,131031],[172,578,272,260,55,5,122787],[173,575,288,229,40,5,59264],[174,539,311,236,41,2,96941],[175,91,51,73,47,3,22490],[176,48,28,22,9,1,69327],[177,505,234,214,42,3,83502],[178,476,273,200,36,6,128340],[179,596,262,232,51,2,111688],[180,507,231,230,43,9,124407],[181,654,302,267,77,9,131061],[182,122,80,83,46,1,130832],[183,48,25,23,29,0,125409],[184,465,235,177,40,8,84920],[185,66,40,46,30,2,118797],[186,517,222,230,57,4,97587],[187,629,303,278,51,2,122826],[188,586,294,326,66,5,110596],[189,110,86,110,37,0,119651],[190,54,16,23,12,1,53472],[191,533,251,256,44,2,89578],[192,587,302,269,78,4,125478],[193,611,266,317,70,7,129535],[194,606,277,306,74,4,130974],[195,508,239,228,44,4,121032],[196,255,95,158,48,7,125947],[197,42,23,44,12,1,36042],[198,590,262,197,56,4,105554],[199,596,255,293,66,5,125547],[200,573,239,239,58,3,129830],[201,578,277,260,55,2,130992],[202,573,251,285,52,4,130831],[203,116,59,91,26,1,122522],[204,55,23,34,12,0,101843],[205,512,236,225,52,4,81455],[206,536,251,252,43,1,111439],[207,570,244,242,58,3,112158],[208,552,260,283,66,4,126511],[209,602,293,276,59,3,130972],[210,61,40,107,23,1,115074],[211,46,21,26,15,1,30716],[212,497,240,174,47,4,128440],[213,586,304,255,46,3,102295],[214,596,386,280,37,1,100932],[215,547,272,223,47,4,116069],[216,544,274,245,51,7,119721],[217,109,66,77,29,1,83377],[218,58,21,17,18,3,52752],[219,476,211,207,42,6,130140],[220,508,245,241,61,10,131055],[221,507,232,209,55,2,119084],[222,473,193,221,43,4,78715],[223,625,286,244,53,6,82937],[224,118,73,90,28,2,107454],[225,45,18,17,4,0,93889],[226,532,227,211,39,2,56927],[227,457,227,194,49,2,112475],[228,626,262,281,95,2,126409],[229,648,249,308,52,3,130297],[230,612,263,288,44,1,123364],[231,60,43,78,21,0,114808],[232,39,19,19,7,2,20267],[233,586,250,200,51,8,110794],[234,592,249,242,31,1,118138],[235,610,250,276,27,4,90993],[236,616,270,269,41,4,82865],[237,594,298,274,33,3,125997],[238,76,62,79,31,0,96053],[239,39,19,37,5,1,27163],[240,498,239,205,38,1,130838],[241,574,236,209,41,5,205177],[242,576,253,284,51,4,123908],[243,573,221,261,55,4,129533],[244,674,260,302,56,4,118215],[245,105,68,116,27,0,111246],[246,37,16,28,9,1,114972],[247,33,16,28,10,0,62294],[248,460,167,194,42,5,128684],[249,598,232,239,49,3,263461],[250,550,225,293,47,7,131021],[251,639,286,304,64,7,119920],[252,110,78,104,34,3,113148],[253,53,15,22,12,0,29024],[254,537,235,217,35,7,119231],[255,532,307,271,37,3,128993],[256,538,273,294,44,1,130910],[257,590,316,306,54,3,130995],[258,630,336,324,47,5,114827],[259,130,83,115,38,0,103567],[260,62,29,45,20,1,91997],[261,511,266,229,95,5,127116],[262,668,300,297,84,5,130878],[263,722,328,323,83,5,120211],[264,605,311,312,62,5,130641],[265,575,271,303,77,6,129373],[266,236,99,147,44,6,129967],[267,46,20,54,30,0,51090],[268,517,223,200,30,4,121503],[269,595,272,258,59,4,113364],[270,668,259,264,73,3,127974],[271,550,258,296,65,3,130894],[272,727,279,312,55,5,105949],[273,93,57,134,55,2,108903],[274,54,25,34,19,5,68250],[275,552,220,243,56,3,113302],[276,597,264,277,61,4,126096],[277,617,295,299,64,4,130436],[278,636,304,325,74,8,130999],[279,695,326,377,53,6,118034],[280,190,82,160,46,4,117803],[281,47,25,38,16,0,117259],[282,36,24,41,16,2,52286],[283,433,222,192,36,3,116927],[284,651,274,290,51,7,129311],[285,597,286,261,48,5,131030],[286,697,335,324,57,3,126784],[287,273,160,149,55,3,125051],[288,65,26,40,27,3,66255],[289,555,259,242,60,2,121997],[290,592,306,282,74,9,129235],[291,672,321,316,82,4,130829],[292,639,305,293,75,2,130916],[293,612,318,324,74,4,122900],[294,319,141,177,38,2,119727],[295,60,44,44,16,0,59828],[296,496,233,263,59,2,85873],[297,581,255,255,45,2,116491],[298,637,310,301,42,2,127302],[299,568,271,355,89,7,131041],[300,523,343,336,66,2,129347],[301,191,109,179,42,1,122793],[302,54,24,40,9,4,130164],[303,528,223,240,46,4,90398],[304,512,278,307,79,7,98664],[305,442,258,245,68,7,126323],[306,568,330,323,55,9,130590],[307,555,308,317,69,6,131011],[308,291,160,169,65,3,121729],[309,49,17,41,20,5,115026],[310,433,251,214,46,1,70239],[311,564,298,294,66,6,124047],[312,554,287,282,61,1,102531],[313,569,329,337,85,3,116787],[314,283,139,202,49,4,111923],[315,123,71,99,20,1,104167],[316,14,9,13,30,1,96422],[317,399,204,207,41,6,127075],[318,358,180,196,27,11,130964],[319,667,296,303,62,4,110579],[320,599,300,307,47,2,129371],[321,609,321,325,70,4,121339],[322,250,145,158,66,1,82520],[323,53,36,47,26,4,104369],[324,536,274,261,71,1,127068],[325,596,329,332,64,6,131029],[326,662,339,407,79,11,126723],[327,159,110,141,24,4,129316],[328,535,332,379,48,2,123986],[329,246,140,186,32,2,117361],[330,41,30,47,18,5,104732],[331,467,256,283,42,5,113787],[332,606,308,377,55,4,129696],[333,579,244,316,66,7,131030],[334,652,299,367,59,5,124148],[335,577,261,323,48,9,109416],[336,132,86,129,20,7,115157],[337,194,62,85,26,3,112967],[338,119,87,137,24,7,332412],[339,392,214,252,55,6,116546],[340,723,326,418,74,4,118185],[341,543,294,335,62,2,107544],[342,617,311,321,69,4,123339],[343,231,123,175,35,2,118490],[344,155,61,62,14,2,106175],[345,459,215,216,40,5,120327],[346,571,255,269,43,4,130345],[347,546,240,243,72,5,130773],[348,531,235,273,64,2,130791],[349,597,321,310,69,5,119685],[350,200,126,152,35,1,119624],[351,45,16,46,4,0,53027],[352,464,210,189,42,2,109126],[353,548,270,240,42,2,99040],[354,519,263,256,48,1,119344],[355,569,276,266,54,4,129085],[356,508,275,273,56,5,130198],[357,249,114,131,49,2,130416],[358,48,16,42,22,2,131019],[359,6,1,2,0,0,32666],[360,285,145,123,33,1,121110],[361,467,192,170,39,4,105112],[362,460,237,181,39,1,87253],[363,448,224,169,52,5,79277],[364,199,123,105,33,4,47178],[365,39,31,34,18,3,72613]],"1979":[[1,45,27,36,20,21,44348],[2,383,186,140,28,3,106656],[3,578,223,180,33,3,94561],[4,466,190,220,36,2,94235],[5,627,233,259,42,2,122200],[6,147,77,114,52,1,51472],[7,43,15,32,16,1,17164],[8,531,212,187,43,5,129412],[9,551,266,242,55,10,129189],[10,619,286,281,55,6,131004],[11,599,257,233,61,13,130918],[12,579,234,259,77,5,128030],[13,237,111,131,48,2,128024],[14,52,26,40,9,2,96402],[15,503,237,208,52,3,116940],[16,556,238,247,63,1,121761],[17,614,252,245,71,3,130841],[18,607,265,269,58,4,131009],[19,554,270,288,66,5,130882],[20,331,108,151,58,3,124430],[21,84,40,57,24,1,129762],[22,488,230,211,52,3,130239],[23,558,261,271,65,2,114936],[24,455,213,253,75,5,113905],[25,569,250,320,86,10,113374],[26,548,284,289,54,6,108762],[27,208,113,138,39,4,88306],[28,91,37,55,16,0,95901],[29,484,257,221,37,1,109338],[30,478,264,273,39,3,128791],[31,523,253,276,56,2,131042],[32,603,268,292,57,0,119441],[33,608,287,333,36,3,119017],[34,272,153,116,31,3,100475],[35,43,19,17,7,0,69924],[36,487,208,204,32,2,107391],[37,617,267,280,63,7,121131],[38,462,229,247,46,4,125079],[39,575,289,286,57,7,130014],[40,544,238,284,62,3,130992],[41,341,126,137,36,2,131026],[42,79,28,69,18,0,122100],[43,559,214,275,51,0,124647],[44,467,183,264,60,2,116424],[45,590,251,258,70,4,119454],[46,543,264,294,63,6,120958],[47,664,338,326,56,1,126645],[48,331,135,140,36,2,125132],[49,137,70,54,21,1,99389],[50,212,86,91,30,5,109777],[51,445,186,195,36,5,119850],[52,462,223,245,66,10,127972],[53,572,264,273,68,4,130868],[54,648,278,267,70,3,123309],[55,250,97,135,38,4,120721],[56,49,22,43,18,0,30071],[57,470,226,214,58,9,111971],[58,523,234,250,49,4,122080],[59,595,286,290,79,9,128273],[60,610,263,299,89,12,131038],[61,677,347,310,70,5,130961],[62,264,95,154,46,1,130587],[63,164,48,59,23,1,64534],[64,600,200,234,39,5,115446],[65,585,233,259,77,7,100780],[66,688,297,271,71,5,128714],[67,611,286,299,68,8,121202],[68,645,344,328,74,6,129672],[69,222,92,121,43,5,120742],[70,134,54,64,28,4,113555],[71,498,211,235,43,9,130931],[72,609,299,274,65,10,131066],[73,617,260,316,94,3,125288],[74,591,261,326,84,8,117438],[75,639,325,396,77,4,130661],[76,243,123,168,58,6,103137],[77,140,63,76,21,2,99001],[78,516,248,216,40,8,125676],[79,533,250,319,81,4,129584],[80,524,261,242,78,9,131044],[81,562,264,315,67,3,129430],[82,636,323,348,67,3,122762],[83,163,94,97,23,2,120309],[84,167,63,69,18,3,83391],[85,492,262,266,38,5,129084],[86,561,284,250,55,11,130065],[87,611,268,244,49,5,130891],[88,597,303,274,57,4,130995],[89,659,322,325,59,12,130907],[90,164,94,103,41,2,112204],[91,76,11,19,11,3,58097],[92,462,239,188,30,6,111206],[93,614,295,271,26,4,116858],[94,542,306,287,54,8,129585],[95,561,274,269,42,2,124703],[96,616,327,290,47,2,130133],[97,155,117,136,32,2,130181],[98,193,80,68,10,0,127800],[99,519,261,231,44,1,131068],[100,595,323,272,53,1,107033],[101,563,335,276,53,5,109644],[102,670,290,274,63,1,120226],[103,463,201,199,47,8,96967],[104,256,98,130,34,4,65011],[105,173,77,75,17,2,97222],[106,360,191,142,38,5,102992],[107,550,249,266,46,8,126030],[108,577,271,280,61,12,130755],[109,553,259,298,62,8,131031],[110,584,241,275,40,14,114954],[111,226,94,127,22,5,82598],[112,31,15,21,12,6,89607],[113,507,264,194,29,8,31431],[114,547,260,251,62,13,115965],[115,497,232,261,46,11,122297],[116,531,244,240,43,15,111799],[117,628,271,292,52,28,128917],[118,218,88,113,18,6,116105],[119,50,35,37,5,3,126117],[120,468,204,225,37,10,131058],[121,450,182,215,41,18,129356],[122,589,241,265,46,27,121749],[123,428,188,237,36,32,116241],[124,560,256,301,42,17,129828],[125,243,86,109,21,17,89994],[126,23,12,18,4,3,68373],[127,466,191,247,27,16,126934],[128,573,268,291,51,20,130513],[129,528,282,256,44,19,130595],[130,594,305,307,41,15,130941],[131,609,301,332,51,24,130796],[132,251,83,139,28,19,127624],[133,53,30,30,5,3,50842],[134,476,236,239,39,15,73281],[135,630,261,257,41,22,115833],[136,521,246,275,46,27,110668],[137,584,286,317,60,18,117449],[138,659,278,329,50,32,126925],[139,314,135,155,29,7,110560],[140,42,27,33,16,6,124734],[141,463,224,216,36,21,130737],[142,571,277,287,42,23,130985],[143,657,302,291,46,15,85256],[144,487,234,290,45,32,118705],[145,627,287,364,47,26,126125],[146,308,148,168,49,10,106166],[147,76,31,41,7,1,102158],[148,38,32,30,18,6,27787],[149,562,257,240,41,10,103526],[150,560,267,292,47,17,128784],[151,591,288,285,62,23,129722],[152,641,317,356,47,33,130925],[153,302,130,127,34,13,73889],[154,33,14,38,7,2,54278],[155,422,194,207,37,18,82377],[156,639,238,267,37,15,125055],[157,648,269,254,57,13,123489],[158,512,256,285,42,9,124768],[159,558,266,306,63,17,129639],[160,226,108,126,46,3,127733],[161,95,36,40,10,3,127937],[162,333,203,198,38,9,131040],[163,516,242,258,34,12,103435],[164,498,224,268,46,10,102088],[165,509,246,262,67,15,114272],[166,645,286,342,73,13,112512],[167,346,109,165,50,7,114168],[168,38,16,34,18,2,83280],[169,489,181,227,69,11,128977],[170,505,221,294,59,7,128358],[171,525,224,280,55,21,130895],[172,624,256,303,43,9,116049],[173,532,265,311,53,15,123612],[174,353,143,144,36,3,109544],[175,50,17,45,8,3,52624],[176,440,214,236,41,17,129561],[177,652,276,311,69,8,127821],[178,543,280,266,75,16,128156],[179,587,289,286,67,11,130073],[180,583,294,320,75,31,131015],[181,235,148,139,55,6,120703],[182,191,65,58,26,6,84128],[183,524,245,217,40,8,98058],[184,680,297,237,50,17,104750],[185,162,80,79,38,16,39791],[186,603,263,246,61,17,99250],[187,499,265,287,60,11,106708],[188,257,104,137,73,7,118637],[189,86,40,30,28,4,114777],[190,491,184,211,55,4,253859],[191,556,211,231,44,21,130862],[192,617,230,276,60,24,131057],[193,644,248,304,85,18,107466],[194,610,240,317,78,12,125311],[195,371,127,172,51,4,80963],[196,99,38,63,20,2,71476],[197,461,190,251,69,16,68931],[198,537,233,246,63,22,120228],[199,511,249,275,67,6,130297],[200,641,219,238,75,22,126425],[201,609,246,282,38,14,130869],[202,236,87,108,34,2,112358],[203,120,47,56,9,1,105576],[204,429,174,206,42,13,131019],[205,545,217,228,31,19,128422],[206,549,215,237,29,11,125582],[207,473,233,274,43,13,82911],[208,564,246,291,28,7,84521],[209,175,77,94,20,1,67213],[210,131,40,29,15,1,44522],[211,419,232,242,34,8,130232],[212,536,244,288,25,22,108509],[213,532,229,268,34,15,125366],[214,538,266,268,34,13,124646],[215,593,249,291,22,7,100355],[216,191,114,117,19,3,99087],[217,103,48,38,14,1,77891],[218,445,208,204,23,16,112832],[219,556,240,263,18,22,130058],[220,606,265,270,34,13,130374],[221,597,258,243,32,6,131045],[222,659,280,269,54,34,120993],[223,165,78,104,36,5,116417],[224,116,39,39,11,1,51256],[225,516,233,242,46,16,96673],[226,573,244,256,45,14,78620],[227,592,225,234,32,22,90791],[228,550,244,307,36,17,77189],[229,575,302,294,34,12,80853],[230,187,106,132,28,5,64198],[231,127,47,42,5,0,6845],[232,573,227,232,40,17,112380],[233,597,234,288,32,19,125716],[234,614,222,280,51,11,126514],[235,538,241,275,55,10,120496],[236,599,258,296,34,16,129532],[237,159,59,110,15,8,122687],[238,135,40,32,5,0,84517],[239,466,216,252,47,11,130953],[240,628,252,274,50,11,130747],[241,610,244,251,52,18,123951],[242,587,234,289,74,11,58877],[243,621,269,306,94,12,89505],[244,229,65,132,33,3,130460],[245,70,16,33,12,0,77191],[246,33,18,25,4,0,72839],[247,487,203,226,42,15,106862],[248,582,232,252,45,10,100328],[249,605,197,275,34,16,117762],[250,677,253,276,46,18,128143],[251,139,73,114,17,4,112313],[252,36,9,28,7,2,22251],[253,547,280,201,26,7,121527],[254,682,272,240,28,7,130774],[255,644,270,286,37,4,130801],[256,547,189,266,45,5,130445],[257,666,292,276,52,8,130928],[258,266,111,108,31,5,131057],[259,51,21,25,9,0,88457],[260,526,259,244,27,1,128337],[261,624,326,300,37,4,57043],[262,640,303,300,45,6,101389],[263,485,193,251,42,5,83227],[264,710,315,325,49,6,109123],[265,260,113,127,23,0,60619],[266,41,12,28,6,1,22595],[267,500,244,220,36,2,120458],[268,645,263,266,43,9,120233],[269,584,244,323,44,5,100213],[270,529,231,278,48,10,130508],[271,643,250,325,47,3,130342],[272,104,54,135,23,3,145933],[273,31,10,19,9,1,12166],[274,619,215,264,25,4,131054],[275,605,216,257,42,3,131054],[276,500,186,237,45,10,113657],[277,638,240,277,44,6,113940],[278,623,237,292,64,9,113895],[279,213,106,147,35,0,69368],[280,164,65,37,12,0,39106],[281,48,25,42,21,1,65622],[282,456,164,226,33,7,66958],[283,555,211,265,57,7,111716],[284,586,205,291,43,6,77047],[285,647,255,353,43,16,76237],[286,158,43,116,25,1,51239],[287,29,12,26,3,0,76331],[288,486,188,250,42,16,127137],[289,632,261,277,68,9,130580],[290,605,234,259,50,3,131061],[291,552,263,321,57,4,127336],[292,591,244,331,38,1,131018],[293,132,65,128,24,3,130916],[294,42,16,23,14,1,29495],[295,451,208,249,57,7,109891],[296,562,227,346,60,11,127938],[297,569,219,309,48,8,95161],[298,527,234,322,61,9,97833],[299,540,256,358,52,6,73685],[300,297,172,178,34,0,90700],[301,51,14,37,16,1,84879],[302,558,200,244,46,6,123645],[303,557,287,317,60,86,96673],[304,566,281,296,52,93,127639],[305,451,215,276,44,8,125012],[306,533,250,322,69,12,126981],[307,278,122,139,31,3,114455],[308,48,23,13,10,1,119437],[309,514,223,223,51,9,130640],[310,572,248,284,38,3,131068],[311,574,271,287,56,9,127917],[312,496,229,347,44,8,121845],[313,651,315,367,57,7,107559],[314,213,98,189,36,5,111874],[315,99,28,53,12,4,99967],[316,81,47,90,26,7,96250],[317,522,221,277,51,9,124282],[318,575,222,351,105,6,110713],[319,491,223,376,139,6,112726],[320,619,285,437,74,7,129148],[321,219,111,159,35,4,109268],[322,144,28,47,21,13,60588],[323,451,188,336,74,6,122264],[324,589,216,427,62,9,130297],[325,510,229,476,89,16,131071],[326,216,85,188,47,5,130743],[327,514,242,394,107,10,129797],[328,180,93,181,44,7,130899],[329,41,14,47,14,5,127009],[330,444,197,302,103,7,119414],[331,575,264,402,84,7,124933],[332,484,254,405,83,11,108214],[333,459,252,388,69,3,122671],[334,545,293,452,66,9,97338],[335,227,134,181,60,12,130675],[336,102,47,67,42,6,84039],[337,428,198,279,69,23,82257],[338,505,237,335,81,8,110514],[339,489,289,350,98,13,116963],[340,424,241,310,88,9,87542],[341,492,265,383,86,9,122264],[342,162,82,160,45,22,129724],[343,176,65,67,32,3,115022],[344,418,233,258,84,6,130401],[345,507,244,425,79,16,130763],[346,517,259,341,66,11,130977],[347,473,222,305,74,12,129050],[348,484,247,334,65,5,85825],[349,206,80,136,65,8,128545],[350,134,52,52,19,5,74711],[351,448,214,246,61,5,100902],[352,559,236,292,68,13,110239],[353,520,235,326,79,13,113044],[354,557,267,343,95,10,119064],[355,574,270,362,94,4,123316],[356,203,105,190,52,4,98840],[357,98,27,50,23,1,92205],[358,28,16,68,38,2,46087],[359,12,3,9,8,4,10504],[360,315,146,210,33,6,106233],[361,467,206,248,59,5,127085],[362,497,228,292,70,21,129381],[363,95,56,179,124,16,122208],[364,106,53,76,46,5,60250],[365,347,153,201,81,21,129490]]}
+;
+  var combinedHost = document.getElementById("combinedCharts");
+  years.forEach(function(yr) {
+    var rows = combinedDaily[yr];
+    var yn = daysInYear(parseInt(yr,10));
+
+    var card = document.createElement("div");
+    card.className = "combined-card";
+    var h4 = document.createElement("h4");
+    h4.textContent = yr;
+    var sub = document.createElement("p");
+    sub.className = "yr-sub";
+    sub.textContent = yn + " days · classification stack + missing-text line (left, linear) · counter-implied volume (right, log)";
+    var cv = document.createElement("canvas");
+    cv.width = 1600; cv.height = 620;
+    card.appendChild(h4);
+    card.appendChild(sub);
+    card.appendChild(cv);
+    combinedHost.appendChild(card);
+
+    var cctx = cv.getContext("2d");
+    var cW = cv.width, cH = cv.height;
+    var padL = 70, padR = 80, padT = 24, padB = 46;
+    var plotW = cW - padL - padR, plotH = cH - padT - padB;
+
+    function xFor(doy) { return padL + ((doy - 0.5) / yn) * plotW; }
+
+    var maxTotal = 0;
+    rows.forEach(function(r) { var t = r[1]+r[2]+r[3]+r[4]; if (t > maxTotal) maxTotal = t; });
+    var leftMax = Math.ceil(maxTotal / 200) * 200 + 200;
+    function yLeft(v) { return padT + plotH - (v / leftMax) * plotH; }
+
+    var implVals = rows.map(function(r){ return r[6]; }).filter(function(v){ return v !== null && v > 0; });
+    var maxImpl = Math.max.apply(null, implVals);
+    var logMax = Math.ceil(Math.log10(maxImpl));
+    function yRight(v) { var lv = Math.log10(Math.max(v, 1)); return padT + plotH - (lv / logMax) * plotH; }
+
+    cctx.clearRect(0, 0, cW, cH);
+
+    // gridlines + left axis labels
+    cctx.strokeStyle = colors.rule;
+    cctx.fillStyle = colors.inkMuted;
+    cctx.font = "18px ui-monospace, SFMono-Regular, Menlo, monospace";
+    cctx.lineWidth = 1;
+    var lsteps = 4;
+    for (var s = 0; s <= lsteps; s++) {
+      var lv = leftMax * s / lsteps;
+      var ly = yLeft(lv);
+      cctx.beginPath();
+      cctx.moveTo(padL, ly);
+      cctx.lineTo(padL + plotW, ly);
+      cctx.globalAlpha = s === 0 ? 1 : 0.35;
+      cctx.stroke();
+      cctx.globalAlpha = 1;
+      cctx.textAlign = "right";
+      cctx.textBaseline = "middle";
+      cctx.fillText(lv.toFixed(0), padL - 10, ly);
+    }
+    cctx.textAlign = "left";
+    for (var p = 0; p <= logMax; p++) {
+      var ry = yRight(Math.pow(10, p));
+      var lbl = Math.pow(10, p) >= 1000 ? (Math.pow(10, p) / 1000) + "k×" : Math.pow(10, p) + "×";
+      cctx.fillText(lbl, padL + plotW + 10, ry);
+    }
+
+    // stacked classification area, real daily resolution
+    for (var layer = 3; layer >= 0; layer--) {
+      cctx.fillStyle = colors.cls[layer];
+      cctx.globalAlpha = 0.88;
+      cctx.beginPath();
+      rows.forEach(function(r, i) {
+        var cum = 0;
+        for (var k = 1; k <= layer + 1; k++) cum += r[k];
+        var x = xFor(r[0]), y = yLeft(cum);
+        if (i === 0) cctx.moveTo(x, y); else cctx.lineTo(x, y);
+      });
+      for (var i2 = rows.length - 1; i2 >= 0; i2--) {
+        var r2 = rows[i2];
+        var cum2 = 0;
+        for (var k2 = 1; k2 <= layer; k2++) cum2 += r2[k2];
+        cctx.lineTo(xFor(r2[0]), yLeft(cum2));
+      }
+      cctx.closePath();
+      cctx.fill();
+    }
+    cctx.globalAlpha = 1;
+
+    // gap bands, tinted on top of the stack (same approach as the small multiples)
+    gapRanges[yr].forEach(function(g) {
+      var d0 = dayOfYear(parseInt(yr, 10), g[0], g[1]) - 1;
+      var d1 = dayOfYear(parseInt(yr, 10), g[2], g[3]);
+      var x0 = xFor(d0 + 0.5), x1 = xFor(d1 + 0.5);
+      var bw = Math.max(x1 - x0, 3);
+      cctx.fillStyle = colors.rose;
+      cctx.globalAlpha = 0.35;
+      cctx.fillRect(x0, padT, bw, plotH);
+      cctx.globalAlpha = 1;
+      cctx.fillRect(x0, padT + plotH + 3, bw, 4);
+    });
+
+    // missing-text overlay line (subset of the stack, not additive)
+    cctx.strokeStyle = colors.ink;
+    cctx.globalAlpha = 0.8;
+    cctx.lineWidth = 2.2;
+    cctx.beginPath();
+    rows.forEach(function(r, i) {
+      var x = xFor(r[0]), y = yLeft(r[5]);
+      if (i === 0) cctx.moveTo(x, y); else cctx.lineTo(x, y);
+    });
+    cctx.stroke();
+    cctx.globalAlpha = 1;
+
+    // counter-implied volume, log scale, right axis — break the line across gaps in coverage
+    cctx.strokeStyle = colors.accent;
+    cctx.setLineDash([3, 4]);
+    cctx.lineWidth = 2.4;
+    cctx.globalAlpha = 0.9;
+    cctx.beginPath();
+    var started = false;
+    rows.forEach(function(r) {
+      if (r[6] === null || r[6] <= 0) { started = false; return; }
+      var x = xFor(r[0]), y = yRight(r[6]);
+      if (!started) { cctx.moveTo(x, y); started = true; } else { cctx.lineTo(x, y); }
+    });
+    cctx.stroke();
+    cctx.setLineDash([]);
+    cctx.globalAlpha = 1;
+
+    // month ticks
+    cctx.fillStyle = colors.ink;
+    cctx.textAlign = "center";
+    cctx.textBaseline = "top";
+    cctx.font = "18px ui-monospace, SFMono-Regular, Menlo, monospace";
+    var monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    for (var mi = 1; mi <= 12; mi++) {
+      var doy = dayOfYear(parseInt(yr, 10), mi, 1);
+      var x = xFor(doy);
+      cctx.strokeStyle = colors.rule;
+      cctx.globalAlpha = 0.4;
+      cctx.beginPath();
+      cctx.moveTo(x, padT);
+      cctx.lineTo(x, padT + plotH);
+      cctx.stroke();
+      cctx.globalAlpha = 1;
+      cctx.fillText(monthNames[mi - 1], x, padT + plotH + 10);
+    }
+  });
+
+  // legend for the combined charts
+  var combinedLegend = document.createElement("div");
+  combinedLegend.className = "chart-legend";
+  combinedLegend.style.marginTop = "1rem";
+  var combinedLegendItems = [
+    ["Unclassified", colors.cls[0], "swatch"],
+    ["Limited Official Use", colors.cls[1], "swatch"],
+    ["Confidential", colors.cls[2], "swatch"],
+    ["Secret", colors.cls[3], "swatch"],
+  ];
+  combinedLegendItems.forEach(function(it) {
+    var span = document.createElement("span");
+    span.innerHTML = '<span class="swatch" style="background:' + it[1] + '"></span>' + it[0];
+    combinedLegend.appendChild(span);
+  });
+  var extraLegend = [
+    ["cables without full text", colors.ink],
+    ["counter-implied volume, log (dashed)", colors.accent],
+    ["flagged gap range", colors.rose],
+  ];
+  extraLegend.forEach(function(it) {
+    var span = document.createElement("span");
+    span.innerHTML = '<span class="swatch line" style="background:' + it[1] + '"></span>' + it[0];
+    combinedLegend.appendChild(span);
+  });
+  combinedHost.parentNode.insertBefore(combinedLegend, combinedHost);
+})();
+</script>
+
+</body></html>
