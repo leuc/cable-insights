@@ -11,6 +11,7 @@ investigation proceeds, then add a row below.
 
 | Slug | Question | Status |
 |---|---|---|
+| | TODO Main path analysis: search path count (SPC), search path link count (SPLC), search path node pair (SPNP), SPLC: really good at finding "long" running discussions? | new |
 | | Can we predict links between cables that don't have any? (based on subject, TAGS, office distribution and address similarity, with measured time lag fall off by station) | new |
 | [`dash-counter-meaning`](dash-counter-meaning/HYPOTHESIS.md) | What does the unlabeled dash-counter header line represent? | answered |
 | [`filing-time-vs-dtg`](filing-time-vs-dtg/HYPOTHESIS.md) | How does the counter's `filing_time` subfield relate to DTG, and does the lag change over time? | answered |
