@@ -60,11 +60,11 @@ def main():
             if not doc:
                 continue
 
-            refs = row.get("extracted_references")
-            if not refs:
-                continue
-
-            # Mark this document as a known primary node
+            # Every document with a document_number becomes a vertex with
+            # full detail (date/preview/tags), whether or not it has
+            # outgoing references -- reference-less and/or unreferenced
+            # (isolated) nodes are pruned from the finished graph at the
+            # end, not excluded from attribute extraction up front.
             primary_docs.add(doc)
             vertices.add(doc)
 
@@ -82,9 +82,11 @@ def main():
                 if formatted:
                     node_tags[doc] = formatted
 
-            for r in refs:
-                edges.add((doc, r))
-                vertices.add(r)
+            refs = row.get("extracted_references")
+            if refs:
+                for r in refs:
+                    edges.add((doc, r))
+                    vertices.add(r)
 
             count += 1
             if count % 500000 == 0:
@@ -100,7 +102,12 @@ def main():
     edge_list = [(idx[f], idx[t]) for f, t in sorted(edges)]
 
     sys.stderr.write("Building graph...\n")
-    g = igraph.Graph(edge_list, directed=True)
+    # n=len(ids) is required now that some vertices can be genuinely
+    # edge-less before pruning (a document with no refs, not cited by
+    # anyone else) -- without it, igraph.Graph() infers vertex count from
+    # the edge list alone and would silently drop/misalign any vertex
+    # whose index isn't reached by an edge.
+    g = igraph.Graph(n=len(ids), edges=edge_list, directed=True)
 
     # Map node properties
     g.vs["label"] = ids
@@ -110,6 +117,16 @@ def main():
 
     # Flag missing documents: True if it ONLY appeared as a reference
     g.vs["missing"] = [vid not in primary_docs for vid in ids]
+
+    sys.stderr.write("Pruning isolated nodes (degree 0)...\n")
+    degrees = g.degree(mode="all")
+    non_isolated = [i for i, d in enumerate(degrees) if d > 0]
+    isolated_count = g.vcount() - len(non_isolated)
+    g = g.induced_subgraph(non_isolated)
+    sys.stderr.write(
+        f"  Removed {isolated_count:,} isolated nodes; "
+        f"final: {g.vcount():,} vertices, {g.ecount():,} edges\n"
+    )
 
     sys.stderr.write(f"Saving {dest}...\n")
     g.write_graphml(dest)
