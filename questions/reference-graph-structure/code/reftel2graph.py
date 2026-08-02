@@ -26,12 +26,15 @@ def _format_tags(tags):
 
 
 def main():
-    if len(sys.argv) != 3:
-        sys.stderr.write(f"Usage: {sys.argv[0]} ref.json output.graphml\n")
+    if len(sys.argv) not in (3, 4):
+        sys.stderr.write(
+            f"Usage: {sys.argv[0]} ref.json output.graphml [estimated_dates.ndjson]\n"
+        )
         sys.exit(1)
 
     src = sys.argv[1]
     dest = sys.argv[2]
+    estimated_src = sys.argv[3] if len(sys.argv) == 4 else None
 
     if not os.path.exists(src):
         sys.stderr.write(f"Error: Input file not found: {src}\n")
@@ -39,6 +42,9 @@ def main():
     if os.path.exists(dest):
         sys.stderr.write(f"Error: Output file already exists: {dest}\n")
         sys.exit(1)
+    if estimated_src and not os.path.exists(estimated_src):
+        sys.stderr.write(f"Warning: estimated-dates file not found, skipping: {estimated_src}\n")
+        estimated_src = None
 
     vertices = set()
     primary_docs = set()  # Track IDs that exist as a document_number
@@ -96,6 +102,31 @@ def main():
         f"\nVertices: {len(vertices)} (Primary: {len(primary_docs)}), Edges: {len(edges)}\n"
     )
 
+    # Optional: fill in an estimated date for "missing" nodes (referenced
+    # but never seen as their own document_number in `src`) from a
+    # separate estimated-dates ndjson. Scoped strictly to missing nodes --
+    # never overrides a real date from `src`, and never touches
+    # message_preview/TAGS, since those aren't part of this file's schema
+    # intent. Filtered to vertices we actually have and that aren't
+    # primary docs, so the large estimated file doesn't need to be held in
+    # memory in full.
+    estimated_dates = {}
+    if estimated_src:
+        sys.stderr.write(f"Loading estimated dates from {estimated_src} ...\n")
+        with open(estimated_src, encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                row = json.loads(line)
+                doc = row.get("document_number")
+                if not doc or doc in primary_docs or doc not in vertices:
+                    continue
+                doc_date = row.get("date")
+                if doc_date:
+                    estimated_dates[doc] = doc_date
+        sys.stderr.write(f"  {len(estimated_dates):,} estimated dates matched to missing nodes\n")
+
     ids = sorted(vertices)
     idx = {v: i for i, v in enumerate(ids)}
 
@@ -111,7 +142,8 @@ def main():
 
     # Map node properties
     g.vs["label"] = ids
-    g.vs["date"] = [node_dates.get(vid, "") for vid in ids]
+    g.vs["date"] = [node_dates.get(vid) or estimated_dates.get(vid, "") for vid in ids]
+    g.vs["date_estimated"] = [vid not in node_dates and vid in estimated_dates for vid in ids]
     g.vs["message_preview"] = [node_previews.get(vid, "") for vid in ids]
     g.vs["TAGS"] = [node_tags.get(vid, "") for vid in ids]
 
