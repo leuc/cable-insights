@@ -21,3 +21,4 @@ investigation proceeds, then add a row below.
 | [`address-reference-similarity`](address-reference-similarity/HYPOTHESIS.md) | Do cables that reference each other share the same office distribution selection/values and/or the same FM/TO/INFO addresses? | answered |
 | [`reference-time-lag`](reference-time-lag/HYPOTHESIS.md) | What is the time gap between a cable and the cable(s) it references, and does it differ by station (STATE vs. field posts)? | answered |
 | [`cd-index-semantics`](cd-index-semantics/HYPOTHESIS.md) | How does the CD-index semantic (imported from patent-citation literature) translate to a telegram reference network? | answered |
+| [`antichain-semantics`](antichain-semantics/HYPOTHESIS.md) | What cable and graph properties do nodes on the antichain hold? | answered |
