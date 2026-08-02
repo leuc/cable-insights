@@ -16,6 +16,6 @@ investigation proceeds, then add a row below.
 | [`tags-reference-similarity`](tags-reference-similarity/HYPOTHESIS.md) | Do cables that reference each other share similar TAGS codes? | answered |
 | [`tags-coverage-vs-faq`](tags-coverage-vs-faq/HYPOTHESIS.md) | How much of the real TAGS data does the FAQ-derived Subject TAGS mapping explain? | answered |
 | [`reference-graph-structure`](reference-graph-structure/HYPOTHESIS.md) | What does the corpus's reference graph look like structurally (components, hubs, communities)? | open |
-| [`publication-cable-graph-signal`](publication-cable-graph-signal/HYPOTHESIS.md) | What graph attributes (or graph-topological methods) signal that a cable is one a historian would cite? | answered |
+| [`publication-cable-graph-signal`](publication-cable-graph-signal/HYPOTHESIS.md) | What graph attributes signal that a cable is one a historian would cite? | answered |
 | [`address-reference-similarity`](address-reference-similarity/HYPOTHESIS.md) | Do cables that reference each other share the same office distribution selection/values and/or the same FM/TO/INFO addresses? | answered |
 | [`reference-time-lag`](reference-time-lag/HYPOTHESIS.md) | What is the time gap between a cable and the cable(s) it references, and does it differ by station (STATE vs. field posts)? | answered |
