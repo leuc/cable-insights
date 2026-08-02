@@ -3,13 +3,19 @@
 
 For each publication (and pooled combinations) with enough matched
 ground-truth cables, test whether each graph attribute separates the
-publication's cited cables from a background sample. Numeric attributes use
-a Mann-Whitney U / rank-biserial effect size; categorical attributes
-(community labelings, cd-index-type, antichain-bucket) use a hypergeometric
-enrichment test on the most concentrated bucket. cd-index and antichain get
-extra, purpose-built tests beyond the generic sweep (see run_cdindex_extra
-and run_antichain_extra) since they encode something structurally different
-from static centrality.
+publication's cited cables from a background sample. Which attributes to
+test is discovered from node_features.csv's actual columns/dtypes, not
+hardcoded (that CSV's columns are themselves whatever build_node_table.py
+found in the source graphml, so this adapts automatically as the graph
+build's attribute schema changes): numeric-dtype columns get a Mann-Whitney
+U / rank-biserial sweep; string-dtype columns (e.g. cd-index-type) get a
+hypergeometric enrichment test on the most concentrated bucket. `cd-index`
+and `antichain` additionally get purpose-built tests beyond the generic
+sweep (skew toward extreme |cd-index|; enrichment/depletion in the
+background's dominant antichain bucket) since they encode something
+structurally different from static centrality -- these two are referenced
+by name because the tests themselves are conceptually specific to those
+attributes, not because the rest of the sweep is hardcoded.
 
 Usage: attribute_signal.py [node_features_csv] [ground_truth_matched_csv] [output_dir]
 """
@@ -21,19 +27,10 @@ from scipy import stats
 
 MIN_N_PER_PUBLICATION = 4
 
-NUMERIC_ATTRS = [
-    "degree",
-    "closeness",
-    "betweenness",
-    "pagerank",
-    "coreness",
-    "strength",
-    "trussness_max",
-    "trussness_mean",
-    "cd-index",
-    "antichain",
-]
-CATEGORICAL_ATTRS = ["community-leiden", "community-walktrap", "community-infomap", "cd-index-type"]
+# Columns that are identifiers/join keys/derived-for-background-sampling
+# rather than graph-signal attributes -- excluded from auto-detection
+# regardless of which graph build produced node_features.csv.
+STRUCTURAL_COLS = {"label", "date", "year"}
 
 DEFAULT_NODE_FEATURES = "questions/publication-cable-graph-signal/results/node_features.csv"
 DEFAULT_GROUND_TRUTH = "questions/publication-cable-graph-signal/results/ground_truth_matched.csv"
@@ -127,6 +124,17 @@ def main():
     nodes = pd.read_csv(node_features_path)
     gt = pd.read_csv(ground_truth_path)
 
+    numeric_attrs = [
+        c for c in nodes.columns
+        if c not in STRUCTURAL_COLS and pd.api.types.is_numeric_dtype(nodes[c])
+    ]
+    categorical_attrs = [
+        c for c in nodes.columns
+        if c not in STRUCTURAL_COLS and nodes[c].dtype == object
+    ]
+    sys.stderr.write(f"Numeric attributes discovered: {numeric_attrs}\n")
+    sys.stderr.write(f"Categorical attributes discovered: {categorical_attrs}\n")
+
     groups = build_groups(gt)
     sys.stderr.write(f"Testing {len(groups)} (publication/pool x tier_scope) groups.\n")
 
@@ -142,16 +150,12 @@ def main():
         for scope in ("same_year", "full_corpus"):
             bg = background_pool(nodes, selected_labels, scope, years)
 
-            for attr in NUMERIC_ATTRS:
-                if attr not in nodes.columns:
-                    continue
+            for attr in numeric_attrs:
                 res = rank_biserial_mannwhitney(selected_nodes[attr], bg[attr])
                 res.update(group=group_name, tier_scope=tier_scope, background_scope=scope, attribute=attr)
                 numeric_rows.append(res)
 
-            for attr in CATEGORICAL_ATTRS:
-                if attr not in nodes.columns:
-                    continue
+            for attr in categorical_attrs:
                 res = hypergeom_bucket_enrichment(selected_nodes[attr], bg[attr])
                 if res:
                     res.update(group=group_name, tier_scope=tier_scope, background_scope=scope, attribute=attr)
@@ -184,19 +188,23 @@ def main():
             if valid.sum():
                 df.loc[valid, "qvalue"] = stats.false_discovery_control(df.loc[valid, "pvalue"], method="bh")
 
+    def save_sorted(df, filename):
+        """Sort by group/tier/scope/qvalue and write, unless df has no rows
+        at all (e.g. antichain on a graph build that lacks that attribute)
+        -- an empty DataFrame has no columns to sort by, so just write it
+        empty rather than erroring."""
+        path = os.path.join(outdir, filename)
+        if len(df):
+            df.sort_values(["group", "tier_scope", "background_scope", "qvalue"]).to_csv(path, index=False)
+        else:
+            df.to_csv(path, index=False)
+            sys.stderr.write(f"  Note: {filename} is empty (attribute not present in this graph build).\n")
+
     os.makedirs(outdir, exist_ok=True)
-    numeric_df.sort_values(["group", "tier_scope", "background_scope", "qvalue"]).to_csv(
-        os.path.join(outdir, "attribute_signal_numeric.csv"), index=False
-    )
-    categorical_df.sort_values(["group", "tier_scope", "background_scope", "qvalue"]).to_csv(
-        os.path.join(outdir, "attribute_signal_categorical.csv"), index=False
-    )
-    cdindex_df.sort_values(["group", "tier_scope", "background_scope", "qvalue"]).to_csv(
-        os.path.join(outdir, "attribute_signal_cdindex.csv"), index=False
-    )
-    antichain_df.sort_values(["group", "tier_scope", "background_scope", "qvalue"]).to_csv(
-        os.path.join(outdir, "attribute_signal_antichain.csv"), index=False
-    )
+    save_sorted(numeric_df, "attribute_signal_numeric.csv")
+    save_sorted(categorical_df, "attribute_signal_categorical.csv")
+    save_sorted(cdindex_df, "attribute_signal_cdindex.csv")
+    save_sorted(antichain_df, "attribute_signal_antichain.csv")
 
     sys.stderr.write("\nTop 15 numeric signals by q-value:\n")
     top = numeric_df.dropna(subset=["qvalue"]).sort_values("qvalue").head(15)
@@ -206,20 +214,22 @@ def main():
     )
 
     sys.stderr.write("\ncd-index extremeness signals (q<0.2):\n")
-    interesting = cdindex_df.dropna(subset=["qvalue"])
-    interesting = interesting[interesting["qvalue"] < 0.2]
-    sys.stderr.write(
-        interesting[["group", "tier_scope", "background_scope", "effect_size", "pvalue", "qvalue", "n_selected"]].to_string(index=False)
-        + "\n" if len(interesting) else "  none\n"
-    )
+    if len(cdindex_df):
+        interesting = cdindex_df.dropna(subset=["qvalue"])
+        interesting = interesting[interesting["qvalue"] < 0.2]
+        cols = ["group", "tier_scope", "background_scope", "effect_size", "pvalue", "qvalue", "n_selected"]
+        sys.stderr.write(interesting[cols].to_string(index=False) + "\n" if len(interesting) else "  none\n")
+    else:
+        sys.stderr.write("  cd-index not present in this graph build.\n")
 
     sys.stderr.write("\nantichain dominant-bucket signals (q<0.2):\n")
-    interesting = antichain_df.dropna(subset=["qvalue"])
-    interesting = interesting[interesting["qvalue"] < 0.2]
-    sys.stderr.write(
-        interesting[["group", "tier_scope", "background_scope", "direction", "observed", "expected", "qvalue"]].to_string(index=False)
-        + "\n" if len(interesting) else "  none\n"
-    )
+    if len(antichain_df):
+        interesting = antichain_df.dropna(subset=["qvalue"])
+        interesting = interesting[interesting["qvalue"] < 0.2]
+        cols = ["group", "tier_scope", "background_scope", "direction", "observed", "expected", "qvalue"]
+        sys.stderr.write(interesting[cols].to_string(index=False) + "\n" if len(interesting) else "  none\n")
+    else:
+        sys.stderr.write("  antichain not present in this graph build.\n")
 
 
 if __name__ == "__main__":

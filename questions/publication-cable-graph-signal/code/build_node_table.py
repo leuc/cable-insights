@@ -3,14 +3,15 @@
 join the hand-transcribed ground truth, and report match diagnostics.
 
 IMPORTANT node-label quirk: this graphml's node labels are NOT the same MRN
-convention used in data/source/*/*.md ground truth. ~96% of nodes use
-"<2-digit year><FULL station name><unpadded number>" (e.g. "73SANTIAGO4687")
--- which is exactly the canonical form acp-127's own
+convention used in data/source/*/*.md ground truth. The large majority of
+nodes use "<2-digit year><FULL station name><unpadded number>" (e.g.
+"73SANTIAGO4687") -- which is exactly the canonical form acp-127's own
 src/reftel_normalize.py::_normalize_doc_number() produces (2-digit year +
 canonical station name + _clean_number()'s leading-zero-stripped number) --
-and only ~4% use the older "<4-digit year><6-char-truncated station><zero-
-padded number>" form (e.g. "1973MANAGU04838") that the ground truth CSV's
-raw MRNs are written in. Ground-truth MRNs are joined by reproducing
+and a small minority use the older "<4-digit year><6-char-truncated
+station><zero-padded number>" form (e.g. "1973MANAGU04838") that the ground
+truth CSV's raw MRNs are written in. Ground-truth MRNs are joined by
+reproducing
 acp-127's normalization: look up the truncated station code in the same
 STATIONS variant table acp-127 uses (station_data.py here, copied verbatim
 from ../../../acp-127/src/station_data.py -- see that file's docstring),
@@ -18,10 +19,18 @@ strip leading zeros from the number the same way _clean_number() does, and
 try a direct label match first. See match_mrn_to_label() below.
 
 Usage:
-    build_node_table.py [graphml_path] [ground_truth_csv] [output_csv]
+    build_node_table.py <graphml_path> [ground_truth_csv] [output_csv]
 
-Defaults assume this script is run from the repo root or the question's
-own code/ dir; all three paths can be overridden positionally.
+graphml_path is required -- no default, since this repo's enriched graphml
+builds live outside the repo and their filename/schema changes over time
+(see the "Which graph build" changelog in results/FINDINGS.md for examples:
+attributes have been added/removed/renamed across builds already). Node and
+edge attributes to extract are discovered from whatever file is passed, not
+hardcoded, so this script adapts automatically to schema changes -- see
+STRUCTURAL_NODE_ATTRS below for the only attributes it deliberately skips.
+
+ground_truth_csv/output_csv default to this question's own results/ paths
+(stable, in-repo) and can still be overridden positionally.
 """
 import re
 import sys
@@ -39,29 +48,16 @@ for _canonical, _variants in STATIONS.items():
     for _variant in _variants:
         STATIONS_MAPPING[_variant.upper()] = _canonical
 
-DEFAULT_GRAPHML = "data/external/reftel-with-tags-and-attr.2026-08-01.giant.graphml"
 DEFAULT_GROUND_TRUTH = "questions/publication-cable-graph-signal/results/ground_truth_cables.csv"
 DEFAULT_OUTPUT = "questions/publication-cable-graph-signal/results/node_features.csv"
-DEFAULT_MATCHED_OUTPUT = "questions/publication-cable-graph-signal/results/ground_truth_matched.csv"
 
 MRN_RE = re.compile(r"^(\d{4})([A-Z]+)(\d+)$")
 
-NODE_ATTRS = [
-    "date",
-    "missing",
-    "antichain",
-    "degree",
-    "closeness",
-    "betweenness",
-    "pagerank",
-    "cd-index-type",
-    "cd-index",
-    "coreness",
-    "strength",
-    "community-leiden",
-    "community-walktrap",
-    "community-infomap",
-]
+# Node attributes that are identifiers/bulk text rather than graph-signal
+# attributes -- excluded from the auto-detected feature set regardless of
+# which graphml build is loaded. "date" is kept out of the flattened
+# attribute loop but read separately below (needed for year derivation).
+STRUCTURAL_NODE_ATTRS = {"label", "id", "message_preview", "TAGS", "date"}
 
 
 def _repo_root_relative(path):
@@ -74,29 +70,29 @@ def _repo_root_relative(path):
     return candidate
 
 
-def build_trussness_aggregates(g):
-    """Per-node max/mean trussness over incident edges (trussness is edge-only)."""
+def build_edge_attr_aggregates(g, edge_attr):
+    """Per-node max/mean of an edge-only attribute over incident edges."""
     n = g.vcount()
-    if "trussness" not in g.es.attributes():
-        sys.stderr.write("  No edge 'trussness' attribute found; skipping.\n")
+    if edge_attr not in g.es.attributes():
+        sys.stderr.write(f"  No edge '{edge_attr}' attribute found; skipping.\n")
         return np.full(n, np.nan), np.full(n, np.nan)
 
-    trussness = np.array(g.es["trussness"], dtype=float)
+    values = np.array(g.es[edge_attr], dtype=float)
     edges = np.array(g.get_edgelist())
     src, tgt = edges[:, 0], edges[:, 1]
 
-    max_t = np.full(n, -np.inf)
-    sum_t = np.zeros(n)
-    count_t = np.zeros(n)
+    max_v = np.full(n, -np.inf)
+    sum_v = np.zeros(n)
+    count_v = np.zeros(n)
 
     for endpoints in (src, tgt):
-        np.maximum.at(max_t, endpoints, trussness)
-        np.add.at(sum_t, endpoints, trussness)
-        np.add.at(count_t, endpoints, 1)
+        np.maximum.at(max_v, endpoints, values)
+        np.add.at(sum_v, endpoints, values)
+        np.add.at(count_v, endpoints, 1)
 
-    max_t[count_t == 0] = np.nan
-    mean_t = np.divide(sum_t, count_t, out=np.full(n, np.nan), where=count_t > 0)
-    return max_t, mean_t
+    max_v[count_v == 0] = np.nan
+    mean_v = np.divide(sum_v, count_v, out=np.full(n, np.nan), where=count_v > 0)
+    return max_v, mean_v
 
 
 def _clean_number(n):
@@ -125,12 +121,22 @@ def match_mrn_to_label(mrn, label_set):
 
 
 def main():
-    graphml_path = _repo_root_relative(sys.argv[1] if len(sys.argv) > 1 else DEFAULT_GRAPHML)
+    if len(sys.argv) < 2:
+        sys.stderr.write(
+            f"Usage: {sys.argv[0]} <graphml_path> [ground_truth_csv] [output_csv]\n"
+        )
+        sys.exit(1)
+
+    graphml_path = sys.argv[1]
     ground_truth_path = _repo_root_relative(
         sys.argv[2] if len(sys.argv) > 2 else DEFAULT_GROUND_TRUTH
     )
     output_path = _repo_root_relative(sys.argv[3] if len(sys.argv) > 3 else DEFAULT_OUTPUT)
-    matched_output_path = _repo_root_relative(DEFAULT_MATCHED_OUTPUT)
+    # Written next to output_path rather than a fixed repo path, so pointing
+    # output_csv at a different directory (e.g. a non-giant-build run) keeps
+    # that run's matched ground truth alongside it instead of overwriting
+    # the canonical results/ground_truth_matched.csv.
+    matched_output_path = os.path.join(os.path.dirname(output_path), "ground_truth_matched.csv")
 
     if not os.path.exists(graphml_path):
         sys.stderr.write(f"GraphML not found: {graphml_path}\n")
@@ -142,22 +148,31 @@ def main():
         f"Vertices: {g.vcount():,}, Edges: {g.ecount():,}, Directed: {g.is_directed()}\n"
     )
 
+    node_attrs = [a for a in g.vs.attributes() if a not in STRUCTURAL_NODE_ATTRS]
+    edge_attrs = list(g.es.attributes())
+    sys.stderr.write(f"Discovered node attributes: {node_attrs}\n")
+    sys.stderr.write(f"Discovered edge attributes: {edge_attrs}\n")
+
     sys.stderr.write("Flattening node attributes ...\n")
     data = {"label": g.vs["label"]}
-    for attr in NODE_ATTRS:
-        if attr in g.vs.attributes():
-            data[attr] = g.vs[attr]
-        else:
-            sys.stderr.write(f"  Warning: node attribute '{attr}' not found, skipping.\n")
+    if "date" in g.vs.attributes():
+        data["date"] = g.vs["date"]
+    for attr in node_attrs:
+        data[attr] = g.vs[attr]
 
-    sys.stderr.write("Aggregating edge trussness onto nodes ...\n")
-    max_t, mean_t = build_trussness_aggregates(g)
-    data["trussness_max"] = max_t
-    data["trussness_mean"] = mean_t
+    for edge_attr in edge_attrs:
+        col_prefix = edge_attr.replace("-", "_")
+        sys.stderr.write(f"Aggregating edge '{edge_attr}' onto nodes ...\n")
+        max_v, mean_v = build_edge_attr_aggregates(g, edge_attr)
+        data[f"{col_prefix}_max"] = max_v
+        data[f"{col_prefix}_mean"] = mean_v
 
     df = pd.DataFrame(data)
-    df["year"] = df["date"].astype(str).str.slice(0, 4)
-    df.loc[~df["year"].str.fullmatch(r"\d{4}"), "year"] = pd.NA
+    if "date" in df.columns:
+        df["year"] = df["date"].astype(str).str.slice(0, 4)
+        df.loc[~df["year"].str.fullmatch(r"\d{4}"), "year"] = pd.NA
+    else:
+        df["year"] = pd.NA
 
     sys.stderr.write(f"Writing node feature table to {output_path} ...\n")
     df.to_csv(output_path, index=False)

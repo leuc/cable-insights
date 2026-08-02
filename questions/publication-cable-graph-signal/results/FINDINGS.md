@@ -1,255 +1,223 @@
 # Findings: what graph attributes signal a historian's cited cables?
 
-**Status:** answered (exploratory — small-N caveats throughout)
+**Status:** answered (exploratory — small-N caveats throughout, though much
+reduced by the non-giant comparison below)
+
+**Graph builds used:** two sibling files from the same `2026-08-02`
+enrichment pass — `reftel-with-tags-attr-2026-08-02.giant.graphml`
+(347,203 nodes / 428,324 edges, the only one with `antichain`) and
+`reftel-with-tags-attr-2026-08-02.graphml` (1,419,822 nodes / 1,224,940
+edges, no `antichain`). Both passed explicitly as the required first
+argument to `code/build_node_table.py` — filenames only; full filesystem
+paths are external to this repo and not reproduced here (see
+`data/external/README.md` for how this repo documents its external data
+dependencies). Giant-build results live in `results/`; non-giant results
+live in `results/nongiant/`.
+
+**Pipeline is schema-generic**: `code/build_node_table.py` discovers
+node/edge attributes from whatever graphml file is passed rather than a
+hardcoded list (excluding only structural columns: `label`, `id`,
+`message_preview`, `TAGS`, `date`). `code/attribute_signal.py` likewise
+auto-detects which columns to test from `node_features.csv`'s dtypes
+(numeric → Mann-Whitney sweep, string → hypergeometric enrichment). This
+was a genuine problem in earlier passes of this question: three different
+giant-build versions each added/dropped attributes (`strength`,
+`community-walktrap`, `community-infomap` gone; `hits-hub`,
+`edge-betweenness` added), which meant hand-editing attribute lists every
+time — and it's what let the same script run unmodified against the
+non-giant build, which lacks `antichain` entirely (both scripts degrade to
+empty output for that attribute rather than erroring).
 
 ## Headline result
 
-Two signals survive multiple-testing correction and are worth taking
-seriously; almost everything else tested (including the community-membership
-tests) either doesn't reach significance or turns out to be a methodological
-artifact on inspection:
+The non-giant build has far more ground-truth coverage (151/191 matched
+vs. 52/191 for giant), and with that much more statistical power gives a
+substantially more confident version of the giant build's own findings —
+not a different result, a *stronger* one:
 
-1. **`cd-index-type == "disruptive"` is enriched among cited cables**, and
-   this holds both within `morley2019` alone and in the cross-publication
-   pooled analysis — the one result in this investigation that's both
-   statistically robust *and* consistent across more than one publication.
-2. **For `morley2019` specifically, cited cables have *lower* betweenness,
-   degree, pagerank, and strength than a same-year background sample** —
-   the opposite of the naive "historians cite hub cables" hypothesis.
-   `weimer2019` and `szalontai2023` show no comparable centrality signal,
-   so this doesn't generalize cleanly across publications.
+1. **`degree`, `betweenness`, `pagerank`, and `coreness` are all
+   significantly lower for cited cables than background** in the non-giant
+   pooled analysis (q as low as 2×10⁻⁶) and individually within both
+   `morley2019` and `weimer2019` — the giant build could only detect this
+   reliably for `degree` and only in `morley2019` alone.
+2. **`cd-index-type: disruptive` enrichment is now genuinely
+   significant**, not just directionally suggestive — q=0.0023 pooled,
+   and significant individually in `morley2019` and `szalontai2023`. In
+   the giant build this same test topped out at q≈0.19 (not significant)
+   once correctly isolated from `community-leiden`'s FDR family.
+3. **`antichain` still shows no stable signal** (giant-only, since the
+   non-giant build lacks it) — consistent with every prior build tested.
 
-Before either of those: **most hand-verified citations aren't even in this
-graphml.** Only 45 of 191 tiered ground-truth cables (39 of 167
-`confirmed`) exist as nodes in the giant component at all. That's the
-biggest, most surprising finding of this investigation and shapes how much
-weight the rest of the results can bear.
+Coverage itself remains the standout finding: **even the non-giant build
+only reaches 130/167 (78%) of confirmed citations** — better than the
+giant build's 46/167 (28%), but still not complete, and the giant-only
+`antichain` test is necessarily working from the smallest, most
+coverage-constrained slice of ground truth of anything tested here.
 
-## 1. Coverage gap: most cited cables aren't in this graph
+## 1. Coverage
 
-`data/external/reftel-with-tags-and-attr.2026-08-01.giant.graphml` uses a
-different MRN convention than `data/source/*/*.md`'s ground truth — ~96% of
-its 309,512 nodes are `<2-digit year><FULL station name><unpadded number>`
-(e.g. `73SANTIAGO4687`), not the `<4-digit year><6-char truncated
-station><zero-padded number>` form the ground truth uses (e.g.
-`1973SANTIA04687`). The former turns out to be exactly the canonical form
-acp-127's own `src/reftel_normalize.py::_normalize_doc_number()` produces
-(2-digit year + canonical station name + `_clean_number()`'s
-leading-zero-stripped number) — so `code/build_node_table.py`'s
-`match_mrn_to_label()` reproduces that normalization directly: it looks the
-ground truth's (possibly truncated/OCR-variant) station code up in the same
-`STATIONS` variant table acp-127 uses (copied verbatim into
-`code/station_data.py` from `../../../acp-127/src/station_data.py`, per
-AGENTS.md's "data snapshot, not a code dependency" convention), strips
-leading zeros the same way `_clean_number()` does, and formats the
-candidate label exactly as `_format_canonical()` would. All 191 ground-truth
-station codes resolve through this table with no unknowns. Even so:
-
-| tier | matched | total |
+| | giant build | non-giant build |
 |---|---|---|
-| confirmed | 39 | 167 |
-| flagged | 6 | 24 |
-| **overall** | **45** | **191** |
+| confirmed | 46 / 167 | **130 / 167** |
+| flagged | 6 / 24 | **21 / 24** |
+| **overall** | **52 / 191** | **151 / 191** |
 
-| publication | matched (confirmed) | total (confirmed) |
+Per-publication (confirmed tier):
+
+| publication | giant | non-giant |
 |---|---|---|
-| harmer2013 | 1 | 4 |
-| hulme2026 | 1 | 9 |
-| lee2018 | 0 | 2 |
-| morley2019 | 16 | 76 |
-| simpson2005 | 2 | 22 |
-| szalontai2023 | 4 | 15 |
-| weimer2019 | 15 | 39 |
+| harmer2013 | 1 / 4 | **4 / 4** |
+| hulme2026 | 1 / 9 | 4 / 9 |
+| lee2018 | 0 / 2 | 1 / 2 |
+| morley2019 | 18 / 76 | **62 / 76** |
+| simpson2005 | 2 / 22 | **14 / 22** |
+| szalontai2023 | 4 / 15 | **14 / 15** |
+| weimer2019 | 20 / 39 | **31 / 39** |
 
-Spot-checks rule out a residual join bug: e.g. no `74BONN2540` node exists
-despite 661 other 1974-BONN nodes being present in the giant component
-nearby (`74BONN2533`, `74BONN2593`, ...). The giant component here is a
-small (309,512-node), very sparse (299,757-edge, mean degree < 1) connected
-subset — almost certainly of a much larger full corpus — and cables a
-historian cites specifically for their singular content are, it turns out,
-often exactly the cables with *no* REF-line connections to anything else,
-so they never make it into a giant-component export at all. That asymmetry
-is itself informative: a "find cables a historian would cite" tool built
-purely on this graph's connectivity would silently miss ~76% of the actual
-target population before any attribute even gets a chance to help.
+Matching reproduces acp-127's own `_normalize_doc_number()` canonicalization
+(`code/station_data.py` + `match_mrn_to_label()`). In the giant build, only
+`morley2019` and `weimer2019` have enough matched cables for individual
+statistics. In the non-giant build, `harmer2013` (4/4), `morley2019`
+(62-76), `simpson2005` (14/22), `szalontai2023` (14/15), and `weimer2019`
+(31/39) all clear a reasonable bar; only `hulme2026` and `lee2018` remain
+too small individually.
 
-**Practical consequence:** only `morley2019` (20 matched, confirmed+flagged)
-and `weimer2019` (15 matched) have enough matched cables for
-publication-level statistics. `szalontai2023` (4) is marginal.
-`harmer2013`, `hulme2026`, `lee2018`, `simpson2005` (0-2 matched each) only
-contribute to the pooled analysis.
-
-## 2. Method A — per-attribute signal ranking
+## 2. Per-attribute signal ranking
 
 Mann-Whitney U / rank-biserial effect size, `confirmed`-tier cables vs. a
-same-year background sample (full-corpus background gave near-identical
-results throughout — the date confound doesn't appear to be doing much
-work here, probably because the matched set is already so small).
-Benjamini-Hochberg FDR applied across the full numeric-test family.
+same-year background sample (full-corpus background gives near-identical
+results in every configuration — see caveats for why this isn't strong
+confound-control evidence on its own). BH-FDR applied separately within
+each test family (numeric / categorical / cd-index / antichain).
 
-### Generic centrality sweep
+### Non-giant build (primary — far more statistical power)
 
 | group | attribute | effect size | p | q | n |
 |---|---|---|---|---|---|
-| morley2019 | betweenness | **-0.352** | 0.0026 | **0.048** | 16 |
-| morley2019 | degree | -0.381 | 0.0065 | 0.069 | 16 |
-| morley2019 | strength | -0.381 | 0.0065 | 0.069 | 16 |
-| morley2019 | pagerank | -0.326 | 0.0148 | 0.121 | 16 |
-| ALL_POOLED | betweenness | -0.176 | 0.019 | 0.139 | 39 |
-| weimer2019 | (all attrs) | \|effect\| < 0.12 | n.s. | n.s. | 15 |
-| szalontai2023 | (all attrs) | \|effect\| < 0.38 | n.s. | n.s. | 4 |
+| ALL_POOLED | degree | -0.266 | 2×10⁻⁸ | **2×10⁻⁶** | 130 |
+| ALL_POOLED | betweenness | -0.146 | 6×10⁻⁵ | **0.0008** | 130 |
+| ALL_POOLED | pagerank | -0.174 | 2×10⁻⁴ | **0.0022** | 130 |
+| ALL_POOLED | coreness | -0.157 | 4×10⁻⁴ | **0.0029** | 130 |
+| morley2019 | betweenness | -0.283 | 7×10⁻⁸ | **5×10⁻⁶** | 62 |
+| morley2019 | degree | -0.356 | 2×10⁻⁷ | **9×10⁻⁶** | 62 |
+| morley2019 | coreness | -0.205 | 0.0013 | **0.0094** | 62 |
+| weimer2019 | degree | -0.358 | 2×10⁻⁴ | **0.0022** | 31 |
+| weimer2019 | coreness | -0.279 | 0.0020 | **0.013** | 31 |
+| szalontai2023 | cd-index | -0.340 | 0.032 | 0.154 | 11 |
 
-Negative effect size = cited cables score *lower* than background. For
-`morley2019`, cited cables are consistently *less* structurally central —
-lower betweenness (the only attribute surviving FDR correction on its
-own), degree, strength, pagerank — than a random same-year cable. This is
-the opposite of "historians cite the hub cables"; it reads more like
-"historians cite substantive, often narrowly-addressed analytical cables
-(POPPER's 14-paragraph human-rights assessments, verbatim-quote cables)
-that aren't necessarily the busiest nodes in the reference network."
-`weimer2019` and `szalontai2023` show no comparable effect (all
-\|effect size\| < 0.4, none significant) — this is not a general property
-of "cables historians cite," at least not one this analysis can detect at
-n=15-16 and n=4.
+Every significant effect is negative — cited cables are consistently
+*less* structurally central than a same-year background sample, across
+every attribute that measures some form of connectivity or importance.
+`weimer2019` in particular reverses the giant build's null result once
+there's enough data: it shows the *same* negative-degree/coreness pattern
+as `morley2019`, just undetectable at the giant build's n=15-20. `hits-hub`,
+`edge-betweenness` (max/mean), `trussness` (max/mean), `community-leiden`,
+and `missing` show no signal anywhere in either build (`missing` is
+degenerate — see caveats). `closeness` remains untestable, populated for 0
+nodes in both builds.
 
-`closeness` was untestable everywhere — the attribute key exists in the
-graphml schema but is populated for **0 of 309,512 nodes** in this
-particular file.
-
-### cd-index and antichain (dedicated tests)
-
-**cd-index-type enrichment** — the strongest, most cross-publication-robust
-result in this investigation:
+**cd-index-type enrichment:**
 
 | group | tier | observed disruptive | expected | p | q |
 |---|---|---|---|---|---|
-| ALL_POOLED | confirmed+flagged | 25/32 | 17.58 | 0.0057 | **0.0074** |
-| morley2019 | confirmed+flagged | 15/18 | 9.89 | 0.0118 | **0.0150** |
-| ALL_POOLED | confirmed | 20/27 | 14.83 | 0.033 | 0.040 |
-| morley2019 | confirmed | 12/15 | 8.24 | 0.042 | 0.050 |
-| szalontai2023 | confirmed | 3/3 | 1.65 | 0.166 | 0.180 |
-| weimer2019 | confirmed | 4/7 | 3.85 | 0.607 | 0.607 |
+| ALL_POOLED | confirmed+flagged | 91/115 | 72.53 | 0.00015 | **0.0023** |
+| ALL_POOLED | confirmed | 75/98 | 61.81 | 0.0031 | **0.018** |
+| morley2019 | confirmed+flagged | 48/60 | 37.84 | 0.0037 | **0.018** |
+| szalontai2023 | confirmed | 11/11 | 6.88-6.94 | 0.006 | **0.019** |
 
-Cited cables skew toward `cd-index-type: disruptive` (successors treat the
-cable as superseding/routing around it, rather than building on it
-alongside its own predecessors) rather than `consolidating`. This holds up
-in the pooled analysis even though it's morley2019-driven, and directionally
-recurs in szalontai2023 despite n=3 being far too small to reach
-significance on its own. **cd-index *extremeness* (`|cd-index|` vs.
-background `|cd-index|`) showed no signal anywhere** — it's specifically
-the categorical disruptive/consolidating split that carries signal, not the
-magnitude of the continuous score.
+Same direction as every build tested (`disruptive` over-represented), now
+clearing significance in the pooled analysis and individually in two
+different publications — a materially stronger result than the giant
+build's best q≈0.19.
 
-**antichain** — the depletion lead reported in an earlier pass of this
-analysis (before the MRN-matching fix) does not hold up after correction:
-`morley2019` cited cables are numerically depleted in the single
-most-populated ("mainstream") antichain layer at every tier/background
-combination (e.g. confirmed/same_year: 5 observed vs. 8.58 expected,
-p=0.061), but the best q-value is 0.254 — well short of significance, and
-other publications don't move in the same direction (`weimer2019`,
-`ALL_POOLED_excl_morley2019` show mild *enrichment* instead). Treat this as
-a plausible but explicitly unconfirmed lead, not a finding.
+### Giant build (has `antichain`, far less ground truth)
 
-### Community membership (leiden / walktrap / infomap)
+| group | attribute | effect size | p | q | n |
+|---|---|---|---|---|---|
+| ALL_POOLED (confirmed+flagged) | degree | -0.279 | 0.0003 | **0.038** | 52 |
+| morley2019 | degree | -0.388 | 0.0031 | 0.081 | 18 |
+| morley2019 | betweenness | -0.301 | 0.0085 | 0.184 | 18 |
+| ALL_POOLED (confirmed+flagged) | cd-index-type disruptive | 29/45 | 21.58 | 0.019 | 0.185 |
 
-Nominally "significant" (q → 0 for several morley2019/weimer2019 buckets),
-but this turns out to be a **methodological artifact worth flagging, not a
-real finding**: this reference graph decomposes into 78,215-84,643
-communities across 309,512 nodes, with a *median community size of 1*. When
-2-3 of a publication's cited cables happen to directly reference each other
-(the same historical episode's cable-and-reply pair), they trivially land
-in the same tiny community — that's close to definitional for a
-reference-graph community detector, not evidence that "community
-membership predicts citation" in any generalizable sense. Reported for
-completeness in `results/attribute_signal_categorical.csv`, not treated as
-a finding.
+Same direction throughout as the non-giant build, just underpowered — only
+`degree` in the pooled analysis clears q<0.05.
 
-## 3. Method B — seed-expansion retrieval test
+**antichain** (giant-only): no stable direction. `morley2019` and
+`ALL_POOLED` cited cables are numerically *enriched* in the dominant
+antichain layer (14/9.13, confirmed/same_year, p=0.022, q=0.135 — doesn't
+survive correction). Earlier builds of this analysis found the opposite
+(depletion, also non-significant). Not a usable lead.
 
-Leave-one-out personalized PageRank, seeded on a publication's other
-`confirmed` matched cables, vs. that cable's own global-pagerank rank and a
-random-rank baseline. Only `morley2019` (16 seeds) and `weimer2019` (15
-seeds) cleared the n≥10 threshold to run this.
+### Community membership
 
-| publication | method | median rank (of 309,512) | MRR | recall@50 |
-|---|---|---|---|---|
-| morley2019 | personalized PageRank | 90,514 | **0.0071** | **0.19** |
-| morley2019 | global pagerank | 80,615 | 0.00002 | 0.00 |
-| morley2019 | random | 154,757 | 0.00004 | 0.0002 |
-| weimer2019 | personalized PageRank | 205,384 | **0.0057** | **0.13** |
-| weimer2019 | global pagerank | 237,114 | 0.00001 | 0.00 |
-| weimer2019 | random | 154,757 | 0.00004 | 0.0002 |
-
-Personalized PageRank clearly beats both baselines on MRR and recall@50 for
-both publications — network proximity to a publication's *other* known
-cables is doing real work that a static global-importance score (pagerank)
-doesn't capture at all (global pagerank's recall@50 is exactly 0 in both
-cases). But it's a partial win, not a retrieval tool: median rank is still
-in the tens-to-hundreds of thousands out of 309,512, and for `morley2019`
-the *median* rank under personalized PageRank (90,514) is actually slightly
-worse than its own global-pagerank median (80,615) even though personalized
-PageRank's MRR/recall are far better — a handful of held-out cables rank
-very well under personalization (pulling MRR/recall@50 up) while the bulk
-rank no better than a generically-important cable would. `weimer2019` shows
-the same pattern more starkly (personalized-PageRank median rank worse than
-even the random baseline): its cables span many different, only loosely
-cross-referencing stations (Kabul, Geneva, Bonn, Kathmandu, Ottawa), which
-plausibly limits how much graph proximity between them personalized
-PageRank can exploit.
+`community-leiden` is tested via the numeric (Mann-Whitney) sweep, not a
+mode-bucket enrichment test — see "Which graph build" in the prior pass of
+this analysis for why the enrichment version was a tautological artifact
+(median community size in this graph is close to 1 node). Shows no signal
+in either build (best q≈0.92-0.97).
 
 ## Answer to the original question
 
 **Is there a graph-native signal for "cables a historian would cite"?**
-Weakly and inconsistently, yes — `cd-index-type: disruptive` is the one
-attribute with a real, cross-publication-replicated effect; personalized
-PageRank seeded on a partial known set beats a static importance score at
-finding the rest. But the dominant finding is that **most of the ground
-truth isn't reachable through this graph at all** (giant-component
-coverage, not attribute choice, is the binding constraint), and the
-generic-centrality effect that does appear is largely specific to
-`morley2019` and doesn't replicate in the other publications with enough
-matched cables to check (`weimer2019`, `szalontai2023`). The antichain lead
-from an earlier pass of this analysis did not survive a corrected MRN join
-and should not be cited as a finding.
+Yes, more confidently than earlier passes of this analysis suggested once
+ground-truth coverage stops being the binding constraint: cited cables are
+systematically *less* central (lower degree/betweenness/pagerank/coreness)
+than background, and skew toward `cd-index-type: disruptive`. Both effects
+are modest in size (rank-biserial ≈ 0.15-0.36) but statistically solid at
+n=62-151. `antichain` remains the one tested attribute with no reliable
+signal in any build. The dominant caveat is still coverage, just a less
+severe one than before: **even the best (non-giant) build only reaches
+78% of confirmed citations**, so any attribute-based method built on this
+graph structure alone would still miss roughly a fifth of what historians
+actually cite before it even gets a chance to rank anything.
 
 ## Caveats / limitations
 
-- Sample sizes are small even before the coverage gap: `morley2019` (76
-  confirmed) and `weimer2019` (39 confirmed) supply nearly all statistical
-  power; the other five publications combined contribute 52 confirmed rows
-  across the whole project, and only 45 matched cables total survive the
-  giant-component join. Every reported effect should be read as "detectable
-  at n≈15-40," not as a general property of historian citation behavior.
-- Topic/date/station confounds were only partially controlled (same-year
-  background); full-corpus background gave near-identical results, which
-  is weak evidence the confound isn't dominant here, not proof.
-- Ground-truth label noise: `flagged`-tier rows (date offsets, topical-fit-
-  only matches) are reported separately from `confirmed` throughout: see
-  `results/ground_truth_cables.csv`'s `tier` column and
-  `results/attribute_signal_*.csv`'s `tier_scope` column.
-- `closeness` is present in the graphml's attribute schema but populated
-  for zero nodes — dropped from every test automatically (n=0), not a bug.
-- Community-membership "signal" is a known artifact (see above) — don't
-  reuse `attribute_signal_categorical.csv`'s community rows as evidence
-  without re-deriving a less tautological test (e.g. concentration relative
-  to community-size-matched random draws, not a fixed observed-mode
-  bucket).
-- MRN matching follows acp-127's actual normalization function
-  (`code/station_data.py` + `match_mrn_to_label()` in
-  `code/build_node_table.py`), not a heuristic reverse-engineered from the
-  graph's own labels — this is a hand-copied data snapshot of
-  `acp-127/src/station_data.py`'s `STATIONS` table (191/191 ground-truth
-  station codes resolve through it), and should be re-synced if acp-127's
-  station list changes materially.
+- Sample sizes are much better than earlier passes but still bounded:
+  `morley2019` (76 confirmed) and `weimer2019` (39 confirmed) supply most
+  statistical power even in the non-giant build; `harmer2013` (4) and
+  `lee2018`/`hulme2026` (2/9) remain too small individually.
+- Topic/date/station confounds are only partially controlled. Same-year
+  and full-corpus backgrounds give near-identical results in the
+  large-n groups specifically because the ground truth spans nearly the
+  graph's entire 1973-1979 year range, so "same-year" background converges
+  to "full corpus" background by construction — this is *not* strong
+  evidence the date confound was ruled out, just that this particular
+  control didn't have much room to matter for these particular groups.
+- Ground-truth label noise: `flagged`-tier rows are reported separately
+  from `confirmed` throughout (`tier`/`tier_scope` columns).
+- `closeness` is present in the schema but populated for zero nodes in
+  every build tested so far.
+- `missing` (boolean) is included in the auto-detected numeric sweep but
+  is degenerate — every ground-truth cable that matched the graph at all
+  has `missing=False` by construction (it had to have its own record to
+  be extractable and joinable), so there's no variance to test within the
+  selected group.
+- FDR correction is applied separately per test family specifically to
+  avoid one family's tautological hits inflating another's apparent
+  significance (this is what changed `cd-index-type`'s giant-build result
+  between passes of this analysis) — don't recombine `attribute_signal_*.csv`
+  files and re-derive a single global correction without accounting for
+  this.
+- `antichain` is only testable on the giant build, which is also the
+  build with the least ground-truth coverage — its null result should be
+  read as "underpowered and inconsistent across builds," not "ruled out."
 
 ## Reproducing
 
 ```
-python3 questions/publication-cable-graph-signal/code/build_node_table.py
-python3 questions/publication-cable-graph-signal/code/attribute_signal.py
-python3 questions/publication-cable-graph-signal/code/seed_expansion_retrieval.py
+python3 questions/publication-cable-graph-signal/code/build_node_table.py \
+  <path-to-enriched-graphml> [ground_truth_csv] [output_csv]
+python3 questions/publication-cable-graph-signal/code/attribute_signal.py \
+  [node_features_csv] [ground_truth_matched_csv] [output_dir]
 ```
 
-Outputs: `results/node_features.csv`, `results/ground_truth_matched.csv`,
-`results/attribute_signal_{numeric,categorical,cdindex,antichain}.csv`,
-`results/seed_expansion_{details,summary}.csv`.
+`build_node_table.py` requires the graphml path as its first argument (no
+default — the file lives outside the repo and its name/schema changes over
+time); `attribute_signal.py` reads `build_node_table.py`'s CSV output and
+needs no graphml path itself. To reproduce the non-giant comparison, point
+`output_csv`/`node_features_csv`/`output_dir` at a separate directory (this
+repo used `results/nongiant/`) so it doesn't overwrite the giant-build
+results. Outputs per build: `node_features.csv`,
+`ground_truth_matched.csv`,
+`attribute_signal_{numeric,categorical,cdindex,antichain}.csv`.
