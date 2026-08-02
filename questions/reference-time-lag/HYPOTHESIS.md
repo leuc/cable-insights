@@ -99,6 +99,17 @@ recordkeeping style (a subject for further investigation) than with a
 - [`address-reference-similarity`](../address-reference-similarity/HYPOTHESIS.md) —
   same reference-edge join, applied to routing/addressing metadata; also
   uses `lib/station.py` for its own STATE/non-STATE breakdown.
+- Follow-up (not yet a question folder): is there a difference in time lag
+  depending on TAGS? The per-station breakdown found real station-to-station
+  variation in how fast references resolve (e.g. USUNNEWYORK/CAIRO/TELAVIV
+  vs. BRUSSELS/CARACAS/ATHENS) — worth checking whether that's actually a
+  topical effect (some subjects/TAGS types get referenced faster or slower
+  than others, e.g. breaking political reporting vs. routine
+  administrative/economic traffic) rather than a purely geographic/post
+  effect. Would join `tags.norm.ndjson` the same way
+  [`tags-reference-similarity`](../tags-reference-similarity/HYPOTHESIS.md)
+  does, bucketing lag by the citing (and/or cited) document's TAGS code or
+  type instead of by station.
 - [`filing-time-vs-dtg`](../filing-time-vs-dtg/HYPOTHESIS.md) — a different
   time-lag question (filing_time vs. DTG within a single cable, 1976-1979
   only), not to be confused with this one (citing cable vs. cited cable,
