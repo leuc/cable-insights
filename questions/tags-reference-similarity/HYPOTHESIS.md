@@ -21,6 +21,8 @@ person), not just one.
 - External: `results/<year>.tags.norm.ndjson` and
   `results/<year>.reftel.norm.ndjson` from the sibling `acp-127` repo (see
   `data/external/README.md`) — no local copy checked into this repo
+- Shared: `lib/station.py` (`parse_station`), for the STATE/non-STATE
+  breakdown
 - Code: `code/tags_reference_similarity.py` (question-exclusive)
 
 ## Method summary
@@ -35,6 +37,10 @@ person), not just one.
   actual-vs-random is apples-to-apples.
 - Compute per-code lift for high-frequency codes:
   `P(cited doc has code X | citing doc has code X)`.
+- Run the whole comparison twice: once over the full corpus, once with
+  STATE-originated documents (station parsed from `document_number`)
+  excluded from both sides of every pair, to check the finding isn't an
+  artifact of STATE's ~29% share of the corpus.
 
 ## Result
 
@@ -42,7 +48,11 @@ Answered — yes, strongly and consistently, across the full corpus and every
 TAGS type. Subject-code overlap (topical "aboutness") is if anything the
 *strongest* signal (91.8% any-overlap, 61.8% identical-set), not an artifact
 of shared dateline geography; effects range 20x-1000x+ above the random
-baseline depending on type. Full write-up: `results/tags_reference_similarity.md`.
+baseline depending on type. Confirmed robust to STATE's ~29% share of the
+corpus: every run now reports both ALL (including STATE) and EXCLUDING
+STATE (station parsed from `document_number`, dropped on both sides of the
+pair); mean Jaccard and lift stay in the same range either way, with no
+reversal of sign or order-of-magnitude change. Full write-up: `results/tags_reference_similarity.md`.
 Published visual summary: [TAGS Reference Similarity — ACP-127](https://claude.ai/code/artifact/d0f24b09-043b-480e-abe2-2a21892d938f)
 (saved locally as `results/tags_reference_similarity.html`).
 
@@ -59,3 +69,11 @@ and per-code minimum-n thresholds used for the lift analysis.
 - [`reference-graph-structure`](../reference-graph-structure/HYPOTHESIS.md) —
   shares the same external reference-data source (`*.reftel.norm.ndjson`),
   but does not share code with this question.
+- [`address-reference-similarity`](../address-reference-similarity/HYPOTHESIS.md) —
+  follow-up: do cables that reference each other share the same office
+  distribution selection/values and/or the same FM/TO/INFO addresses? Tests
+  whether the TAGS overlap found here is distinct from, or largely
+  explained by, shared routing/distribution metadata.
+- [`reference-time-lag`](../reference-time-lag/HYPOTHESIS.md) — same
+  reference-edge join, applied to the time gap between citing and cited
+  cables instead of TAGS.

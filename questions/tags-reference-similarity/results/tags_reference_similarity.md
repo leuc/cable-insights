@@ -39,6 +39,10 @@ Script: [`code/tags_reference_similarity.py`](../code/tags_reference_similarity.
    (`--per-code-min-n`, default 300 in the run below), `P(cited doc also has
    code X | citing doc has code X)` is computed for actual reference pairs
    and for random pairs; `lift = actual P / random P`.
+6. **STATE robustness check.** The whole comparison runs twice: once over
+   the full corpus ("ALL"), once with STATE-originated documents (station
+   parsed from `document_number` via `lib.station.parse_station`) excluded
+   from both sides of every pair ("EXCLUDING STATE").
 
 Run: `python3 -m src.tags_reference_similarity [--sample N] [--per-code]`.
 
@@ -138,6 +142,33 @@ actually shows up when a real reference exists), subject codes (91.8% any
 overlap) and organization codes (70.9%) are the most dependable evidence of
 a citation relationship; person names, unknown, other, and annotation codes
 are real but much noisier signals, present in a minority of pairs.
+
+## STATE vs. non-STATE robustness check
+
+STATE is ~29% of the corpus and drafted/routed differently from field posts
+(outgoing instructions rather than field reporting), so every run now
+reports a second section with STATE-originated documents excluded from
+both sides of every pair (station parsed from `document_number` via
+`lib.station.parse_station`; see `address-reference-similarity`, which uses
+the same helper). Full corpus, `--seed 42`:
+
+| view | mean Jaccard, ALL (incl. STATE) | mean Jaccard, EXCLUDING STATE | lift, ALL | lift, EXCLUDING STATE |
+|---|---|---|---|---|
+| all | 0.615 | 0.631 | 33.0x | 35.2x |
+| subject | 0.762 | 0.735 | 31.3x | 26.4x |
+| geographic | 0.607 | 0.700 | 22.1x | 30.6x |
+| organization | 0.669 | 0.650 | 136.8x | 126.9x |
+| person | 0.386 | 0.335 | 1143.7x | 1283.9x |
+| annotation | 0.194 | 0.187 | 20788x | 15997x |
+| unknown | 0.316 | 0.337 | 292.0x | 210.8x |
+| other | 0.295 | 0.304 | 1420.9x | 1258.2x |
+
+Removing STATE drops the citing-document pool from 1,136,872 to 829,021 and
+the resolved-reference rate from 81.3% to 43.6% (STATE cables reference and
+are referenced by each other heavily, so excluding them removes a large
+share of resolvable edges) — but every type's mean Jaccard and lift stays in
+the same range, with no reversal of sign or order-of-magnitude change. The
+finding is not an artifact of STATE's outsized share of the corpus.
 
 ## Conclusion
 
