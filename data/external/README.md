@@ -20,6 +20,14 @@ pipeline and NDJSON schema.
   (per year, 1973-1979) — normalized reference and TAGS records, consumed by
   `questions/reference-graph-structure/code/reftel2graph.py` and
   `questions/tags-reference-similarity/code/tags_reference_similarity.py`.
+- `results/<year>.ndjson` (per year, 1973-1979) — raw per-document extractor
+  output (`Message Attributes."Document Number"`, `_distribution`, `_from`,
+  `_to`, `_info`, among other fields not yet consumed by any question here).
+  Consumed by
+  `questions/address-reference-similarity/code/address_reference_similarity.py`,
+  joined to `results/<year>.reftel.norm.ndjson` via the raw Document Number
+  (`document_number_raw`). Exposed to this repo at `data/cable-extract/`
+  (symlinked to the same underlying directory as `acp-127/results`).
 - `$DASHFIX_DIR/<year>.reduced.ndjson` — a separate fixed-parser
   re-extraction (doc/date/dash only), consumed by
   `lib/build_transmission_volume.sh` to build
