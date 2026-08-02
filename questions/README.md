@@ -11,6 +11,7 @@ investigation proceeds, then add a row below.
 
 | Slug | Question | Status |
 |---|---|---|
+| | Can we predict links between cables that don't have any? (based on subject, TAGS, office distribution and address similarity, with measured time lag fall off by station) | new |
 | [`dash-counter-meaning`](dash-counter-meaning/HYPOTHESIS.md) | What does the unlabeled dash-counter header line represent? | answered |
 | [`filing-time-vs-dtg`](filing-time-vs-dtg/HYPOTHESIS.md) | How does the counter's `filing_time` subfield relate to DTG, and does the lag change over time? | answered |
 | [`tags-reference-similarity`](tags-reference-similarity/HYPOTHESIS.md) | Do cables that reference each other share similar TAGS codes? | answered |
