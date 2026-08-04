@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "source": {
+    "id": "gutfeld2016",
+    "doi": "10.1080/00263206.2016.1144393",
+    "citation": "Gutfeld & Vanetik (2016), “A Situation That Had to Be Manipulated” — cable findings",
+    "files": [
+      "data/source/gutfeld2016/FINDINGS.md"
+    ]
+  },
+  "mrns": [
+    {
+      "mrn_full": "1973JIDDA04549",
+      "mrn_normalized": "73JEDDAH4549"
+    },
+    {
+      "mrn_full": "1973JIDDA04663",
+      "mrn_normalized": "73JEDDAH4663"
+    },
+    {
+      "mrn_full": "1973STATE203571",
+      "mrn_normalized": "73STATE203571"
+    }
+  ]
+}

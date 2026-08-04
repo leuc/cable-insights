@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "source": {
+    "id": "auffant2022",
+    "doi": "10.26153/TSW/42079",
+    "citation": "Auffant (2022), \"Oil for Atoms: The 1970s Energy Crisis and Nuclear Proliferation in the Persian Gulf\" — cable findings",
+    "files": [
+      "data/source/auffant2022/FINDINGS.md"
+    ]
+  },
+  "mrns": [
+    {
+      "mrn_full": "1974BONN01326",
+      "mrn_normalized": "74BONN1326"
+    },
+    {
+      "mrn_full": "1974BONN04098",
+      "mrn_normalized": "74BONN4098"
+    },
+    {
+      "mrn_full": "1974BONN07347",
+      "mrn_normalized": "74BONN7347"
+    },
+    {
+      "mrn_full": "1974JIDDA01123",
+      "mrn_normalized": "74JEDDAH1123"
+    },
+    {
+      "mrn_full": "1974JIDDA01192",
+      "mrn_normalized": "74JEDDAH1192"
+    },
+    {
+      "mrn_full": "1974JIDDA03609",
+      "mrn_normalized": "74JEDDAH3609"
+    },
+    {
+      "mrn_full": "1974KUWAIT03297",
+      "mrn_normalized": "74KUWAIT3297"
+    },
+    {
+      "mrn_full": "1974NEWDE06431",
+      "mrn_normalized": "74NEWDELHI6431"
+    },
+    {
+      "mrn_full": "1974NEWDE06785",
+      "mrn_normalized": "74NEWDELHI6785"
+    },
+    {
+      "mrn_full": "1974PARIS01654",
+      "mrn_normalized": "74PARIS1654"
+    },
+    {
+      "mrn_full": "1974PARIS15305",
+      "mrn_normalized": "74PARIS15305"
+    },
+    {
+      "mrn_full": "1974PARIS15445",
+      "mrn_normalized": "74PARIS15445"
+    },
+    {
+      "mrn_full": "1974PARIS28641",
+      "mrn_normalized": "74PARIS28641"
+    },
+    {
+      "mrn_full": "1974PARIS29667",
+      "mrn_normalized": "74PARIS29667"
+    },
+    {
+      "mrn_full": "1974STATE045027",
+      "mrn_normalized": "74STATE45027"
+    },
+    {
+      "mrn_full": "1974STATE138121",
+      "mrn_normalized": "74STATE138121"
+    },
+    {
+      "mrn_full": "1974STATE220253",
+      "mrn_normalized": "74STATE220253"
+    },
+    {
+      "mrn_full": "1974TEHRAN03593",
+      "mrn_normalized": "74TEHRAN3593"
+    },
+    {
+      "mrn_full": "1974TEHRAN05192",
+      "mrn_normalized": "74TEHRAN5192"
+    },
+    {
+      "mrn_full": "1974TOKYO01127",
+      "mrn_normalized": "74TOKYO1127"
+    },
+    {
+      "mrn_full": "1974TOKYO01337",
+      "mrn_normalized": "74TOKYO1337"
+    },
+    {
+      "mrn_full": "1974TOKYO01784",
+      "mrn_normalized": "74TOKYO1784"
+    },
+    {
+      "mrn_full": "1974TOKYO02473",
+      "mrn_normalized": "74TOKYO2473"
+    },
+    {
+      "mrn_full": "1974TOKYO03150",
+      "mrn_normalized": "74TOKYO3150"
+    },
+    {
+      "mrn_full": "1975PARIS01944",
+      "mrn_normalized": "75PARIS1944"
+    },
+    {
+      "mrn_full": "1975PARIS23731",
+      "mrn_normalized": "75PARIS23731"
+    }
+  ]
+}

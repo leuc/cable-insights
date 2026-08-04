@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "source": {
+    "id": "sanchez-nateras2024",
+    "doi": "10.1017/lar.2023.32",
+    "citation": "Sánchez Nateras (2024), \"'A Similar Détente': Mexico's Central American Policy, 1978–1982\" — cable findings",
+    "files": [
+      "data/source/sanchez-nateras2024/FINDINGS.md"
+    ]
+  },
+  "mrns": [
+    {
+      "mrn_full": "1979MANAGU03651",
+      "mrn_normalized": "1979MANAGU03651"
+    },
+    {
+      "mrn_full": "1979MEXICO12378",
+      "mrn_normalized": "79MEXICOCITY12378"
+    },
+    {
+      "mrn_full": "1979MEXICO12752",
+      "mrn_normalized": "79MEXICOCITY12752"
+    },
+    {
+      "mrn_full": "1979MEXICO13864",
+      "mrn_normalized": "79MEXICOCITY13864"
+    },
+    {
+      "mrn_full": "1979MEXICO17640",
+      "mrn_normalized": "79MEXICOCITY17640"
+    },
+    {
+      "mrn_full": "1979STATE194780",
+      "mrn_normalized": "79STATE194780"
+    },
+    {
+      "mrn_full": "1979VIENNA11356",
+      "mrn_normalized": "79VIENNA11356"
+    }
+  ]
+}

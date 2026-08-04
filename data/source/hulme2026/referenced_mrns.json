@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "source": {
+    "id": "hulme2026",
+    "doi": "10.1080/09636412.2026.2617892",
+    "citation": "Hulme & Waxman (2026), \"Minding the Commitment Gap\" — cable/telegram findings",
+    "files": [
+      "data/source/hulme2026/FINDINGS.md"
+    ]
+  },
+  "mrns": [
+    {
+      "mrn_full": "1973MANILA09787",
+      "mrn_normalized": "73MANILA9787"
+    },
+    {
+      "mrn_full": "1975BANGKO12351",
+      "mrn_normalized": "75BANGKOK12351"
+    },
+    {
+      "mrn_full": "1975BANGKO18841",
+      "mrn_normalized": "75BANGKOK18841"
+    },
+    {
+      "mrn_full": "1975STATE015015",
+      "mrn_normalized": "75STATE15015"
+    },
+    {
+      "mrn_full": "1976MANILA11355",
+      "mrn_normalized": "76MANILA11355"
+    },
+    {
+      "mrn_full": "1976STATE268153",
+      "mrn_normalized": "76STATE268153"
+    },
+    {
+      "mrn_full": "1976STATE272078",
+      "mrn_normalized": "76STATE272078"
+    },
+    {
+      "mrn_full": "1976STATE287342",
+      "mrn_normalized": "76STATE287342"
+    },
+    {
+      "mrn_full": "1977MANILA15267",
+      "mrn_normalized": "77MANILA15267"
+    },
+    {
+      "mrn_full": "1977SEOUL06011",
+      "mrn_normalized": "77SEOUL6011"
+    },
+    {
+      "mrn_full": "1979STATE004453",
+      "mrn_normalized": "79STATE4453"
+    }
+  ]
+}

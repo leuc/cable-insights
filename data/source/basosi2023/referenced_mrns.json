@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "source": {
+    "id": "basosi2023",
+    "doi": "10.1080/14682745.2023.2269869",
+    "citation": "FINDINGS — Basosi 2023, \"Something that apparently troubles the Cubans significantly\"",
+    "files": [
+      "data/source/basosi2023/FINDINGS.md"
+    ]
+  },
+  "mrns": [
+    {
+      "mrn_full": "1978ABUDH01313",
+      "mrn_normalized": "78ABUDHABI1313"
+    },
+    {
+      "mrn_full": "1978BELGRA00759",
+      "mrn_normalized": "78BELGRADE759"
+    },
+    {
+      "mrn_full": "1978BELGRA04620",
+      "mrn_normalized": "78BELGRADE4620"
+    },
+    {
+      "mrn_full": "1978BELGRA05405",
+      "mrn_normalized": "78BELGRADE5405"
+    },
+    {
+      "mrn_full": "1978BELGRA05466",
+      "mrn_normalized": "78BELGRADE5466"
+    },
+    {
+      "mrn_full": "1978BELGRA05563",
+      "mrn_normalized": "78BELGRADE5563"
+    },
+    {
+      "mrn_full": "1978COLOMB02392",
+      "mrn_normalized": "78COLOMBO2392"
+    },
+    {
+      "mrn_full": "1978HAVANA00219",
+      "mrn_normalized": "78HAVANA219"
+    },
+    {
+      "mrn_full": "1978HAVANA00236",
+      "mrn_normalized": "78HAVANA236"
+    },
+    {
+      "mrn_full": "1978HAVANA01176",
+      "mrn_normalized": "78HAVANA1176"
+    },
+    {
+      "mrn_full": "1978HAVANA01299",
+      "mrn_normalized": "78HAVANA1299"
+    },
+    {
+      "mrn_full": "1978HAVANA01379",
+      "mrn_normalized": "78HAVANA1379"
+    },
+    {
+      "mrn_full": "1978HAVANA01400",
+      "mrn_normalized": "78HAVANA1400"
+    },
+    {
+      "mrn_full": "1978HAVANA01430",
+      "mrn_normalized": "78HAVANA1430"
+    },
+    {
+      "mrn_full": "1978KHARTO03325",
+      "mrn_normalized": "78KHARTOUM3325"
+    },
+    {
+      "mrn_full": "1978STATE097545",
+      "mrn_normalized": "78STATE97545"
+    },
+    {
+      "mrn_full": "1978STATE142045",
+      "mrn_normalized": "78STATE142045"
+    },
+    {
+      "mrn_full": "1978STATE164031",
+      "mrn_normalized": "78STATE164031"
+    },
+    {
+      "mrn_full": "1978STATE176826",
+      "mrn_normalized": "78STATE176826"
+    },
+    {
+      "mrn_full": "1978STATE186342",
+      "mrn_normalized": "78STATE186342"
+    },
+    {
+      "mrn_full": "1978STATE229147",
+      "mrn_normalized": "78STATE229147"
+    },
+    {
+      "mrn_full": "1978USUNN01966",
+      "mrn_normalized": "78USUNNEWYORK1966"
+    },
+    {
+      "mrn_full": "1978USUNN02099",
+      "mrn_normalized": "78USUNNEWYORK2099"
+    },
+    {
+      "mrn_full": "1978USUNN02178",
+      "mrn_normalized": "78USUNNEWYORK2178"
+    },
+    {
+      "mrn_full": "1978USUNN02593",
+      "mrn_normalized": "78USUNNEWYORK2593"
+    }
+  ]
+}

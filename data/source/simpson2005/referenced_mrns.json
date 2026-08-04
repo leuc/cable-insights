@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "source": {
+    "id": "simpson2005",
+    "doi": "10.1080/14682740500222028",
+    "citation": "Simpson (2005), \"'Illegally and Beautifully': The United States, the Indonesian Invasion of East Timor and the International Community, 1974-76\" — cable findings",
+    "files": [
+      "data/source/simpson2005/FINDINGS.md"
+    ]
+  },
+  "mrns": [
+    {
+      "mrn_full": "1973JAKART03017",
+      "mrn_normalized": "73JAKARTA3017"
+    },
+    {
+      "mrn_full": "1975CANBER07933",
+      "mrn_normalized": "75CANBERRA7933"
+    },
+    {
+      "mrn_full": "1975JAKART02484",
+      "mrn_normalized": "75JAKARTA2484"
+    },
+    {
+      "mrn_full": "1975JAKART10244",
+      "mrn_normalized": "75JAKARTA10244"
+    },
+    {
+      "mrn_full": "1975JAKART12275",
+      "mrn_normalized": "75JAKARTA12275"
+    },
+    {
+      "mrn_full": "1975JAKART15438",
+      "mrn_normalized": "75JAKARTA15438"
+    },
+    {
+      "mrn_full": "1975STATE000286",
+      "mrn_normalized": "75STATE286"
+    },
+    {
+      "mrn_full": "1975STATE003749",
+      "mrn_normalized": "75STATE3749"
+    },
+    {
+      "mrn_full": "1975STATE170357",
+      "mrn_normalized": "75STATE170357"
+    },
+    {
+      "mrn_full": "1975STATE252899",
+      "mrn_normalized": "75STATE252899"
+    },
+    {
+      "mrn_full": "1975USUNN04955",
+      "mrn_normalized": "75USUNNEWYORK4955"
+    },
+    {
+      "mrn_full": "1975USUNN05029",
+      "mrn_normalized": "75USUNNEWYORK5029"
+    },
+    {
+      "mrn_full": "1975USUNN05928",
+      "mrn_normalized": "75USUNNEWYORK5928"
+    },
+    {
+      "mrn_full": "1976JAKART00694",
+      "mrn_normalized": "76JAKARTA694"
+    },
+    {
+      "mrn_full": "1976JAKART01151",
+      "mrn_normalized": "76JAKARTA1151"
+    },
+    {
+      "mrn_full": "1976JAKART02097",
+      "mrn_normalized": "76JAKARTA2097"
+    },
+    {
+      "mrn_full": "1976JAKART06284",
+      "mrn_normalized": "76JAKARTA6284"
+    },
+    {
+      "mrn_full": "1976LISBON01442",
+      "mrn_normalized": "76LISBON1442"
+    },
+    {
+      "mrn_full": "1976STATE037929",
+      "mrn_normalized": "76STATE37929"
+    },
+    {
+      "mrn_full": "1976STATE101116",
+      "mrn_normalized": "76STATE101116"
+    },
+    {
+      "mrn_full": "1976STATE119079",
+      "mrn_normalized": "76STATE119079"
+    },
+    {
+      "mrn_full": "1976STATE119690",
+      "mrn_normalized": "76STATE119690"
+    },
+    {
+      "mrn_full": "1976USUNN01182",
+      "mrn_normalized": "76USUNNEWYORK1182"
+    },
+    {
+      "mrn_full": "1977JAKART04745",
+      "mrn_normalized": "77JAKARTA4745"
+    },
+    {
+      "mrn_full": "1978JAKART00021",
+      "mrn_normalized": "78JAKARTA21"
+    },
+    {
+      "mrn_full": "1978USUNN05688",
+      "mrn_normalized": "78USUNNEWYORK5688"
+    },
+    {
+      "mrn_full": "1979USUNN04899",
+      "mrn_normalized": "79USUNNEWYORK4899"
+    }
+  ]
+}

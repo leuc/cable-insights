@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "source": {
+    "id": "fibiger2020",
+    "doi": "10.1080/09592296.2020.1721084",
+    "citation": "Fibiger (2020) — Cable Extraction Report",
+    "files": [
+      "data/source/fibiger2020/FINDINGS.md"
+    ]
+  },
+  "mrns": [
+    {
+      "mrn_full": "1975BANGKO08807",
+      "mrn_normalized": "75BANGKOK8807"
+    },
+    {
+      "mrn_full": "1975GENEVA03576",
+      "mrn_normalized": "75GENEVA3576"
+    },
+    {
+      "mrn_full": "1975JAKART05963",
+      "mrn_normalized": "75JAKARTA5963"
+    },
+    {
+      "mrn_full": "1975KUALA02683",
+      "mrn_normalized": "75KUALA LUMPUR2683"
+    },
+    {
+      "mrn_full": "1975MANILA06799",
+      "mrn_normalized": "75MANILA6799"
+    },
+    {
+      "mrn_full": "1975TAIPEI02661",
+      "mrn_normalized": "75TAIPEI2661"
+    },
+    {
+      "mrn_full": "1975THEHA02491",
+      "mrn_normalized": "75THEHAGUE2491"
+    }
+  ]
+}

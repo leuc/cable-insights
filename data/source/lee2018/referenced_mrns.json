@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "source": {
+    "id": "lee2018",
+    "doi": "10.1017/S0020818318000085",
+    "citation": "Lee (2018), \"The International Politics of Incomplete Sovereignty: How Hostile Neighbors Weaken the State\" — cable findings",
+    "files": [
+      "data/source/lee2018/FINDINGS.md"
+    ]
+  },
+  "mrns": [
+    {
+      "mrn_full": "1973KUALA00943",
+      "mrn_normalized": "73KUALA LUMPUR943"
+    },
+    {
+      "mrn_full": "1973MANILA02769",
+      "mrn_normalized": "73MANILA2769"
+    },
+    {
+      "mrn_full": "1975MANILA02817",
+      "mrn_normalized": "75MANILA2817"
+    }
+  ]
+}

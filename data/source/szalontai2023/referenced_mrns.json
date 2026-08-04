@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "source": {
+    "id": "szalontai2023",
+    "doi": "10.1162/jcws_a_01119",
+    "citation": "Szalontai & Yoo (2023), \"Maneuvering between Baghdad and Tehran\" — cable/telegram findings",
+    "files": [
+      "data/source/szalontai2023/FINDINGS.md"
+    ]
+  },
+  "mrns": [
+    {
+      "mrn_full": "1973SEOUL02368",
+      "mrn_normalized": "73SEOUL2368"
+    },
+    {
+      "mrn_full": "1973STATE072356",
+      "mrn_normalized": "73STATE72356"
+    },
+    {
+      "mrn_full": "1973TEHRAN02588",
+      "mrn_normalized": "73TEHRAN2588"
+    },
+    {
+      "mrn_full": "1973TEHRAN06143",
+      "mrn_normalized": "73TEHRAN6143"
+    },
+    {
+      "mrn_full": "1975STATE153446",
+      "mrn_normalized": "75STATE153446"
+    },
+    {
+      "mrn_full": "1975TEHRAN02481",
+      "mrn_normalized": "75TEHRAN2481"
+    },
+    {
+      "mrn_full": "1976BAGHDA01263",
+      "mrn_normalized": "76BAGHDAD1263"
+    },
+    {
+      "mrn_full": "1976TEHRAN08487",
+      "mrn_normalized": "76TEHRAN8487"
+    },
+    {
+      "mrn_full": "1976TEHRAN09522",
+      "mrn_normalized": "76TEHRAN9522"
+    },
+    {
+      "mrn_full": "1976TEHRAN11243",
+      "mrn_normalized": "76TEHRAN11243"
+    },
+    {
+      "mrn_full": "1977BAGHDA00550",
+      "mrn_normalized": "77BAGHDAD550"
+    },
+    {
+      "mrn_full": "1978BAGHDA02238",
+      "mrn_normalized": "78BAGHDAD2238"
+    },
+    {
+      "mrn_full": "1978BAGHDA02262",
+      "mrn_normalized": "78BAGHDAD2262"
+    },
+    {
+      "mrn_full": "1979BAGHDA02432",
+      "mrn_normalized": "79BAGHDAD2432"
+    },
+    {
+      "mrn_full": "1979TEHRAN07979",
+      "mrn_normalized": "79TEHRAN7979"
+    }
+  ]
+}

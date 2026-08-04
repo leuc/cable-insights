@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "source": {
+    "id": "winger2022",
+    "doi": "10.1080/07075332.2021.1927799",
+    "citation": "Winger (2022), \"Reassurance and Revival: The U.S.–Philippine Alliance in the Wake of the Vietnam War\" — cable findings",
+    "files": [
+      "data/source/winger2022/FINDINGS.md"
+    ]
+  },
+  "mrns": [
+    {
+      "mrn_full": "1975MANILA04374",
+      "mrn_normalized": "75MANILA4374"
+    },
+    {
+      "mrn_full": "1975MANILA04661",
+      "mrn_normalized": "75MANILA4661"
+    },
+    {
+      "mrn_full": "1975MANILA04738",
+      "mrn_normalized": "75MANILA4738"
+    },
+    {
+      "mrn_full": "1975MANILA04883",
+      "mrn_normalized": "75MANILA4883"
+    },
+    {
+      "mrn_full": "1975MANILA05250",
+      "mrn_normalized": "75MANILA5250"
+    },
+    {
+      "mrn_full": "1975MANILA05355",
+      "mrn_normalized": "75MANILA5355"
+    },
+    {
+      "mrn_full": "1975MANILA06840",
+      "mrn_normalized": "75MANILA6840"
+    },
+    {
+      "mrn_full": "1975MANILA06987",
+      "mrn_normalized": "75MANILA6987"
+    },
+    {
+      "mrn_full": "1975MANILA07891",
+      "mrn_normalized": "75MANILA7891"
+    },
+    {
+      "mrn_full": "1975MANILA09245",
+      "mrn_normalized": "75MANILA9245"
+    },
+    {
+      "mrn_full": "1975MANILA09556",
+      "mrn_normalized": "75MANILA9556"
+    },
+    {
+      "mrn_full": "1975MANILA09896",
+      "mrn_normalized": "75MANILA9896"
+    },
+    {
+      "mrn_full": "1975STATE116037",
+      "mrn_normalized": "75STATE116037"
+    },
+    {
+      "mrn_full": "1975STATE133765",
+      "mrn_normalized": "75STATE133765"
+    },
+    {
+      "mrn_full": "1976MANILA10023",
+      "mrn_normalized": "76MANILA10023"
+    },
+    {
+      "mrn_full": "1976MANILA11209",
+      "mrn_normalized": "76MANILA11209"
+    },
+    {
+      "mrn_full": "1976MANILA11733",
+      "mrn_normalized": "76MANILA11733"
+    },
+    {
+      "mrn_full": "1976STATE190998",
+      "mrn_normalized": "76STATE190998"
+    },
+    {
+      "mrn_full": "1976STATE192534",
+      "mrn_normalized": "76STATE192534"
+    },
+    {
+      "mrn_full": "1976STATE267580",
+      "mrn_normalized": "76STATE267580"
+    },
+    {
+      "mrn_full": "1976STATE268153",
+      "mrn_normalized": "76STATE268153"
+    },
+    {
+      "mrn_full": "1976STATE293490",
+      "mrn_normalized": "76STATE293490"
+    },
+    {
+      "mrn_full": "1976STATE295628",
+      "mrn_normalized": "76STATE295628"
+    },
+    {
+      "mrn_full": "1976STATE300727",
+      "mrn_normalized": "76STATE300727"
+    },
+    {
+      "mrn_full": "1977MANILA00632",
+      "mrn_normalized": "77MANILA632"
+    },
+    {
+      "mrn_full": "1977MANILA01695",
+      "mrn_normalized": "77MANILA1695"
+    },
+    {
+      "mrn_full": "1977MANILA15267",
+      "mrn_normalized": "77MANILA15267"
+    },
+    {
+      "mrn_full": "1977MANILA19311",
+      "mrn_normalized": "77MANILA19311"
+    },
+    {
+      "mrn_full": "1977STATE197398",
+      "mrn_normalized": "77STATE197398"
+    },
+    {
+      "mrn_full": "1977STATE198986",
+      "mrn_normalized": "77STATE198986"
+    },
+    {
+      "mrn_full": "1977STATE227946",
+      "mrn_normalized": "77STATE227946"
+    },
+    {
+      "mrn_full": "1977STATE248525",
+      "mrn_normalized": "77STATE248525"
+    },
+    {
+      "mrn_full": "1977STATE290510",
+      "mrn_normalized": "77STATE290510"
+    },
+    {
+      "mrn_full": "1978MANILA00632",
+      "mrn_normalized": "78MANILA632"
+    },
+    {
+      "mrn_full": "1978MANILA00721",
+      "mrn_normalized": "78MANILA721"
+    },
+    {
+      "mrn_full": "1978MANILA04258",
+      "mrn_normalized": "78MANILA4258"
+    },
+    {
+      "mrn_full": "1978MANILA04486",
+      "mrn_normalized": "78MANILA4486"
+    },
+    {
+      "mrn_full": "1978MANILA04971",
+      "mrn_normalized": "78MANILA4971"
+    },
+    {
+      "mrn_full": "1978MANILA06080",
+      "mrn_normalized": "78MANILA6080"
+    },
+    {
+      "mrn_full": "1978MANILA06295",
+      "mrn_normalized": "78MANILA6295"
+    },
+    {
+      "mrn_full": "1978MANILA07272",
+      "mrn_normalized": "78MANILA7272"
+    },
+    {
+      "mrn_full": "1978MANILA07402",
+      "mrn_normalized": "78MANILA7402"
+    },
+    {
+      "mrn_full": "1978MANILA13485",
+      "mrn_normalized": "78MANILA13485"
+    },
+    {
+      "mrn_full": "1978MANILA13751",
+      "mrn_normalized": "78MANILA13751"
+    },
+    {
+      "mrn_full": "1978MANILA14216",
+      "mrn_normalized": "78MANILA14216"
+    },
+    {
+      "mrn_full": "1978MANILA17337",
+      "mrn_normalized": "78MANILA17337"
+    },
+    {
+      "mrn_full": "1978MANILA18793",
+      "mrn_normalized": "78MANILA18793"
+    },
+    {
+      "mrn_full": "1978MANILA19451",
+      "mrn_normalized": "78MANILA19451"
+    },
+    {
+      "mrn_full": "1978MANILA19456",
+      "mrn_normalized": "78MANILA19456"
+    },
+    {
+      "mrn_full": "1978MANILA20142",
+      "mrn_normalized": "78MANILA20142"
+    },
+    {
+      "mrn_full": "1978MANILA22622",
+      "mrn_normalized": "78MANILA22622"
+    },
+    {
+      "mrn_full": "1978STATE067001",
+      "mrn_normalized": "78STATE67001"
+    },
+    {
+      "mrn_full": "1978STATE092191",
+      "mrn_normalized": "78STATE92191"
+    },
+    {
+      "mrn_full": "1978STATE146429",
+      "mrn_normalized": "78STATE146429"
+    },
+    {
+      "mrn_full": "1978STATE192106",
+      "mrn_normalized": "78STATE192106"
+    },
+    {
+      "mrn_full": "1978STATE203005",
+      "mrn_normalized": "78STATE203005"
+    },
+    {
+      "mrn_full": "1978STATE259598",
+      "mrn_normalized": "78STATE259598"
+    },
+    {
+      "mrn_full": "1978STATE287362",
+      "mrn_normalized": "78STATE287362"
+    },
+    {
+      "mrn_full": "1978STATE287372",
+      "mrn_normalized": "78STATE287372"
+    },
+    {
+      "mrn_full": "1978STATE300318",
+      "mrn_normalized": "78STATE300318"
+    },
+    {
+      "mrn_full": "1978STATE327037",
+      "mrn_normalized": "78STATE327037"
+    },
+    {
+      "mrn_full": "1979STATE004453",
+      "mrn_normalized": "79STATE4453"
+    }
+  ]
+}

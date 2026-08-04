@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "source": {
+    "id": "harmer2013",
+    "doi": "10.1017/S0022216X1200123X",
+    "citation": "Harmer (2013), \"Two, Three, Many Revolutions? Cuba and the Prospects for Revolutionary Change in Latin America, 1967–1975\" — cable findings",
+    "files": [
+      "data/source/harmer2013/FINDINGS.md"
+    ]
+  },
+  "mrns": [
+    {
+      "mrn_full": "1974CARACA06501",
+      "mrn_normalized": "74CARACAS6501"
+    },
+    {
+      "mrn_full": "1974GUATEM05023",
+      "mrn_normalized": "74GUATEMALA5023"
+    },
+    {
+      "mrn_full": "1974SANSA03486",
+      "mrn_normalized": "74SANSALVADOR3486"
+    },
+    {
+      "mrn_full": "1975GUATEM03218",
+      "mrn_normalized": "75GUATEMALA3218"
+    }
+  ]
+}

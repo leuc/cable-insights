@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "source": {
+    "id": "connelly2021",
+    "doi": "10.1080/02684527.2021.1946959",
+    "citation": "Connelly et al. (2021), “New evidence and new methods for analyzing the Iranian revolution as an intelligence failure” — cable findings",
+    "files": [
+      "data/source/connelly2021/FINDINGS.md"
+    ]
+  },
+  "mrns": [
+    {
+      "mrn_full": "1978STATE110017",
+      "mrn_normalized": "78STATE110017"
+    },
+    {
+      "mrn_full": "1978STATE231682",
+      "mrn_normalized": "78STATE231682"
+    },
+    {
+      "mrn_full": "1978STATE283811",
+      "mrn_normalized": "78STATE283811"
+    },
+    {
+      "mrn_full": "1978TABRIZ00004",
+      "mrn_normalized": "1978TABRIZ00004"
+    },
+    {
+      "mrn_full": "1978TEHRAN00389",
+      "mrn_normalized": "78TEHRAN389"
+    },
+    {
+      "mrn_full": "1978TEHRAN00665",
+      "mrn_normalized": "78TEHRAN665"
+    },
+    {
+      "mrn_full": "1978TEHRAN00961",
+      "mrn_normalized": "78TEHRAN961"
+    },
+    {
+      "mrn_full": "1978TEHRAN03892",
+      "mrn_normalized": "78TEHRAN3892"
+    },
+    {
+      "mrn_full": "1978TEHRAN04582",
+      "mrn_normalized": "78TEHRAN4582"
+    },
+    {
+      "mrn_full": "1978TEHRAN05390",
+      "mrn_normalized": "78TEHRAN5390"
+    },
+    {
+      "mrn_full": "1978TEHRAN07242",
+      "mrn_normalized": "78TEHRAN7242"
+    },
+    {
+      "mrn_full": "1978TEHRAN07882",
+      "mrn_normalized": "78TEHRAN7882"
+    },
+    {
+      "mrn_full": "1978TEHRAN08217",
+      "mrn_normalized": "78TEHRAN8217"
+    },
+    {
+      "mrn_full": "1978TEHRAN09431",
+      "mrn_normalized": "78TEHRAN9431"
+    },
+    {
+      "mrn_full": "1978TEHRAN10962",
+      "mrn_normalized": "78TEHRAN10962"
+    }
+  ]
+}

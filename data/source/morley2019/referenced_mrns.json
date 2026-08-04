@@ -1,0 +1,1077 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "source": {
+    "id": "morley2019",
+    "doi": null,
+    "citation": "Telegram/cable mentions in Morley & McGillion, *US Policy toward Chile in the 1970s*",
+    "files": [
+      "data/source/morley2019/02-consolidating-pinochet.md",
+      "data/source/morley2019/03-discordant-voices.md",
+      "data/source/morley2019/04-a-cooler-embrace.md",
+      "data/source/morley2019/05-continuity-and-change.md",
+      "data/source/morley2019/06-muddying-the-waters.md",
+      "data/source/morley2019/07-one-step-forward-two-steps-back.md",
+      "data/source/morley2019/08-policy-adrift.md",
+      "data/source/morley2019/09-conclusion.md"
+    ]
+  },
+  "mrns": [
+    {
+      "mrn_full": "1973PARIS25844",
+      "mrn_normalized": "73PARIS25844"
+    },
+    {
+      "mrn_full": "1973SANTIA04687",
+      "mrn_normalized": "73SANTIAGO4687"
+    },
+    {
+      "mrn_full": "1973STATE181833",
+      "mrn_normalized": "73STATE181833"
+    },
+    {
+      "mrn_full": "1973STATE181843",
+      "mrn_normalized": "73STATE181843"
+    },
+    {
+      "mrn_full": "1973STATE182136",
+      "mrn_normalized": "73STATE182136"
+    },
+    {
+      "mrn_full": "1973STATE182164",
+      "mrn_normalized": "73STATE182164"
+    },
+    {
+      "mrn_full": "1973STATE182343",
+      "mrn_normalized": "73STATE182343"
+    },
+    {
+      "mrn_full": "1973STATE182527",
+      "mrn_normalized": "73STATE182527"
+    },
+    {
+      "mrn_full": "1973STATE188028",
+      "mrn_normalized": "73STATE188028"
+    },
+    {
+      "mrn_full": "1973STATE188201",
+      "mrn_normalized": "73STATE188201"
+    },
+    {
+      "mrn_full": "1973STATE188497",
+      "mrn_normalized": "73STATE188497"
+    },
+    {
+      "mrn_full": "1973STATE188508",
+      "mrn_normalized": "73STATE188508"
+    },
+    {
+      "mrn_full": "1973STATE188709",
+      "mrn_normalized": "73STATE188709"
+    },
+    {
+      "mrn_full": "1973STATE188845",
+      "mrn_normalized": "73STATE188845"
+    },
+    {
+      "mrn_full": "1973STATE189464",
+      "mrn_normalized": "73STATE189464"
+    },
+    {
+      "mrn_full": "1973STATE189618",
+      "mrn_normalized": "73STATE189618"
+    },
+    {
+      "mrn_full": "1973STATE189879",
+      "mrn_normalized": "73STATE189879"
+    },
+    {
+      "mrn_full": "1973STATE189999",
+      "mrn_normalized": "73STATE189999"
+    },
+    {
+      "mrn_full": "1973STATE190077",
+      "mrn_normalized": "73STATE190077"
+    },
+    {
+      "mrn_full": "1973STATE190149",
+      "mrn_normalized": "73STATE190149"
+    },
+    {
+      "mrn_full": "1973STATE190162",
+      "mrn_normalized": "73STATE190162"
+    },
+    {
+      "mrn_full": "1973STATE190289",
+      "mrn_normalized": "73STATE190289"
+    },
+    {
+      "mrn_full": "1973STATE212600",
+      "mrn_normalized": "73STATE212600"
+    },
+    {
+      "mrn_full": "1973STATE216172",
+      "mrn_normalized": "73STATE216172"
+    },
+    {
+      "mrn_full": "1973STATE216697",
+      "mrn_normalized": "73STATE216697"
+    },
+    {
+      "mrn_full": "1973STATE216765",
+      "mrn_normalized": "73STATE216765"
+    },
+    {
+      "mrn_full": "1974BONN02540",
+      "mrn_normalized": "74BONN2540"
+    },
+    {
+      "mrn_full": "1974LONDON02192",
+      "mrn_normalized": "74LONDON2192"
+    },
+    {
+      "mrn_full": "1974SANTIA00419",
+      "mrn_normalized": "74SANTIAGO419"
+    },
+    {
+      "mrn_full": "1974SANTIA00421",
+      "mrn_normalized": "74SANTIAGO421"
+    },
+    {
+      "mrn_full": "1974SANTIA00422",
+      "mrn_normalized": "74SANTIAGO422"
+    },
+    {
+      "mrn_full": "1974SANTIA00424",
+      "mrn_normalized": "74SANTIAGO424"
+    },
+    {
+      "mrn_full": "1974SANTIA00425",
+      "mrn_normalized": "74SANTIAGO425"
+    },
+    {
+      "mrn_full": "1974SANTIA00429",
+      "mrn_normalized": "74SANTIAGO429"
+    },
+    {
+      "mrn_full": "1974SANTIA00430",
+      "mrn_normalized": "74SANTIAGO430"
+    },
+    {
+      "mrn_full": "1974SANTIA00671",
+      "mrn_normalized": "74SANTIAGO671"
+    },
+    {
+      "mrn_full": "1974SANTIA00678",
+      "mrn_normalized": "74SANTIAGO678"
+    },
+    {
+      "mrn_full": "1974SANTIA00679",
+      "mrn_normalized": "74SANTIAGO679"
+    },
+    {
+      "mrn_full": "1974SANTIA00680",
+      "mrn_normalized": "74SANTIAGO680"
+    },
+    {
+      "mrn_full": "1974SANTIA00710",
+      "mrn_normalized": "74SANTIAGO710"
+    },
+    {
+      "mrn_full": "1974SANTIA00714",
+      "mrn_normalized": "74SANTIAGO714"
+    },
+    {
+      "mrn_full": "1974SANTIA00722",
+      "mrn_normalized": "74SANTIAGO722"
+    },
+    {
+      "mrn_full": "1974SANTIA00724",
+      "mrn_normalized": "74SANTIAGO724"
+    },
+    {
+      "mrn_full": "1974SANTIA00726",
+      "mrn_normalized": "74SANTIAGO726"
+    },
+    {
+      "mrn_full": "1974SANTIA00727",
+      "mrn_normalized": "74SANTIAGO727"
+    },
+    {
+      "mrn_full": "1974SANTIA00728",
+      "mrn_normalized": "74SANTIAGO728"
+    },
+    {
+      "mrn_full": "1974SANTIA00729",
+      "mrn_normalized": "74SANTIAGO729"
+    },
+    {
+      "mrn_full": "1974SANTIA00730",
+      "mrn_normalized": "74SANTIAGO730"
+    },
+    {
+      "mrn_full": "1974SANTIA00731",
+      "mrn_normalized": "74SANTIAGO731"
+    },
+    {
+      "mrn_full": "1974SANTIA00941",
+      "mrn_normalized": "74SANTIAGO941"
+    },
+    {
+      "mrn_full": "1974SANTIA00951",
+      "mrn_normalized": "74SANTIAGO951"
+    },
+    {
+      "mrn_full": "1974SANTIA01195",
+      "mrn_normalized": "74SANTIAGO1195"
+    },
+    {
+      "mrn_full": "1974SANTIA01679",
+      "mrn_normalized": "74SANTIAGO1679"
+    },
+    {
+      "mrn_full": "1974SANTIA01687",
+      "mrn_normalized": "74SANTIAGO1687"
+    },
+    {
+      "mrn_full": "1974SANTIA01690",
+      "mrn_normalized": "74SANTIAGO1690"
+    },
+    {
+      "mrn_full": "1974SANTIA01691",
+      "mrn_normalized": "74SANTIAGO1691"
+    },
+    {
+      "mrn_full": "1974SANTIA01692",
+      "mrn_normalized": "74SANTIAGO1692"
+    },
+    {
+      "mrn_full": "1974SANTIA01693",
+      "mrn_normalized": "74SANTIAGO1693"
+    },
+    {
+      "mrn_full": "1974SANTIA01696",
+      "mrn_normalized": "74SANTIAGO1696"
+    },
+    {
+      "mrn_full": "1974SANTIA01697",
+      "mrn_normalized": "74SANTIAGO1697"
+    },
+    {
+      "mrn_full": "1974SANTIA01700",
+      "mrn_normalized": "74SANTIAGO1700"
+    },
+    {
+      "mrn_full": "1974SANTIA01702",
+      "mrn_normalized": "74SANTIAGO1702"
+    },
+    {
+      "mrn_full": "1974SANTIA01708",
+      "mrn_normalized": "74SANTIAGO1708"
+    },
+    {
+      "mrn_full": "1974SANTIA01709",
+      "mrn_normalized": "74SANTIAGO1709"
+    },
+    {
+      "mrn_full": "1974SANTIA02036",
+      "mrn_normalized": "74SANTIAGO2036"
+    },
+    {
+      "mrn_full": "1974SANTIA02046",
+      "mrn_normalized": "74SANTIAGO2046"
+    },
+    {
+      "mrn_full": "1974SANTIA02047",
+      "mrn_normalized": "74SANTIAGO2047"
+    },
+    {
+      "mrn_full": "1974SANTIA02048",
+      "mrn_normalized": "74SANTIAGO2048"
+    },
+    {
+      "mrn_full": "1974SANTIA02051",
+      "mrn_normalized": "74SANTIAGO2051"
+    },
+    {
+      "mrn_full": "1974SANTIA02057",
+      "mrn_normalized": "74SANTIAGO2057"
+    },
+    {
+      "mrn_full": "1974SANTIA02058",
+      "mrn_normalized": "74SANTIAGO2058"
+    },
+    {
+      "mrn_full": "1974SANTIA02060",
+      "mrn_normalized": "74SANTIAGO2060"
+    },
+    {
+      "mrn_full": "1974SANTIA02061",
+      "mrn_normalized": "74SANTIAGO2061"
+    },
+    {
+      "mrn_full": "1974SANTIA02062",
+      "mrn_normalized": "74SANTIAGO2062"
+    },
+    {
+      "mrn_full": "1974SANTIA02135",
+      "mrn_normalized": "74SANTIAGO2135"
+    },
+    {
+      "mrn_full": "1974SANTIA02144",
+      "mrn_normalized": "74SANTIAGO2144"
+    },
+    {
+      "mrn_full": "1974SANTIA02148",
+      "mrn_normalized": "74SANTIAGO2148"
+    },
+    {
+      "mrn_full": "1974SANTIA02150",
+      "mrn_normalized": "74SANTIAGO2150"
+    },
+    {
+      "mrn_full": "1974SANTIA02151",
+      "mrn_normalized": "74SANTIAGO2151"
+    },
+    {
+      "mrn_full": "1974SANTIA02152",
+      "mrn_normalized": "74SANTIAGO2152"
+    },
+    {
+      "mrn_full": "1974SANTIA04315",
+      "mrn_normalized": "74SANTIAGO4315"
+    },
+    {
+      "mrn_full": "1974SANTIA04319",
+      "mrn_normalized": "74SANTIAGO4319"
+    },
+    {
+      "mrn_full": "1974SANTIA04322",
+      "mrn_normalized": "74SANTIAGO4322"
+    },
+    {
+      "mrn_full": "1974SANTIA04329",
+      "mrn_normalized": "74SANTIAGO4329"
+    },
+    {
+      "mrn_full": "1974SANTIA04343",
+      "mrn_normalized": "74SANTIAGO4343"
+    },
+    {
+      "mrn_full": "1974SANTIA04351",
+      "mrn_normalized": "74SANTIAGO4351"
+    },
+    {
+      "mrn_full": "1974SANTIA04591",
+      "mrn_normalized": "74SANTIAGO4591"
+    },
+    {
+      "mrn_full": "1974SANTIA05306",
+      "mrn_normalized": "74SANTIAGO5306"
+    },
+    {
+      "mrn_full": "1974SANTIA05307",
+      "mrn_normalized": "74SANTIAGO5307"
+    },
+    {
+      "mrn_full": "1974SANTIA05308",
+      "mrn_normalized": "74SANTIAGO5308"
+    },
+    {
+      "mrn_full": "1974SANTIA05492",
+      "mrn_normalized": "74SANTIAGO5492"
+    },
+    {
+      "mrn_full": "1974SANTIA05536",
+      "mrn_normalized": "74SANTIAGO5536"
+    },
+    {
+      "mrn_full": "1974SANTIA05559",
+      "mrn_normalized": "74SANTIAGO5559"
+    },
+    {
+      "mrn_full": "1974SANTIA07726",
+      "mrn_normalized": "74SANTIAGO7726"
+    },
+    {
+      "mrn_full": "1974STATE019743",
+      "mrn_normalized": "74STATE19743"
+    },
+    {
+      "mrn_full": "1974STATE019994",
+      "mrn_normalized": "74STATE19994"
+    },
+    {
+      "mrn_full": "1974STATE020316",
+      "mrn_normalized": "74STATE20316"
+    },
+    {
+      "mrn_full": "1974STATE031838",
+      "mrn_normalized": "74STATE31838"
+    },
+    {
+      "mrn_full": "1974STATE046469",
+      "mrn_normalized": "74STATE46469"
+    },
+    {
+      "mrn_full": "1974STATE053384",
+      "mrn_normalized": "74STATE53384"
+    },
+    {
+      "mrn_full": "1974STATE084285",
+      "mrn_normalized": "74STATE84285"
+    },
+    {
+      "mrn_full": "1974STATE196836",
+      "mrn_normalized": "74STATE196836"
+    },
+    {
+      "mrn_full": "1975BONN01200",
+      "mrn_normalized": "75BONN1200"
+    },
+    {
+      "mrn_full": "1975MADRID01490",
+      "mrn_normalized": "75MADRID1490"
+    },
+    {
+      "mrn_full": "1975PARIS05284",
+      "mrn_normalized": "75PARIS5284"
+    },
+    {
+      "mrn_full": "1975SANTIA00093",
+      "mrn_normalized": "75SANTIAGO93"
+    },
+    {
+      "mrn_full": "1975SANTIA00789",
+      "mrn_normalized": "75SANTIAGO789"
+    },
+    {
+      "mrn_full": "1975SANTIA02155",
+      "mrn_normalized": "75SANTIAGO2155"
+    },
+    {
+      "mrn_full": "1975SANTIA02157",
+      "mrn_normalized": "75SANTIAGO2157"
+    },
+    {
+      "mrn_full": "1975SANTIA02158",
+      "mrn_normalized": "75SANTIAGO2158"
+    },
+    {
+      "mrn_full": "1975SANTIA02159",
+      "mrn_normalized": "75SANTIAGO2159"
+    },
+    {
+      "mrn_full": "1975SANTIA02160",
+      "mrn_normalized": "75SANTIAGO2160"
+    },
+    {
+      "mrn_full": "1975SANTIA02166",
+      "mrn_normalized": "75SANTIAGO2166"
+    },
+    {
+      "mrn_full": "1975SANTIA02181",
+      "mrn_normalized": "75SANTIAGO2181"
+    },
+    {
+      "mrn_full": "1975SANTIA02184",
+      "mrn_normalized": "75SANTIAGO2184"
+    },
+    {
+      "mrn_full": "1975SANTIA02189",
+      "mrn_normalized": "75SANTIAGO2189"
+    },
+    {
+      "mrn_full": "1975SANTIA04506",
+      "mrn_normalized": "75SANTIAGO4506"
+    },
+    {
+      "mrn_full": "1975SANTIA04579",
+      "mrn_normalized": "75SANTIAGO4579"
+    },
+    {
+      "mrn_full": "1975SANTIA04585",
+      "mrn_normalized": "75SANTIAGO4585"
+    },
+    {
+      "mrn_full": "1975SANTIA04591",
+      "mrn_normalized": "75SANTIAGO4591"
+    },
+    {
+      "mrn_full": "1975SANTIA04594",
+      "mrn_normalized": "75SANTIAGO4594"
+    },
+    {
+      "mrn_full": "1975SANTIA04595",
+      "mrn_normalized": "75SANTIAGO4595"
+    },
+    {
+      "mrn_full": "1975SANTIA04600",
+      "mrn_normalized": "75SANTIAGO4600"
+    },
+    {
+      "mrn_full": "1975SANTIA04601",
+      "mrn_normalized": "75SANTIAGO4601"
+    },
+    {
+      "mrn_full": "1975SANTIA04711",
+      "mrn_normalized": "75SANTIAGO4711"
+    },
+    {
+      "mrn_full": "1975SANTIA04740",
+      "mrn_normalized": "75SANTIAGO4740"
+    },
+    {
+      "mrn_full": "1975SANTIA04754",
+      "mrn_normalized": "75SANTIAGO4754"
+    },
+    {
+      "mrn_full": "1975SANTIA06446",
+      "mrn_normalized": "75SANTIAGO6446"
+    },
+    {
+      "mrn_full": "1975SANTIA06468",
+      "mrn_normalized": "75SANTIAGO6468"
+    },
+    {
+      "mrn_full": "1975SANTIA07323",
+      "mrn_normalized": "75SANTIAGO7323"
+    },
+    {
+      "mrn_full": "1975SANTIA07324",
+      "mrn_normalized": "75SANTIAGO7324"
+    },
+    {
+      "mrn_full": "1975SANTIA07681",
+      "mrn_normalized": "75SANTIAGO7681"
+    },
+    {
+      "mrn_full": "1975SANTIA07683",
+      "mrn_normalized": "75SANTIAGO7683"
+    },
+    {
+      "mrn_full": "1975STATE021617",
+      "mrn_normalized": "75STATE21617"
+    },
+    {
+      "mrn_full": "1975STATE023898",
+      "mrn_normalized": "75STATE23898"
+    },
+    {
+      "mrn_full": "1975STATE045175",
+      "mrn_normalized": "75STATE45175"
+    },
+    {
+      "mrn_full": "1975STATE071525",
+      "mrn_normalized": "75STATE71525"
+    },
+    {
+      "mrn_full": "1975STATE111319",
+      "mrn_normalized": "75STATE111319"
+    },
+    {
+      "mrn_full": "1975STATE113013",
+      "mrn_normalized": "75STATE113013"
+    },
+    {
+      "mrn_full": "1975STATE115686",
+      "mrn_normalized": "75STATE115686"
+    },
+    {
+      "mrn_full": "1975STATE144899",
+      "mrn_normalized": "75STATE144899"
+    },
+    {
+      "mrn_full": "1975STATE162958",
+      "mrn_normalized": "75STATE162958"
+    },
+    {
+      "mrn_full": "1975STATE163048",
+      "mrn_normalized": "75STATE163048"
+    },
+    {
+      "mrn_full": "1975STATE297259",
+      "mrn_normalized": "75STATE297259"
+    },
+    {
+      "mrn_full": "1975STATE297266",
+      "mrn_normalized": "75STATE297266"
+    },
+    {
+      "mrn_full": "1975STATE297303",
+      "mrn_normalized": "75STATE297303"
+    },
+    {
+      "mrn_full": "1975THEHA01110",
+      "mrn_normalized": "75THEHAGUE1110"
+    },
+    {
+      "mrn_full": "1975THEHA01144",
+      "mrn_normalized": "75THEHAGUE1144"
+    },
+    {
+      "mrn_full": "1975USUNN05578",
+      "mrn_normalized": "75USUNNEWYORK5578"
+    },
+    {
+      "mrn_full": "1975USUNN05582",
+      "mrn_normalized": "75USUNNEWYORK5582"
+    },
+    {
+      "mrn_full": "1975USUNN05821",
+      "mrn_normalized": "75USUNNEWYORK5821"
+    },
+    {
+      "mrn_full": "1975USUNN05826",
+      "mrn_normalized": "75USUNNEWYORK5826"
+    },
+    {
+      "mrn_full": "1975USUNN06011",
+      "mrn_normalized": "75USUNNEWYORK6011"
+    },
+    {
+      "mrn_full": "1976SANTIA00745",
+      "mrn_normalized": "76SANTIAGO745"
+    },
+    {
+      "mrn_full": "1976SANTIA01254",
+      "mrn_normalized": "76SANTIAGO1254"
+    },
+    {
+      "mrn_full": "1976SANTIA01256",
+      "mrn_normalized": "76SANTIAGO1256"
+    },
+    {
+      "mrn_full": "1976SANTIA01264",
+      "mrn_normalized": "76SANTIAGO1264"
+    },
+    {
+      "mrn_full": "1976SANTIA01287",
+      "mrn_normalized": "76SANTIAGO1287"
+    },
+    {
+      "mrn_full": "1976SANTIA02398",
+      "mrn_normalized": "76SANTIAGO2398"
+    },
+    {
+      "mrn_full": "1976SANTIA02400",
+      "mrn_normalized": "76SANTIAGO2400"
+    },
+    {
+      "mrn_full": "1976SANTIA02411",
+      "mrn_normalized": "76SANTIAGO2411"
+    },
+    {
+      "mrn_full": "1976SANTIA02412",
+      "mrn_normalized": "76SANTIAGO2412"
+    },
+    {
+      "mrn_full": "1976SANTIA02449",
+      "mrn_normalized": "76SANTIAGO2449"
+    },
+    {
+      "mrn_full": "1976SANTIA02450",
+      "mrn_normalized": "76SANTIAGO2450"
+    },
+    {
+      "mrn_full": "1976SANTIA02451",
+      "mrn_normalized": "76SANTIAGO2451"
+    },
+    {
+      "mrn_full": "1976SANTIA02460",
+      "mrn_normalized": "76SANTIAGO2460"
+    },
+    {
+      "mrn_full": "1976SANTIA02464",
+      "mrn_normalized": "76SANTIAGO2464"
+    },
+    {
+      "mrn_full": "1976SANTIA02468",
+      "mrn_normalized": "76SANTIAGO2468"
+    },
+    {
+      "mrn_full": "1976SANTIA02469",
+      "mrn_normalized": "76SANTIAGO2469"
+    },
+    {
+      "mrn_full": "1976SANTIA02470",
+      "mrn_normalized": "76SANTIAGO2470"
+    },
+    {
+      "mrn_full": "1976SANTIA02471",
+      "mrn_normalized": "76SANTIAGO2471"
+    },
+    {
+      "mrn_full": "1976SANTIA03641",
+      "mrn_normalized": "76SANTIAGO3641"
+    },
+    {
+      "mrn_full": "1976SANTIA03779",
+      "mrn_normalized": "76SANTIAGO3779"
+    },
+    {
+      "mrn_full": "1976SANTIA04341",
+      "mrn_normalized": "76SANTIAGO4341"
+    },
+    {
+      "mrn_full": "1976SANTIA05083",
+      "mrn_normalized": "76SANTIAGO5083"
+    },
+    {
+      "mrn_full": "1976SANTIA05128",
+      "mrn_normalized": "76SANTIAGO5128"
+    },
+    {
+      "mrn_full": "1976SANTIA06251",
+      "mrn_normalized": "76SANTIAGO6251"
+    },
+    {
+      "mrn_full": "1976SANTIA06259",
+      "mrn_normalized": "76SANTIAGO6259"
+    },
+    {
+      "mrn_full": "1976SANTIA06269",
+      "mrn_normalized": "76SANTIAGO6269"
+    },
+    {
+      "mrn_full": "1976SANTIA08208",
+      "mrn_normalized": "76SANTIAGO8208"
+    },
+    {
+      "mrn_full": "1976SANTIA08209",
+      "mrn_normalized": "76SANTIAGO8209"
+    },
+    {
+      "mrn_full": "1976SANTIA09212",
+      "mrn_normalized": "76SANTIAGO9212"
+    },
+    {
+      "mrn_full": "1976SANTIA10335",
+      "mrn_normalized": "76SANTIAGO10335"
+    },
+    {
+      "mrn_full": "1976SANTIA10362",
+      "mrn_normalized": "76SANTIAGO10362"
+    },
+    {
+      "mrn_full": "1976STATE021202",
+      "mrn_normalized": "76STATE21202"
+    },
+    {
+      "mrn_full": "1976STATE064984",
+      "mrn_normalized": "76STATE64984"
+    },
+    {
+      "mrn_full": "1976STATE125318",
+      "mrn_normalized": "76STATE125318"
+    },
+    {
+      "mrn_full": "1976STATE151434",
+      "mrn_normalized": "76STATE151434"
+    },
+    {
+      "mrn_full": "1976STATE209192",
+      "mrn_normalized": "76STATE209192"
+    },
+    {
+      "mrn_full": "1976STATE257200",
+      "mrn_normalized": "76STATE257200"
+    },
+    {
+      "mrn_full": "1977SANTIA00487",
+      "mrn_normalized": "77SANTIAGO487"
+    },
+    {
+      "mrn_full": "1977SANTIA00804",
+      "mrn_normalized": "77SANTIAGO804"
+    },
+    {
+      "mrn_full": "1977SANTIA00809",
+      "mrn_normalized": "77SANTIAGO809"
+    },
+    {
+      "mrn_full": "1977SANTIA00820",
+      "mrn_normalized": "77SANTIAGO820"
+    },
+    {
+      "mrn_full": "1977SANTIA00821",
+      "mrn_normalized": "77SANTIAGO821"
+    },
+    {
+      "mrn_full": "1977SANTIA00834",
+      "mrn_normalized": "77SANTIAGO834"
+    },
+    {
+      "mrn_full": "1977SANTIA00835",
+      "mrn_normalized": "77SANTIAGO835"
+    },
+    {
+      "mrn_full": "1977SANTIA01273",
+      "mrn_normalized": "77SANTIAGO1273"
+    },
+    {
+      "mrn_full": "1977SANTIA01800",
+      "mrn_normalized": "77SANTIAGO1800"
+    },
+    {
+      "mrn_full": "1977SANTIA02579",
+      "mrn_normalized": "77SANTIAGO2579"
+    },
+    {
+      "mrn_full": "1977SANTIA02580",
+      "mrn_normalized": "77SANTIAGO2580"
+    },
+    {
+      "mrn_full": "1977SANTIA02582",
+      "mrn_normalized": "77SANTIAGO2582"
+    },
+    {
+      "mrn_full": "1977SANTIA02595",
+      "mrn_normalized": "77SANTIAGO2595"
+    },
+    {
+      "mrn_full": "1977SANTIA02891",
+      "mrn_normalized": "77SANTIAGO2891"
+    },
+    {
+      "mrn_full": "1977SANTIA02904",
+      "mrn_normalized": "77SANTIAGO2904"
+    },
+    {
+      "mrn_full": "1977SANTIA03779",
+      "mrn_normalized": "77SANTIAGO3779"
+    },
+    {
+      "mrn_full": "1977SANTIA03835",
+      "mrn_normalized": "77SANTIAGO3835"
+    },
+    {
+      "mrn_full": "1977SANTIA04103",
+      "mrn_normalized": "77SANTIAGO4103"
+    },
+    {
+      "mrn_full": "1977SANTIA04319",
+      "mrn_normalized": "77SANTIAGO4319"
+    },
+    {
+      "mrn_full": "1977SANTIA04564",
+      "mrn_normalized": "77SANTIAGO4564"
+    },
+    {
+      "mrn_full": "1977SANTIA05448",
+      "mrn_normalized": "77SANTIAGO5448"
+    },
+    {
+      "mrn_full": "1977SANTIA05987",
+      "mrn_normalized": "77SANTIAGO5987"
+    },
+    {
+      "mrn_full": "1977SANTIA05988",
+      "mrn_normalized": "77SANTIAGO5988"
+    },
+    {
+      "mrn_full": "1977SANTIA06021",
+      "mrn_normalized": "77SANTIAGO6021"
+    },
+    {
+      "mrn_full": "1977SANTIA06030",
+      "mrn_normalized": "77SANTIAGO6030"
+    },
+    {
+      "mrn_full": "1977SANTIA06664",
+      "mrn_normalized": "77SANTIAGO6664"
+    },
+    {
+      "mrn_full": "1977SANTIA07847",
+      "mrn_normalized": "77SANTIAGO7847"
+    },
+    {
+      "mrn_full": "1977SANTIA08239",
+      "mrn_normalized": "77SANTIAGO8239"
+    },
+    {
+      "mrn_full": "1977SANTIA09286",
+      "mrn_normalized": "77SANTIAGO9286"
+    },
+    {
+      "mrn_full": "1977SANTIA09288",
+      "mrn_normalized": "77SANTIAGO9288"
+    },
+    {
+      "mrn_full": "1977SANTIA09299",
+      "mrn_normalized": "77SANTIAGO9299"
+    },
+    {
+      "mrn_full": "1977SANTIA09497",
+      "mrn_normalized": "77SANTIAGO9497"
+    },
+    {
+      "mrn_full": "1977SANTIA09646",
+      "mrn_normalized": "77SANTIAGO9646"
+    },
+    {
+      "mrn_full": "1977SANTIA10386",
+      "mrn_normalized": "77SANTIAGO10386"
+    },
+    {
+      "mrn_full": "1977STATE050688",
+      "mrn_normalized": "77STATE50688"
+    },
+    {
+      "mrn_full": "1977STATE051024",
+      "mrn_normalized": "77STATE51024"
+    },
+    {
+      "mrn_full": "1977STATE051090",
+      "mrn_normalized": "77STATE51090"
+    },
+    {
+      "mrn_full": "1977STATE051154",
+      "mrn_normalized": "77STATE51154"
+    },
+    {
+      "mrn_full": "1977STATE051957",
+      "mrn_normalized": "77STATE51957"
+    },
+    {
+      "mrn_full": "1977STATE057032",
+      "mrn_normalized": "77STATE57032"
+    },
+    {
+      "mrn_full": "1977STATE123807",
+      "mrn_normalized": "77STATE123807"
+    },
+    {
+      "mrn_full": "1977STATE160699",
+      "mrn_normalized": "77STATE160699"
+    },
+    {
+      "mrn_full": "1977STATE295616",
+      "mrn_normalized": "77STATE295616"
+    },
+    {
+      "mrn_full": "1978SANTIA01237",
+      "mrn_normalized": "78SANTIAGO1237"
+    },
+    {
+      "mrn_full": "1978SANTIA01250",
+      "mrn_normalized": "78SANTIAGO1250"
+    },
+    {
+      "mrn_full": "1978SANTIA01906",
+      "mrn_normalized": "78SANTIAGO1906"
+    },
+    {
+      "mrn_full": "1978SANTIA01927",
+      "mrn_normalized": "78SANTIAGO1927"
+    },
+    {
+      "mrn_full": "1978SANTIA02976",
+      "mrn_normalized": "78SANTIAGO2976"
+    },
+    {
+      "mrn_full": "1978SANTIA04206",
+      "mrn_normalized": "78SANTIAGO4206"
+    },
+    {
+      "mrn_full": "1978SANTIA04247",
+      "mrn_normalized": "78SANTIAGO4247"
+    },
+    {
+      "mrn_full": "1978SANTIA04502",
+      "mrn_normalized": "78SANTIAGO4502"
+    },
+    {
+      "mrn_full": "1978SANTIA06580",
+      "mrn_normalized": "78SANTIAGO6580"
+    },
+    {
+      "mrn_full": "1978SANTIA06647",
+      "mrn_normalized": "78SANTIAGO6647"
+    },
+    {
+      "mrn_full": "1978SANTIA07687",
+      "mrn_normalized": "78SANTIAGO7687"
+    },
+    {
+      "mrn_full": "1978SANTIA08391",
+      "mrn_normalized": "78SANTIAGO8391"
+    },
+    {
+      "mrn_full": "1978SANTIA08783",
+      "mrn_normalized": "78SANTIAGO8783"
+    },
+    {
+      "mrn_full": "1978SANTIA09126",
+      "mrn_normalized": "78SANTIAGO9126"
+    },
+    {
+      "mrn_full": "1978SANTIA09161",
+      "mrn_normalized": "78SANTIAGO9161"
+    },
+    {
+      "mrn_full": "1978SANTIA09194",
+      "mrn_normalized": "78SANTIAGO9194"
+    },
+    {
+      "mrn_full": "1978SANTIA09201",
+      "mrn_normalized": "78SANTIAGO9201"
+    },
+    {
+      "mrn_full": "1978SANTIA09282",
+      "mrn_normalized": "78SANTIAGO9282"
+    },
+    {
+      "mrn_full": "1978SANTIA09353",
+      "mrn_normalized": "78SANTIAGO9353"
+    },
+    {
+      "mrn_full": "1978SANTIA09824",
+      "mrn_normalized": "78SANTIAGO9824"
+    },
+    {
+      "mrn_full": "1979SANTIA00308",
+      "mrn_normalized": "79SANTIAGO308"
+    },
+    {
+      "mrn_full": "1979SANTIA06822",
+      "mrn_normalized": "79SANTIAGO6822"
+    },
+    {
+      "mrn_full": "1979STATE021857",
+      "mrn_normalized": "79STATE21857"
+    },
+    {
+      "mrn_full": "1979STATE075056",
+      "mrn_normalized": "79STATE75056"
+    },
+    {
+      "mrn_full": "1979STATE084455",
+      "mrn_normalized": "79STATE84455"
+    },
+    {
+      "mrn_full": "1979STATE096739",
+      "mrn_normalized": "79STATE96739"
+    },
+    {
+      "mrn_full": "1979STATE124968",
+      "mrn_normalized": "79STATE124968"
+    },
+    {
+      "mrn_full": "1979STATE140552",
+      "mrn_normalized": "79STATE140552"
+    },
+    {
+      "mrn_full": "1979STATE308464",
+      "mrn_normalized": "79STATE308464"
+    },
+    {
+      "mrn_full": "1979STATE313565",
+      "mrn_normalized": "79STATE313565"
+    },
+    {
+      "mrn_full": "1979USUNN05828",
+      "mrn_normalized": "79USUNNEWYORK5828"
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "source": {
+    "id": "weimer2019",
+    "doi": "10.1086/702695",
+    "citation": "Weimer (2019), \"'It's That Difficult of a Terrain': Opium, Development, and Territoriality in US-Afghan Relations, 1940s-1970s\" — cable findings",
+    "files": [
+      "data/source/weimer2019/FINDINGS.md"
+    ]
+  },
+  "mrns": [
+    {
+      "mrn_full": "1973GENEVA04867",
+      "mrn_normalized": "73GENEVA4867"
+    },
+    {
+      "mrn_full": "1973KABUL02083",
+      "mrn_normalized": "73KABUL2083"
+    },
+    {
+      "mrn_full": "1973KABUL03073",
+      "mrn_normalized": "73KABUL3073"
+    },
+    {
+      "mrn_full": "1973STATE049755",
+      "mrn_normalized": "73STATE49755"
+    },
+    {
+      "mrn_full": "1973STATE137350",
+      "mrn_normalized": "73STATE137350"
+    },
+    {
+      "mrn_full": "1974GENEVA01473",
+      "mrn_normalized": "74GENEVA1473"
+    },
+    {
+      "mrn_full": "1974GENEVA04490",
+      "mrn_normalized": "74GENEVA4490"
+    },
+    {
+      "mrn_full": "1974KABUL07553",
+      "mrn_normalized": "74KABUL7553"
+    },
+    {
+      "mrn_full": "1974STATE226822",
+      "mrn_normalized": "74STATE226822"
+    },
+    {
+      "mrn_full": "1974STATE241287",
+      "mrn_normalized": "74STATE241287"
+    },
+    {
+      "mrn_full": "1975KABUL03281",
+      "mrn_normalized": "75KABUL3281"
+    },
+    {
+      "mrn_full": "1975STATE304303",
+      "mrn_normalized": "75STATE304303"
+    },
+    {
+      "mrn_full": "1976GENEVA05871",
+      "mrn_normalized": "76GENEVA5871"
+    },
+    {
+      "mrn_full": "1976KABUL01765",
+      "mrn_normalized": "76KABUL1765"
+    },
+    {
+      "mrn_full": "1976KABUL03367",
+      "mrn_normalized": "76KABUL3367"
+    },
+    {
+      "mrn_full": "1976KABUL05601",
+      "mrn_normalized": "76KABUL5601"
+    },
+    {
+      "mrn_full": "1977GENEVA05640",
+      "mrn_normalized": "77GENEVA5640"
+    },
+    {
+      "mrn_full": "1977KABUL06784",
+      "mrn_normalized": "77KABUL6784"
+    },
+    {
+      "mrn_full": "1977KABUL07191",
+      "mrn_normalized": "77KABUL7191"
+    },
+    {
+      "mrn_full": "1977KABUL08529",
+      "mrn_normalized": "77KABUL8529"
+    },
+    {
+      "mrn_full": "1977KATHMA01805",
+      "mrn_normalized": "77KATHMANDU1805"
+    },
+    {
+      "mrn_full": "1977STATE085013",
+      "mrn_normalized": "77STATE85013"
+    },
+    {
+      "mrn_full": "1977STATE109493",
+      "mrn_normalized": "77STATE109493"
+    },
+    {
+      "mrn_full": "1977STATE123399",
+      "mrn_normalized": "77STATE123399"
+    },
+    {
+      "mrn_full": "1977STATE234051",
+      "mrn_normalized": "77STATE234051"
+    },
+    {
+      "mrn_full": "1977STATE301403",
+      "mrn_normalized": "77STATE301403"
+    },
+    {
+      "mrn_full": "1978GENEVA05558",
+      "mrn_normalized": "78GENEVA5558"
+    },
+    {
+      "mrn_full": "1978GENEVA05579",
+      "mrn_normalized": "78GENEVA5579"
+    },
+    {
+      "mrn_full": "1978GENEVA05580",
+      "mrn_normalized": "78GENEVA5580"
+    },
+    {
+      "mrn_full": "1978KABUL01494",
+      "mrn_normalized": "78KABUL1494"
+    },
+    {
+      "mrn_full": "1978KABUL02557",
+      "mrn_normalized": "78KABUL2557"
+    },
+    {
+      "mrn_full": "1978KABUL02765",
+      "mrn_normalized": "78KABUL2765"
+    },
+    {
+      "mrn_full": "1978KABUL04421",
+      "mrn_normalized": "78KABUL4421"
+    },
+    {
+      "mrn_full": "1978KABUL09818",
+      "mrn_normalized": "78KABUL9818"
+    },
+    {
+      "mrn_full": "1978KABUL10067",
+      "mrn_normalized": "78KABUL10067"
+    },
+    {
+      "mrn_full": "1979KABUL00655",
+      "mrn_normalized": "79KABUL655"
+    },
+    {
+      "mrn_full": "1979KABUL01852",
+      "mrn_normalized": "79KABUL1852"
+    },
+    {
+      "mrn_full": "1979KABUL02634",
+      "mrn_normalized": "79KABUL2634"
+    },
+    {
+      "mrn_full": "1979KABUL04475",
+      "mrn_normalized": "79KABUL4475"
+    },
+    {
+      "mrn_full": "1979KABUL04932",
+      "mrn_normalized": "79KABUL4932"
+    },
+    {
+      "mrn_full": "1979KABUL06860",
+      "mrn_normalized": "79KABUL6860"
+    },
+    {
+      "mrn_full": "1979STATE156481",
+      "mrn_normalized": "79STATE156481"
+    },
+    {
+      "mrn_full": "1979STATE252292",
+      "mrn_normalized": "79STATE252292"
+    }
+  ]
+}

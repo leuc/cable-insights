@@ -1,27 +1,14 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cable-insights.local/schemas/related_literature.schema.json",
-  "title": "Combined related literature cable MRN index",
+  "$id": "https://cable-insights.local/schemas/referenced_mrns.schema.json",
+  "title": "Per-source referenced MRNs",
   "type": "object",
   "additionalProperties": false,
-  "required": ["$schema", "schema_version", "description", "normalization", "sources", "mrns"],
+  "required": ["$schema", "schema_version", "source", "mrns"],
   "properties": {
     "$schema": { "type": "string", "format": "uri-reference" },
     "schema_version": { "const": 1 },
-    "description": { "type": "string", "minLength": 1 },
-    "normalization": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["full", "normalized"],
-      "properties": {
-        "full": { "type": "string", "minLength": 1 },
-        "normalized": { "type": "string", "minLength": 1 }
-      }
-    },
-    "sources": {
-      "type": "object",
-      "additionalProperties": { "$ref": "#/$defs/source" }
-    },
+    "source": { "$ref": "#/$defs/source" },
     "mrns": {
       "type": "array",
       "items": { "$ref": "#/$defs/mrn" },
@@ -49,16 +36,10 @@
     "mrn": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["mrn_full", "mrn_normalized", "source_ids"],
+      "required": ["mrn_full", "mrn_normalized"],
       "properties": {
         "mrn_full": { "type": "string", "pattern": "^197[3-9][A-Z]{3,8}[0-9]{4,6}$" },
-        "mrn_normalized": { "type": "string", "pattern": "^(?:[0-9]{2}|19[0-9]{2})[A-Z][A-Z ]{2,15}[0-9]+$" },
-        "source_ids": {
-          "type": "array",
-          "items": { "type": "string", "minLength": 1 },
-          "minItems": 1,
-          "uniqueItems": true
-        }
+        "mrn_normalized": { "type": "string", "pattern": "^(?:[0-9]{2}|19[0-9]{2})[A-Z][A-Z ]{2,15}[0-9]+$" }
       }
     }
   }
