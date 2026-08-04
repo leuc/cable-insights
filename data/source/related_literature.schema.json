@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cable-insights.local/schemas/related_literature.schema.json",
+  "title": "Related literature cable MRN index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "description", "normalization", "sources", "mrns"],
+  "properties": {
+    "$schema": { "type": "string", "format": "uri-reference" },
+    "schema_version": { "const": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "normalization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["full", "normalized"],
+      "properties": {
+        "full": { "type": "string", "minLength": 1 },
+        "normalized": { "type": "string", "minLength": 1 }
+      }
+    },
+    "sources": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "mrns": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/mrn" },
+      "minItems": 1
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["doi", "citation", "file"],
+      "properties": {
+        "doi": {
+          "type": ["string", "null"],
+          "pattern": "^10\\.[0-9]{4,9}/.+$"
+        },
+        "citation": { "type": "string", "minLength": 1 },
+        "file": { "type": "string", "pattern": "^data/source/.+\\.md$" }
+      }
+    },
+    "mrn": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mrn_full", "mrn_normalized", "source_ids"],
+      "properties": {
+        "mrn_full": {
+          "type": "string",
+          "pattern": "^197[3-9][A-Z]{3,8}[0-9]{4,6}$"
+        },
+        "mrn_normalized": {
+          "type": "string",
+          "pattern": "^7[3-9][A-Z]{3,12}[0-9]+$"
+        },
+        "source_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

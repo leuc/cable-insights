@@ -1,0 +1,3665 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "description": "Deduplicated MRNs found in parsed related literature and resolved in the ACP-127 corpus.",
+  "normalization": {
+    "full": "document_number_raw-style four-digit year plus station plus serial",
+    "normalized": "corpus document_number-style two-digit year plus station plus integer serial"
+  },
+  "sources": {
+    "auffant2022__FINDINGS": {
+      "doi": "10.26153/TSW/42079",
+      "citation": "Auffant (2022), \"Oil for Atoms: The 1970s Energy Crisis and Nuclear Proliferation in the Persian Gulf\" — cable findings",
+      "file": "data/source/auffant2022/FINDINGS.md"
+    },
+    "basosi2023__FINDINGS": {
+      "doi": "10.1080/14682745.2023.2269869",
+      "citation": "FINDINGS — Basosi 2023, \"Something that apparently troubles the Cubans significantly\"",
+      "file": "data/source/basosi2023/FINDINGS.md"
+    },
+    "connelly2021__FINDINGS": {
+      "doi": "10.1080/02684527.2021.1946959",
+      "citation": "Connelly et al. (2021), “New evidence and new methods for analyzing the Iranian revolution as an intelligence failure” — cable findings",
+      "file": "data/source/connelly2021/FINDINGS.md"
+    },
+    "fibiger2020__FINDINGS": {
+      "doi": "10.1080/09592296.2020.1721084",
+      "citation": "Fibiger (2020) — Cable Extraction Report",
+      "file": "data/source/fibiger2020/FINDINGS.md"
+    },
+    "harmer2013__FINDINGS": {
+      "doi": "10.1017/S0022216X1200123X",
+      "citation": "Harmer (2013), \"Two, Three, Many Revolutions? Cuba and the Prospects for Revolutionary Change in Latin America, 1967–1975\" — cable findings",
+      "file": "data/source/harmer2013/FINDINGS.md"
+    },
+    "hulme2026__FINDINGS": {
+      "doi": "10.1080/09636412.2026.2617892",
+      "citation": "Hulme & Waxman (2026), \"Minding the Commitment Gap\" — cable/telegram findings",
+      "file": "data/source/hulme2026/FINDINGS.md"
+    },
+    "lee2018__FINDINGS": {
+      "doi": "10.1017/S0020818318000085",
+      "citation": "Lee (2018), \"The International Politics of Incomplete Sovereignty: How Hostile Neighbors Weaken the State\" — cable findings",
+      "file": "data/source/lee2018/FINDINGS.md"
+    },
+    "morley2019__02-consolidating-pinochet": {
+      "doi": null,
+      "citation": "Chapter 2 — Consolidating Pinochet — telegram/cable mentions in endnotes",
+      "file": "data/source/morley2019/02-consolidating-pinochet.md"
+    },
+    "morley2019__03-discordant-voices": {
+      "doi": null,
+      "citation": "Chapter 3 — Discordant Voices — telegram/cable mentions in endnotes",
+      "file": "data/source/morley2019/03-discordant-voices.md"
+    },
+    "morley2019__04-a-cooler-embrace": {
+      "doi": null,
+      "citation": "Chapter 4 — A Cooler Embrace — telegram/cable mentions in endnotes",
+      "file": "data/source/morley2019/04-a-cooler-embrace.md"
+    },
+    "morley2019__05-continuity-and-change": {
+      "doi": null,
+      "citation": "Chapter 5 — Continuity and Change in Chile Policy — telegram/cable mentions in endnotes",
+      "file": "data/source/morley2019/05-continuity-and-change.md"
+    },
+    "morley2019__06-muddying-the-waters": {
+      "doi": null,
+      "citation": "Chapter 6 — Muddying the Waters — telegram/cable mentions in endnotes",
+      "file": "data/source/morley2019/06-muddying-the-waters.md"
+    },
+    "morley2019__07-one-step-forward-two-steps-back": {
+      "doi": null,
+      "citation": "Chapter 7 — One Step Forward, Two Steps Back — telegram/cable mentions in endnotes",
+      "file": "data/source/morley2019/07-one-step-forward-two-steps-back.md"
+    },
+    "morley2019__08-policy-adrift": {
+      "doi": null,
+      "citation": "Chapter 8 — Policy Adrift — telegram/cable mentions in endnotes",
+      "file": "data/source/morley2019/08-policy-adrift.md"
+    },
+    "morley2019__09-conclusion": {
+      "doi": null,
+      "citation": "Conclusion — telegram/cable mentions in endnotes",
+      "file": "data/source/morley2019/09-conclusion.md"
+    },
+    "sanchez-nateras2024__FINDINGS": {
+      "doi": "10.1017/lar.2023.32",
+      "citation": "Sánchez Nateras (2024), \"'A Similar Détente': Mexico's Central American Policy, 1978–1982\" — cable findings",
+      "file": "data/source/sanchez-nateras2024/FINDINGS.md"
+    },
+    "simpson2005__FINDINGS": {
+      "doi": "10.1080/14682740500222028",
+      "citation": "Simpson (2005), \"'Illegally and Beautifully': The United States, the Indonesian Invasion of East Timor and the International Community, 1974-76\" — cable findings",
+      "file": "data/source/simpson2005/FINDINGS.md"
+    },
+    "szalontai2023__FINDINGS": {
+      "doi": "10.1162/jcws_a_01119",
+      "citation": "Szalontai & Yoo (2023), \"Maneuvering between Baghdad and Tehran\" — cable/telegram findings",
+      "file": "data/source/szalontai2023/FINDINGS.md"
+    },
+    "weimer2019__FINDINGS": {
+      "doi": "10.1086/702695",
+      "citation": "Weimer (2019), \"'It's That Difficult of a Terrain': Opium, Development, and Territoriality in US-Afghan Relations, 1940s-1970s\" — cable findings",
+      "file": "data/source/weimer2019/FINDINGS.md"
+    },
+    "winger2022__FINDINGS": {
+      "doi": "10.1080/07075332.2021.1927799",
+      "citation": "Winger (2022), \"Reassurance and Revival: The U.S.–Philippine Alliance in the Wake of the Vietnam War\" — cable findings",
+      "file": "data/source/winger2022/FINDINGS.md"
+    }
+  },
+  "mrns": [
+    {
+      "mrn_full": "1973GENEVA04867",
+      "mrn_normalized": "73GENEVA4867",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1973JAKART03017",
+      "mrn_normalized": "73JAKARTA3017",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1973KABUL02083",
+      "mrn_normalized": "73KABUL2083",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1973KABUL03073",
+      "mrn_normalized": "73KABUL3073",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1973KUALA00943",
+      "mrn_normalized": "73KUALA LUMPUR943",
+      "source_ids": [
+        "lee2018__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1973MANILA02769",
+      "mrn_normalized": "73MANILA2769",
+      "source_ids": [
+        "lee2018__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1973MANILA09787",
+      "mrn_normalized": "73MANILA9787",
+      "source_ids": [
+        "hulme2026__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1973PARIS25844",
+      "mrn_normalized": "73PARIS25844",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973SANTIA04687",
+      "mrn_normalized": "73SANTIAGO4687",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973SEOUL02368",
+      "mrn_normalized": "73SEOUL2368",
+      "source_ids": [
+        "szalontai2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE049755",
+      "mrn_normalized": "73STATE49755",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE072356",
+      "mrn_normalized": "73STATE72356",
+      "source_ids": [
+        "szalontai2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE137350",
+      "mrn_normalized": "73STATE137350",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE181833",
+      "mrn_normalized": "73STATE181833",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE181843",
+      "mrn_normalized": "73STATE181843",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE182136",
+      "mrn_normalized": "73STATE182136",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE182164",
+      "mrn_normalized": "73STATE182164",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE182343",
+      "mrn_normalized": "73STATE182343",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE182527",
+      "mrn_normalized": "73STATE182527",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE188028",
+      "mrn_normalized": "73STATE188028",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE188201",
+      "mrn_normalized": "73STATE188201",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE188497",
+      "mrn_normalized": "73STATE188497",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE188508",
+      "mrn_normalized": "73STATE188508",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE188709",
+      "mrn_normalized": "73STATE188709",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE188845",
+      "mrn_normalized": "73STATE188845",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE189464",
+      "mrn_normalized": "73STATE189464",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE189618",
+      "mrn_normalized": "73STATE189618",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE189879",
+      "mrn_normalized": "73STATE189879",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE189999",
+      "mrn_normalized": "73STATE189999",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE190077",
+      "mrn_normalized": "73STATE190077",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE190149",
+      "mrn_normalized": "73STATE190149",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE190162",
+      "mrn_normalized": "73STATE190162",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE190289",
+      "mrn_normalized": "73STATE190289",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE212600",
+      "mrn_normalized": "73STATE212600",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE216172",
+      "mrn_normalized": "73STATE216172",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE216697",
+      "mrn_normalized": "73STATE216697",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973STATE216765",
+      "mrn_normalized": "73STATE216765",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1973TEHRAN02588",
+      "mrn_normalized": "73TEHRAN2588",
+      "source_ids": [
+        "szalontai2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1973TEHRAN06143",
+      "mrn_normalized": "73TEHRAN6143",
+      "source_ids": [
+        "szalontai2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974BONN01326",
+      "mrn_normalized": "74BONN1326",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974BONN02540",
+      "mrn_normalized": "74BONN2540",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974BONN04098",
+      "mrn_normalized": "74BONN4098",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974BONN07347",
+      "mrn_normalized": "74BONN7347",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974CARACA06501",
+      "mrn_normalized": "74CARACAS6501",
+      "source_ids": [
+        "harmer2013__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974GENEVA01473",
+      "mrn_normalized": "74GENEVA1473",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974GENEVA04490",
+      "mrn_normalized": "74GENEVA4490",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974GUATEM05023",
+      "mrn_normalized": "74GUATEMALA5023",
+      "source_ids": [
+        "harmer2013__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974JIDDA01123",
+      "mrn_normalized": "74JEDDAH1123",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974JIDDA01192",
+      "mrn_normalized": "74JEDDAH1192",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974JIDDA03609",
+      "mrn_normalized": "74JEDDAH3609",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974KABUL07553",
+      "mrn_normalized": "74KABUL7553",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974KUWAIT03297",
+      "mrn_normalized": "74KUWAIT3297",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974LONDON02192",
+      "mrn_normalized": "74LONDON2192",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974NEWDE06431",
+      "mrn_normalized": "74NEWDELHI6431",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974NEWDE06785",
+      "mrn_normalized": "74NEWDELHI6785",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974PARIS01654",
+      "mrn_normalized": "74PARIS1654",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974PARIS15305",
+      "mrn_normalized": "74PARIS15305",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974PARIS15445",
+      "mrn_normalized": "74PARIS15445",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974PARIS28641",
+      "mrn_normalized": "74PARIS28641",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974PARIS29667",
+      "mrn_normalized": "74PARIS29667",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974SANSA03486",
+      "mrn_normalized": "74SANSALVADOR3486",
+      "source_ids": [
+        "harmer2013__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00419",
+      "mrn_normalized": "74SANTIAGO419",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet",
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00421",
+      "mrn_normalized": "74SANTIAGO421",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00422",
+      "mrn_normalized": "74SANTIAGO422",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00424",
+      "mrn_normalized": "74SANTIAGO424",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00425",
+      "mrn_normalized": "74SANTIAGO425",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00429",
+      "mrn_normalized": "74SANTIAGO429",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00430",
+      "mrn_normalized": "74SANTIAGO430",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00671",
+      "mrn_normalized": "74SANTIAGO671",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00678",
+      "mrn_normalized": "74SANTIAGO678",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00679",
+      "mrn_normalized": "74SANTIAGO679",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00680",
+      "mrn_normalized": "74SANTIAGO680",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00710",
+      "mrn_normalized": "74SANTIAGO710",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00714",
+      "mrn_normalized": "74SANTIAGO714",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00722",
+      "mrn_normalized": "74SANTIAGO722",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00724",
+      "mrn_normalized": "74SANTIAGO724",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00726",
+      "mrn_normalized": "74SANTIAGO726",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet",
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00727",
+      "mrn_normalized": "74SANTIAGO727",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00728",
+      "mrn_normalized": "74SANTIAGO728",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00729",
+      "mrn_normalized": "74SANTIAGO729",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00730",
+      "mrn_normalized": "74SANTIAGO730",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet",
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00731",
+      "mrn_normalized": "74SANTIAGO731",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00941",
+      "mrn_normalized": "74SANTIAGO941",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA00951",
+      "mrn_normalized": "74SANTIAGO951",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA01195",
+      "mrn_normalized": "74SANTIAGO1195",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA01679",
+      "mrn_normalized": "74SANTIAGO1679",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA01687",
+      "mrn_normalized": "74SANTIAGO1687",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA01690",
+      "mrn_normalized": "74SANTIAGO1690",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA01691",
+      "mrn_normalized": "74SANTIAGO1691",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA01692",
+      "mrn_normalized": "74SANTIAGO1692",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA01693",
+      "mrn_normalized": "74SANTIAGO1693",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA01696",
+      "mrn_normalized": "74SANTIAGO1696",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA01697",
+      "mrn_normalized": "74SANTIAGO1697",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA01700",
+      "mrn_normalized": "74SANTIAGO1700",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA01702",
+      "mrn_normalized": "74SANTIAGO1702",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA01708",
+      "mrn_normalized": "74SANTIAGO1708",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA01709",
+      "mrn_normalized": "74SANTIAGO1709",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA02036",
+      "mrn_normalized": "74SANTIAGO2036",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA02046",
+      "mrn_normalized": "74SANTIAGO2046",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA02047",
+      "mrn_normalized": "74SANTIAGO2047",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA02048",
+      "mrn_normalized": "74SANTIAGO2048",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA02051",
+      "mrn_normalized": "74SANTIAGO2051",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA02057",
+      "mrn_normalized": "74SANTIAGO2057",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA02058",
+      "mrn_normalized": "74SANTIAGO2058",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA02060",
+      "mrn_normalized": "74SANTIAGO2060",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA02061",
+      "mrn_normalized": "74SANTIAGO2061",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA02062",
+      "mrn_normalized": "74SANTIAGO2062",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA02135",
+      "mrn_normalized": "74SANTIAGO2135",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA02144",
+      "mrn_normalized": "74SANTIAGO2144",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA02148",
+      "mrn_normalized": "74SANTIAGO2148",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA02150",
+      "mrn_normalized": "74SANTIAGO2150",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA02151",
+      "mrn_normalized": "74SANTIAGO2151",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA02152",
+      "mrn_normalized": "74SANTIAGO2152",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA04315",
+      "mrn_normalized": "74SANTIAGO4315",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA04319",
+      "mrn_normalized": "74SANTIAGO4319",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA04322",
+      "mrn_normalized": "74SANTIAGO4322",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA04329",
+      "mrn_normalized": "74SANTIAGO4329",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA04343",
+      "mrn_normalized": "74SANTIAGO4343",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA04351",
+      "mrn_normalized": "74SANTIAGO4351",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA04591",
+      "mrn_normalized": "74SANTIAGO4591",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA05306",
+      "mrn_normalized": "74SANTIAGO5306",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA05307",
+      "mrn_normalized": "74SANTIAGO5307",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA05308",
+      "mrn_normalized": "74SANTIAGO5308",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA05492",
+      "mrn_normalized": "74SANTIAGO5492",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA05536",
+      "mrn_normalized": "74SANTIAGO5536",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA05559",
+      "mrn_normalized": "74SANTIAGO5559",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974SANTIA07726",
+      "mrn_normalized": "74SANTIAGO7726",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1974STATE019743",
+      "mrn_normalized": "74STATE19743",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974STATE019994",
+      "mrn_normalized": "74STATE19994",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974STATE020316",
+      "mrn_normalized": "74STATE20316",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974STATE031838",
+      "mrn_normalized": "74STATE31838",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974STATE045027",
+      "mrn_normalized": "74STATE45027",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974STATE046469",
+      "mrn_normalized": "74STATE46469",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974STATE053384",
+      "mrn_normalized": "74STATE53384",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974STATE084285",
+      "mrn_normalized": "74STATE84285",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974STATE138121",
+      "mrn_normalized": "74STATE138121",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974STATE196836",
+      "mrn_normalized": "74STATE196836",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1974STATE220253",
+      "mrn_normalized": "74STATE220253",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974STATE226822",
+      "mrn_normalized": "74STATE226822",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974STATE241287",
+      "mrn_normalized": "74STATE241287",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974TEHRAN03593",
+      "mrn_normalized": "74TEHRAN3593",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974TEHRAN05192",
+      "mrn_normalized": "74TEHRAN5192",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974TOKYO01127",
+      "mrn_normalized": "74TOKYO1127",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974TOKYO01337",
+      "mrn_normalized": "74TOKYO1337",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974TOKYO01784",
+      "mrn_normalized": "74TOKYO1784",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974TOKYO02473",
+      "mrn_normalized": "74TOKYO2473",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1974TOKYO03150",
+      "mrn_normalized": "74TOKYO3150",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975BANGKO08807",
+      "mrn_normalized": "75BANGKOK8807",
+      "source_ids": [
+        "fibiger2020__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975BANGKO12351",
+      "mrn_normalized": "75BANGKOK12351",
+      "source_ids": [
+        "hulme2026__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975BANGKO18841",
+      "mrn_normalized": "75BANGKOK18841",
+      "source_ids": [
+        "hulme2026__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975BONN01200",
+      "mrn_normalized": "75BONN1200",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975CANBER07933",
+      "mrn_normalized": "75CANBERRA7933",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975GENEVA03576",
+      "mrn_normalized": "75GENEVA3576",
+      "source_ids": [
+        "fibiger2020__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975GUATEM03218",
+      "mrn_normalized": "75GUATEMALA3218",
+      "source_ids": [
+        "harmer2013__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975JAKART02484",
+      "mrn_normalized": "75JAKARTA2484",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975JAKART05963",
+      "mrn_normalized": "75JAKARTA5963",
+      "source_ids": [
+        "fibiger2020__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975JAKART10244",
+      "mrn_normalized": "75JAKARTA10244",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975JAKART12275",
+      "mrn_normalized": "75JAKARTA12275",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975JAKART15438",
+      "mrn_normalized": "75JAKARTA15438",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975KABUL03281",
+      "mrn_normalized": "75KABUL3281",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975KUALA02683",
+      "mrn_normalized": "75KUALA LUMPUR2683",
+      "source_ids": [
+        "fibiger2020__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975MADRID01490",
+      "mrn_normalized": "75MADRID1490",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975MANILA02817",
+      "mrn_normalized": "75MANILA2817",
+      "source_ids": [
+        "lee2018__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975MANILA04374",
+      "mrn_normalized": "75MANILA4374",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975MANILA04661",
+      "mrn_normalized": "75MANILA4661",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975MANILA04738",
+      "mrn_normalized": "75MANILA4738",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975MANILA04883",
+      "mrn_normalized": "75MANILA4883",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975MANILA05250",
+      "mrn_normalized": "75MANILA5250",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975MANILA05355",
+      "mrn_normalized": "75MANILA5355",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975MANILA06799",
+      "mrn_normalized": "75MANILA6799",
+      "source_ids": [
+        "fibiger2020__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975MANILA06840",
+      "mrn_normalized": "75MANILA6840",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975MANILA06987",
+      "mrn_normalized": "75MANILA6987",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975MANILA07891",
+      "mrn_normalized": "75MANILA7891",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975MANILA09245",
+      "mrn_normalized": "75MANILA9245",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975MANILA09556",
+      "mrn_normalized": "75MANILA9556",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975MANILA09896",
+      "mrn_normalized": "75MANILA9896",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975PARIS01944",
+      "mrn_normalized": "75PARIS1944",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975PARIS05284",
+      "mrn_normalized": "75PARIS5284",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975PARIS23731",
+      "mrn_normalized": "75PARIS23731",
+      "source_ids": [
+        "auffant2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA00093",
+      "mrn_normalized": "75SANTIAGO93",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA00789",
+      "mrn_normalized": "75SANTIAGO789",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA02155",
+      "mrn_normalized": "75SANTIAGO2155",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA02157",
+      "mrn_normalized": "75SANTIAGO2157",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA02158",
+      "mrn_normalized": "75SANTIAGO2158",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA02159",
+      "mrn_normalized": "75SANTIAGO2159",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA02160",
+      "mrn_normalized": "75SANTIAGO2160",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA02166",
+      "mrn_normalized": "75SANTIAGO2166",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA02181",
+      "mrn_normalized": "75SANTIAGO2181",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA02184",
+      "mrn_normalized": "75SANTIAGO2184",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA02189",
+      "mrn_normalized": "75SANTIAGO2189",
+      "source_ids": [
+        "morley2019__02-consolidating-pinochet"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA04506",
+      "mrn_normalized": "75SANTIAGO4506",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA04579",
+      "mrn_normalized": "75SANTIAGO4579",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA04585",
+      "mrn_normalized": "75SANTIAGO4585",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA04591",
+      "mrn_normalized": "75SANTIAGO4591",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA04594",
+      "mrn_normalized": "75SANTIAGO4594",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA04595",
+      "mrn_normalized": "75SANTIAGO4595",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA04600",
+      "mrn_normalized": "75SANTIAGO4600",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA04601",
+      "mrn_normalized": "75SANTIAGO4601",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA04711",
+      "mrn_normalized": "75SANTIAGO4711",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA04740",
+      "mrn_normalized": "75SANTIAGO4740",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA04754",
+      "mrn_normalized": "75SANTIAGO4754",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA06446",
+      "mrn_normalized": "75SANTIAGO6446",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA06468",
+      "mrn_normalized": "75SANTIAGO6468",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA07323",
+      "mrn_normalized": "75SANTIAGO7323",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA07324",
+      "mrn_normalized": "75SANTIAGO7324",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA07681",
+      "mrn_normalized": "75SANTIAGO7681",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975SANTIA07683",
+      "mrn_normalized": "75SANTIAGO7683",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE000286",
+      "mrn_normalized": "75STATE286",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE003749",
+      "mrn_normalized": "75STATE3749",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE015015",
+      "mrn_normalized": "75STATE15015",
+      "source_ids": [
+        "hulme2026__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE021617",
+      "mrn_normalized": "75STATE21617",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE023898",
+      "mrn_normalized": "75STATE23898",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE045175",
+      "mrn_normalized": "75STATE45175",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE071525",
+      "mrn_normalized": "75STATE71525",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE111319",
+      "mrn_normalized": "75STATE111319",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE113013",
+      "mrn_normalized": "75STATE113013",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE115686",
+      "mrn_normalized": "75STATE115686",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE116037",
+      "mrn_normalized": "75STATE116037",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE133765",
+      "mrn_normalized": "75STATE133765",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE144899",
+      "mrn_normalized": "75STATE144899",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE153446",
+      "mrn_normalized": "75STATE153446",
+      "source_ids": [
+        "szalontai2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE162958",
+      "mrn_normalized": "75STATE162958",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE163048",
+      "mrn_normalized": "75STATE163048",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE170357",
+      "mrn_normalized": "75STATE170357",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE252899",
+      "mrn_normalized": "75STATE252899",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE297259",
+      "mrn_normalized": "75STATE297259",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE297266",
+      "mrn_normalized": "75STATE297266",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE297303",
+      "mrn_normalized": "75STATE297303",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975STATE304303",
+      "mrn_normalized": "75STATE304303",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975TAIPEI02661",
+      "mrn_normalized": "75TAIPEI2661",
+      "source_ids": [
+        "fibiger2020__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975TEHRAN02481",
+      "mrn_normalized": "75TEHRAN2481",
+      "source_ids": [
+        "szalontai2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975THEHA01110",
+      "mrn_normalized": "75THEHAGUE1110",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975THEHA01144",
+      "mrn_normalized": "75THEHAGUE1144",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975THEHA02491",
+      "mrn_normalized": "75THEHAGUE2491",
+      "source_ids": [
+        "fibiger2020__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975USUNN04955",
+      "mrn_normalized": "75USUNNEWYORK4955",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975USUNN05029",
+      "mrn_normalized": "75USUNNEWYORK5029",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975USUNN05578",
+      "mrn_normalized": "75USUNNEWYORK5578",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975USUNN05582",
+      "mrn_normalized": "75USUNNEWYORK5582",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975USUNN05821",
+      "mrn_normalized": "75USUNNEWYORK5821",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975USUNN05826",
+      "mrn_normalized": "75USUNNEWYORK5826",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1975USUNN05928",
+      "mrn_normalized": "75USUNNEWYORK5928",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1975USUNN06011",
+      "mrn_normalized": "75USUNNEWYORK6011",
+      "source_ids": [
+        "morley2019__03-discordant-voices"
+      ]
+    },
+    {
+      "mrn_full": "1976BAGHDA01263",
+      "mrn_normalized": "76BAGHDAD1263",
+      "source_ids": [
+        "szalontai2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976GENEVA05871",
+      "mrn_normalized": "76GENEVA5871",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976JAKART00694",
+      "mrn_normalized": "76JAKARTA694",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976JAKART01151",
+      "mrn_normalized": "76JAKARTA1151",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976JAKART02097",
+      "mrn_normalized": "76JAKARTA2097",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976JAKART06284",
+      "mrn_normalized": "76JAKARTA6284",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976KABUL01765",
+      "mrn_normalized": "76KABUL1765",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976KABUL03367",
+      "mrn_normalized": "76KABUL3367",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976KABUL05601",
+      "mrn_normalized": "76KABUL5601",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976LISBON01442",
+      "mrn_normalized": "76LISBON1442",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976MANILA10023",
+      "mrn_normalized": "76MANILA10023",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976MANILA11209",
+      "mrn_normalized": "76MANILA11209",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976MANILA11355",
+      "mrn_normalized": "76MANILA11355",
+      "source_ids": [
+        "hulme2026__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976MANILA11733",
+      "mrn_normalized": "76MANILA11733",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA00745",
+      "mrn_normalized": "76SANTIAGO745",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA01254",
+      "mrn_normalized": "76SANTIAGO1254",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA01256",
+      "mrn_normalized": "76SANTIAGO1256",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA01264",
+      "mrn_normalized": "76SANTIAGO1264",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA01287",
+      "mrn_normalized": "76SANTIAGO1287",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA02398",
+      "mrn_normalized": "76SANTIAGO2398",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA02400",
+      "mrn_normalized": "76SANTIAGO2400",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA02411",
+      "mrn_normalized": "76SANTIAGO2411",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA02412",
+      "mrn_normalized": "76SANTIAGO2412",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA02449",
+      "mrn_normalized": "76SANTIAGO2449",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA02450",
+      "mrn_normalized": "76SANTIAGO2450",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA02451",
+      "mrn_normalized": "76SANTIAGO2451",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA02460",
+      "mrn_normalized": "76SANTIAGO2460",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA02464",
+      "mrn_normalized": "76SANTIAGO2464",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA02468",
+      "mrn_normalized": "76SANTIAGO2468",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA02469",
+      "mrn_normalized": "76SANTIAGO2469",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA02470",
+      "mrn_normalized": "76SANTIAGO2470",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA02471",
+      "mrn_normalized": "76SANTIAGO2471",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA03641",
+      "mrn_normalized": "76SANTIAGO3641",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA03779",
+      "mrn_normalized": "76SANTIAGO3779",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA04341",
+      "mrn_normalized": "76SANTIAGO4341",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA05083",
+      "mrn_normalized": "76SANTIAGO5083",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA05128",
+      "mrn_normalized": "76SANTIAGO5128",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA06251",
+      "mrn_normalized": "76SANTIAGO6251",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA06259",
+      "mrn_normalized": "76SANTIAGO6259",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA06269",
+      "mrn_normalized": "76SANTIAGO6269",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA08208",
+      "mrn_normalized": "76SANTIAGO8208",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA08209",
+      "mrn_normalized": "76SANTIAGO8209",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA09212",
+      "mrn_normalized": "76SANTIAGO9212",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA10335",
+      "mrn_normalized": "76SANTIAGO10335",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1976SANTIA10362",
+      "mrn_normalized": "76SANTIAGO10362",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE021202",
+      "mrn_normalized": "76STATE21202",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE037929",
+      "mrn_normalized": "76STATE37929",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE064984",
+      "mrn_normalized": "76STATE64984",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE101116",
+      "mrn_normalized": "76STATE101116",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE119079",
+      "mrn_normalized": "76STATE119079",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE119690",
+      "mrn_normalized": "76STATE119690",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE125318",
+      "mrn_normalized": "76STATE125318",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE151434",
+      "mrn_normalized": "76STATE151434",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE190998",
+      "mrn_normalized": "76STATE190998",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE192534",
+      "mrn_normalized": "76STATE192534",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE209192",
+      "mrn_normalized": "76STATE209192",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE257200",
+      "mrn_normalized": "76STATE257200",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE267580",
+      "mrn_normalized": "76STATE267580",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE268153",
+      "mrn_normalized": "76STATE268153",
+      "source_ids": [
+        "hulme2026__FINDINGS",
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE272078",
+      "mrn_normalized": "76STATE272078",
+      "source_ids": [
+        "hulme2026__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE287342",
+      "mrn_normalized": "76STATE287342",
+      "source_ids": [
+        "hulme2026__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE293490",
+      "mrn_normalized": "76STATE293490",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE295628",
+      "mrn_normalized": "76STATE295628",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976STATE300727",
+      "mrn_normalized": "76STATE300727",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976TEHRAN08487",
+      "mrn_normalized": "76TEHRAN8487",
+      "source_ids": [
+        "szalontai2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976TEHRAN09522",
+      "mrn_normalized": "76TEHRAN9522",
+      "source_ids": [
+        "szalontai2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976TEHRAN11243",
+      "mrn_normalized": "76TEHRAN11243",
+      "source_ids": [
+        "szalontai2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1976USUNN01182",
+      "mrn_normalized": "76USUNNEWYORK1182",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977BAGHDA00550",
+      "mrn_normalized": "77BAGHDAD550",
+      "source_ids": [
+        "szalontai2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977GENEVA05640",
+      "mrn_normalized": "77GENEVA5640",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977JAKART04745",
+      "mrn_normalized": "77JAKARTA4745",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977KABUL06784",
+      "mrn_normalized": "77KABUL6784",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977KABUL07191",
+      "mrn_normalized": "77KABUL7191",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977KABUL08529",
+      "mrn_normalized": "77KABUL8529",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977KATHMA01805",
+      "mrn_normalized": "77KATHMANDU1805",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977MANILA00632",
+      "mrn_normalized": "77MANILA632",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977MANILA01695",
+      "mrn_normalized": "77MANILA1695",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977MANILA15267",
+      "mrn_normalized": "77MANILA15267",
+      "source_ids": [
+        "hulme2026__FINDINGS",
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977MANILA19311",
+      "mrn_normalized": "77MANILA19311",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA00487",
+      "mrn_normalized": "77SANTIAGO487",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA00804",
+      "mrn_normalized": "77SANTIAGO804",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA00809",
+      "mrn_normalized": "77SANTIAGO809",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA00820",
+      "mrn_normalized": "77SANTIAGO820",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA00821",
+      "mrn_normalized": "77SANTIAGO821",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace",
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA00834",
+      "mrn_normalized": "77SANTIAGO834",
+      "source_ids": [
+        "morley2019__04-a-cooler-embrace",
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA00835",
+      "mrn_normalized": "77SANTIAGO835",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA01273",
+      "mrn_normalized": "77SANTIAGO1273",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA01800",
+      "mrn_normalized": "77SANTIAGO1800",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA02579",
+      "mrn_normalized": "77SANTIAGO2579",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA02580",
+      "mrn_normalized": "77SANTIAGO2580",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA02582",
+      "mrn_normalized": "77SANTIAGO2582",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA02595",
+      "mrn_normalized": "77SANTIAGO2595",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA02891",
+      "mrn_normalized": "77SANTIAGO2891",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA02904",
+      "mrn_normalized": "77SANTIAGO2904",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA03779",
+      "mrn_normalized": "77SANTIAGO3779",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA03835",
+      "mrn_normalized": "77SANTIAGO3835",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA04103",
+      "mrn_normalized": "77SANTIAGO4103",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA04319",
+      "mrn_normalized": "77SANTIAGO4319",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA04564",
+      "mrn_normalized": "77SANTIAGO4564",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA05448",
+      "mrn_normalized": "77SANTIAGO5448",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA05987",
+      "mrn_normalized": "77SANTIAGO5987",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA05988",
+      "mrn_normalized": "77SANTIAGO5988",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA06021",
+      "mrn_normalized": "77SANTIAGO6021",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA06030",
+      "mrn_normalized": "77SANTIAGO6030",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA06664",
+      "mrn_normalized": "77SANTIAGO6664",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA07847",
+      "mrn_normalized": "77SANTIAGO7847",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA08239",
+      "mrn_normalized": "77SANTIAGO8239",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA09286",
+      "mrn_normalized": "77SANTIAGO9286",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA09288",
+      "mrn_normalized": "77SANTIAGO9288",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA09299",
+      "mrn_normalized": "77SANTIAGO9299",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA09497",
+      "mrn_normalized": "77SANTIAGO9497",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA09646",
+      "mrn_normalized": "77SANTIAGO9646",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1977SANTIA10386",
+      "mrn_normalized": "77SANTIAGO10386",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1977SEOUL06011",
+      "mrn_normalized": "77SEOUL6011",
+      "source_ids": [
+        "hulme2026__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE050688",
+      "mrn_normalized": "77STATE50688",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE051024",
+      "mrn_normalized": "77STATE51024",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE051090",
+      "mrn_normalized": "77STATE51090",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE051154",
+      "mrn_normalized": "77STATE51154",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE051957",
+      "mrn_normalized": "77STATE51957",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE057032",
+      "mrn_normalized": "77STATE57032",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE085013",
+      "mrn_normalized": "77STATE85013",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE109493",
+      "mrn_normalized": "77STATE109493",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE123399",
+      "mrn_normalized": "77STATE123399",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE123807",
+      "mrn_normalized": "77STATE123807",
+      "source_ids": [
+        "morley2019__05-continuity-and-change"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE160699",
+      "mrn_normalized": "77STATE160699",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE197398",
+      "mrn_normalized": "77STATE197398",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE198986",
+      "mrn_normalized": "77STATE198986",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE227946",
+      "mrn_normalized": "77STATE227946",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE234051",
+      "mrn_normalized": "77STATE234051",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE248525",
+      "mrn_normalized": "77STATE248525",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE290510",
+      "mrn_normalized": "77STATE290510",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE295616",
+      "mrn_normalized": "77STATE295616",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1977STATE301403",
+      "mrn_normalized": "77STATE301403",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978ABUDH01313",
+      "mrn_normalized": "78ABUDHABI1313",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978BAGHDA02238",
+      "mrn_normalized": "78BAGHDAD2238",
+      "source_ids": [
+        "szalontai2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978BAGHDA02262",
+      "mrn_normalized": "78BAGHDAD2262",
+      "source_ids": [
+        "szalontai2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978BELGRA00759",
+      "mrn_normalized": "78BELGRADE759",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978BELGRA04620",
+      "mrn_normalized": "78BELGRADE4620",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978BELGRA05405",
+      "mrn_normalized": "78BELGRADE5405",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978BELGRA05466",
+      "mrn_normalized": "78BELGRADE5466",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978BELGRA05563",
+      "mrn_normalized": "78BELGRADE5563",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978COLOMB02392",
+      "mrn_normalized": "78COLOMBO2392",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978GENEVA05558",
+      "mrn_normalized": "78GENEVA5558",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978GENEVA05579",
+      "mrn_normalized": "78GENEVA5579",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978GENEVA05580",
+      "mrn_normalized": "78GENEVA5580",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978HAVANA00219",
+      "mrn_normalized": "78HAVANA219",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978HAVANA00236",
+      "mrn_normalized": "78HAVANA236",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978HAVANA01176",
+      "mrn_normalized": "78HAVANA1176",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978HAVANA01299",
+      "mrn_normalized": "78HAVANA1299",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978HAVANA01379",
+      "mrn_normalized": "78HAVANA1379",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978HAVANA01400",
+      "mrn_normalized": "78HAVANA1400",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978HAVANA01430",
+      "mrn_normalized": "78HAVANA1430",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978JAKART00021",
+      "mrn_normalized": "78JAKARTA21",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978KABUL01494",
+      "mrn_normalized": "78KABUL1494",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978KABUL02557",
+      "mrn_normalized": "78KABUL2557",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978KABUL02765",
+      "mrn_normalized": "78KABUL2765",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978KABUL04421",
+      "mrn_normalized": "78KABUL4421",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978KABUL09818",
+      "mrn_normalized": "78KABUL9818",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978KABUL10067",
+      "mrn_normalized": "78KABUL10067",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978KHARTO03325",
+      "mrn_normalized": "78KHARTOUM3325",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA00632",
+      "mrn_normalized": "78MANILA632",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA00721",
+      "mrn_normalized": "78MANILA721",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA04258",
+      "mrn_normalized": "78MANILA4258",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA04486",
+      "mrn_normalized": "78MANILA4486",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA04971",
+      "mrn_normalized": "78MANILA4971",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA06080",
+      "mrn_normalized": "78MANILA6080",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA06295",
+      "mrn_normalized": "78MANILA6295",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA07272",
+      "mrn_normalized": "78MANILA7272",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA07402",
+      "mrn_normalized": "78MANILA7402",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA13485",
+      "mrn_normalized": "78MANILA13485",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA13751",
+      "mrn_normalized": "78MANILA13751",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA14216",
+      "mrn_normalized": "78MANILA14216",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA17337",
+      "mrn_normalized": "78MANILA17337",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA18793",
+      "mrn_normalized": "78MANILA18793",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA19451",
+      "mrn_normalized": "78MANILA19451",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA19456",
+      "mrn_normalized": "78MANILA19456",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA20142",
+      "mrn_normalized": "78MANILA20142",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978MANILA22622",
+      "mrn_normalized": "78MANILA22622",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA01237",
+      "mrn_normalized": "78SANTIAGO1237",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA01250",
+      "mrn_normalized": "78SANTIAGO1250",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA01906",
+      "mrn_normalized": "78SANTIAGO1906",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters",
+        "morley2019__09-conclusion"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA01927",
+      "mrn_normalized": "78SANTIAGO1927",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters",
+        "morley2019__09-conclusion"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA02976",
+      "mrn_normalized": "78SANTIAGO2976",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA04206",
+      "mrn_normalized": "78SANTIAGO4206",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA04247",
+      "mrn_normalized": "78SANTIAGO4247",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA04502",
+      "mrn_normalized": "78SANTIAGO4502",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA06580",
+      "mrn_normalized": "78SANTIAGO6580",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA06647",
+      "mrn_normalized": "78SANTIAGO6647",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA07687",
+      "mrn_normalized": "78SANTIAGO7687",
+      "source_ids": [
+        "morley2019__06-muddying-the-waters"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA08391",
+      "mrn_normalized": "78SANTIAGO8391",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA08783",
+      "mrn_normalized": "78SANTIAGO8783",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA09126",
+      "mrn_normalized": "78SANTIAGO9126",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA09161",
+      "mrn_normalized": "78SANTIAGO9161",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA09194",
+      "mrn_normalized": "78SANTIAGO9194",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA09201",
+      "mrn_normalized": "78SANTIAGO9201",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA09282",
+      "mrn_normalized": "78SANTIAGO9282",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA09353",
+      "mrn_normalized": "78SANTIAGO9353",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1978SANTIA09824",
+      "mrn_normalized": "78SANTIAGO9824",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE067001",
+      "mrn_normalized": "78STATE67001",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE092191",
+      "mrn_normalized": "78STATE92191",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE097545",
+      "mrn_normalized": "78STATE97545",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE110017",
+      "mrn_normalized": "78STATE110017",
+      "source_ids": [
+        "connelly2021__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE142045",
+      "mrn_normalized": "78STATE142045",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE146429",
+      "mrn_normalized": "78STATE146429",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE164031",
+      "mrn_normalized": "78STATE164031",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE176826",
+      "mrn_normalized": "78STATE176826",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE186342",
+      "mrn_normalized": "78STATE186342",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE192106",
+      "mrn_normalized": "78STATE192106",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE203005",
+      "mrn_normalized": "78STATE203005",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE229147",
+      "mrn_normalized": "78STATE229147",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE231682",
+      "mrn_normalized": "78STATE231682",
+      "source_ids": [
+        "connelly2021__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE259598",
+      "mrn_normalized": "78STATE259598",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE283811",
+      "mrn_normalized": "78STATE283811",
+      "source_ids": [
+        "connelly2021__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE287362",
+      "mrn_normalized": "78STATE287362",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE287372",
+      "mrn_normalized": "78STATE287372",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE300318",
+      "mrn_normalized": "78STATE300318",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978STATE327037",
+      "mrn_normalized": "78STATE327037",
+      "source_ids": [
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978TABRIZ00004",
+      "mrn_normalized": "1978TABRIZ00004",
+      "source_ids": [
+        "connelly2021__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978TEHRAN00389",
+      "mrn_normalized": "78TEHRAN389",
+      "source_ids": [
+        "connelly2021__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978TEHRAN00665",
+      "mrn_normalized": "78TEHRAN665",
+      "source_ids": [
+        "connelly2021__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978TEHRAN00961",
+      "mrn_normalized": "78TEHRAN961",
+      "source_ids": [
+        "connelly2021__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978TEHRAN03892",
+      "mrn_normalized": "78TEHRAN3892",
+      "source_ids": [
+        "connelly2021__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978TEHRAN04582",
+      "mrn_normalized": "78TEHRAN4582",
+      "source_ids": [
+        "connelly2021__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978TEHRAN05390",
+      "mrn_normalized": "78TEHRAN5390",
+      "source_ids": [
+        "connelly2021__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978TEHRAN07242",
+      "mrn_normalized": "78TEHRAN7242",
+      "source_ids": [
+        "connelly2021__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978TEHRAN07882",
+      "mrn_normalized": "78TEHRAN7882",
+      "source_ids": [
+        "connelly2021__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978TEHRAN08217",
+      "mrn_normalized": "78TEHRAN8217",
+      "source_ids": [
+        "connelly2021__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978TEHRAN09431",
+      "mrn_normalized": "78TEHRAN9431",
+      "source_ids": [
+        "connelly2021__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978TEHRAN10962",
+      "mrn_normalized": "78TEHRAN10962",
+      "source_ids": [
+        "connelly2021__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978USUNN01966",
+      "mrn_normalized": "78USUNNEWYORK1966",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978USUNN02099",
+      "mrn_normalized": "78USUNNEWYORK2099",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978USUNN02178",
+      "mrn_normalized": "78USUNNEWYORK2178",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978USUNN02593",
+      "mrn_normalized": "78USUNNEWYORK2593",
+      "source_ids": [
+        "basosi2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1978USUNN05688",
+      "mrn_normalized": "78USUNNEWYORK5688",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979BAGHDA02432",
+      "mrn_normalized": "79BAGHDAD2432",
+      "source_ids": [
+        "szalontai2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979KABUL00655",
+      "mrn_normalized": "79KABUL655",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979KABUL01852",
+      "mrn_normalized": "79KABUL1852",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979KABUL02634",
+      "mrn_normalized": "79KABUL2634",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979KABUL04475",
+      "mrn_normalized": "79KABUL4475",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979KABUL04932",
+      "mrn_normalized": "79KABUL4932",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979KABUL06860",
+      "mrn_normalized": "79KABUL6860",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979MANAGU03651",
+      "mrn_normalized": "1979MANAGU03651",
+      "source_ids": [
+        "sanchez-nateras2024__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979MEXICO12378",
+      "mrn_normalized": "79MEXICOCITY12378",
+      "source_ids": [
+        "sanchez-nateras2024__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979MEXICO12752",
+      "mrn_normalized": "79MEXICOCITY12752",
+      "source_ids": [
+        "sanchez-nateras2024__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979MEXICO13864",
+      "mrn_normalized": "79MEXICOCITY13864",
+      "source_ids": [
+        "sanchez-nateras2024__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979MEXICO17640",
+      "mrn_normalized": "79MEXICOCITY17640",
+      "source_ids": [
+        "sanchez-nateras2024__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979SANTIA00308",
+      "mrn_normalized": "79SANTIAGO308",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1979SANTIA06822",
+      "mrn_normalized": "79SANTIAGO6822",
+      "source_ids": [
+        "morley2019__08-policy-adrift"
+      ]
+    },
+    {
+      "mrn_full": "1979STATE004453",
+      "mrn_normalized": "79STATE4453",
+      "source_ids": [
+        "hulme2026__FINDINGS",
+        "winger2022__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979STATE021857",
+      "mrn_normalized": "79STATE21857",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1979STATE075056",
+      "mrn_normalized": "79STATE75056",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1979STATE084455",
+      "mrn_normalized": "79STATE84455",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1979STATE096739",
+      "mrn_normalized": "79STATE96739",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1979STATE124968",
+      "mrn_normalized": "79STATE124968",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1979STATE140552",
+      "mrn_normalized": "79STATE140552",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1979STATE156481",
+      "mrn_normalized": "79STATE156481",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979STATE194780",
+      "mrn_normalized": "79STATE194780",
+      "source_ids": [
+        "sanchez-nateras2024__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979STATE252292",
+      "mrn_normalized": "79STATE252292",
+      "source_ids": [
+        "weimer2019__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979STATE308464",
+      "mrn_normalized": "79STATE308464",
+      "source_ids": [
+        "morley2019__07-one-step-forward-two-steps-back"
+      ]
+    },
+    {
+      "mrn_full": "1979STATE313565",
+      "mrn_normalized": "79STATE313565",
+      "source_ids": [
+        "morley2019__08-policy-adrift"
+      ]
+    },
+    {
+      "mrn_full": "1979TEHRAN07979",
+      "mrn_normalized": "79TEHRAN7979",
+      "source_ids": [
+        "szalontai2023__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979USUNN04899",
+      "mrn_normalized": "79USUNNEWYORK4899",
+      "source_ids": [
+        "simpson2005__FINDINGS"
+      ]
+    },
+    {
+      "mrn_full": "1979USUNN05828",
+      "mrn_normalized": "79USUNNEWYORK5828",
+      "source_ids": [
+        "morley2019__08-policy-adrift"
+      ]
+    },
+    {
+      "mrn_full": "1979VIENNA11356",
+      "mrn_normalized": "79VIENNA11356",
+      "source_ids": [
+        "sanchez-nateras2024__FINDINGS"
+      ]
+    }
+  ]
+}

@@ -50,6 +50,19 @@ contract (NDJSON/CSV it produces on disk). See `data/external/README.md` for
 exactly what's expected and how to regenerate it; that dependency is
 documented there only, nothing is symlinked or copied into this repo.
 
+## Related-literature MRN index
+
+- When adding or changing a parsed source under `data/source/`, update
+  `data/source/related_literature.json` with each MRN that resolves in
+  `data/cable-extract/all-dates.ndjson`.
+- Store the source-printed/full MRN in `mrn_full`, the corpus
+  `document_number` in `mrn_normalized`, and point `source_ids` at a source
+  entry whose metadata includes the DOI (or `null` when none exists), a
+  human-readable `citation`, and the exact parsed Markdown file.
+- Validate the index against
+  `data/source/related_literature.schema.json`; do not add unresolved or
+  pre-CFPF references to this normalized index.
+
 ## Git
 
 Do not run `git` commands in this repo (status, add, commit, mv, or
